@@ -1,8 +1,7 @@
-import {
-  SignInButton,
-  SignOutButton,
-  UserInfo,
-} from "./components/AuthButtons";
+"use client";
+
+import { SignInButton, SignOutButton } from "./components/AuthButtons";
+import { UserInfo } from "./components/UserInfo";
 
 export default function Home() {
   return (
