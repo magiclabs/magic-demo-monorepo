@@ -4,39 +4,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-// GET /api/tee/wallet → forwards to GET /v1/wallet
-export async function GET() {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Authentication required" },
-        { status: 401 }
-      );
-    }
-
-    const res = await teeFetch(TeeEndpoint.WALLET);
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      return NextResponse.json(
-        { error: `TEE API Error: ${res.status} - ${errorText}` },
-        { status: res.status }
-      );
-    }
-
-    const data = await res.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("GET wallet error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
-}
-
-// POST /api/tee/wallet → forwards to POST /v1/wallet
+// POST /api/tee/wallet/sign/data → forwards to POST /v1/wallet/sign/data
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
@@ -48,7 +16,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.text();
-    const res = await teeFetch(TeeEndpoint.WALLET, {
+    const res = await teeFetch(TeeEndpoint.SIGN_DATA, {
       method: "POST",
       body,
     });
@@ -64,7 +32,7 @@ export async function POST(req: Request) {
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("POST wallet error:", error);
+    console.error("POST sign data error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

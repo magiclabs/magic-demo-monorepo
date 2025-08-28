@@ -1,7 +1,7 @@
 export enum TeeEndpoint {
   WALLET = "/v1/wallet",
   SIGN_DATA = "/v1/wallet/sign/data",
-  SIGN_MESSAGE = "v1/wallet/sign/message",
+  SIGN_MESSAGE = "/v1/wallet/sign/message",
 }
 
 export interface Wallet {
