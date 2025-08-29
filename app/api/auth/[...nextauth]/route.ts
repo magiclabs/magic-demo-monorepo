@@ -1,4 +1,4 @@
-import NextAuth, { Account, Session, TokenSet } from "next-auth";
+import NextAuth, { Account, Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -20,21 +20,13 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({
-      token,
-      account,
-    }: {
-      token: TokenSet;
-      account: Account | null;
-    }) {
-      // Store the id_token in the token object
+    async jwt({ token, account }: { token: JWT; account: Account | null }) {
       if (account) {
         token.idToken = account.id_token;
       }
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      // Add the id_token to the session object
       session.idToken = token.idToken;
       return session;
     },
