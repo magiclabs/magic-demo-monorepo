@@ -16,11 +16,9 @@ export function UserInfo() {
     }
   }, [wallet, status]);
 
-  if (!session) return <div>Not signed in</div>;
-
   return (
     <div className="mb-2">
-      Signed in as {session.user?.email || session.user?.name}
+      Signed in as {session?.user?.email || session?.user?.name}
       {wallet && <div>Wallet: {wallet}</div>}
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { teeService } from "../lib/tee-service";
 import { ethers } from "ethers";
+import { Button } from "./Primitives";
 
 const SmallSignTypedDataV3Payload = {
   types: {
@@ -121,7 +122,7 @@ export function SignMethods() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button onClick={handlePersonalSign}>Sign</button>
+        <Button onClick={handlePersonalSign}>Sign</Button>
       </div>
       {signature && (
         <div className="max-w-md">
@@ -137,7 +138,7 @@ export function SignMethods() {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <button onClick={handleSignTypedDataV1}>Sign</button>
+        <Button onClick={handleSignTypedDataV1}>Sign</Button>
       </div>
       {typedDataV1 && (
         <div className="max-w-md">
@@ -153,7 +154,7 @@ export function SignMethods() {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <button onClick={handleSignTypedDataV3}>Sign</button>
+        <Button onClick={handleSignTypedDataV3}>Sign</Button>
       </div>
       {typedDataV3 && (
         <div className="max-w-md">
@@ -169,7 +170,11 @@ export function SignMethods() {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <button onClick={handleSignTypedDataV4}>Sign</button>
+        <Button onClick={handleSignTypedDataV4}>Sign</Button>
+        <textarea
+          value={JSON.stringify(SmallSignTypedDataV4Payload, null, 2)}
+          className="w-full h-40 p-2 border border-gray-300 rounded-md"
+        />
       </div>
       {typedDataV4 && (
         <div className="max-w-md">
@@ -185,7 +190,7 @@ export function SignMethods() {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <button onClick={handleSignTransaction}>Sign</button>
+        <Button onClick={handleSignTransaction}>Sign</Button>
       </div>
       {signedTransaction && (
         <div className="max-w-md">

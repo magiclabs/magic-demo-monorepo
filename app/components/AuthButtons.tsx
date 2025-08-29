@@ -1,25 +1,20 @@
 "use client";
 
 import { signIn, signOut } from "next-auth/react";
+import { Button } from "./Primitives";
 
 export function SignInButton() {
   return (
-    <button
-      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      onClick={() => signIn("google", { redirect: false })}
-    >
+    <Button onClick={() => signIn("google", { redirect: false })}>
       Sign in with Google
-    </button>
+    </Button>
   );
 }
 
 export function SignOutButton() {
   return (
-    <button
-      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-      onClick={() => signOut()}
-    >
+    <Button className=" bg-red-600! text-white" onClick={() => signOut()}>
       Sign Out
-    </button>
+    </Button>
   );
 }
