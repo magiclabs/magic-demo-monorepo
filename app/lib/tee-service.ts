@@ -22,6 +22,17 @@ const computeEip712Hash = (
   return "0x" + hashBuffer.toString("hex");
 };
 
+const getOrCreateWallet = async () => {
+  const res = await fetch("/api/tee/wallet", {
+    method: "POST",
+    body: JSON.stringify({
+      chain: "ETH",
+    }),
+  });
+  const data = await res.json();
+  return data.public_address;
+};
+
 const personalSign = async (data: string) => {
   const message = Buffer.from(data, "utf-8").toString("base64");
   const body = { message_base64: message, chain: "ETH" };
@@ -81,6 +92,7 @@ const signTransaction = async (tx: TransactionRequest) => {
 };
 
 export const teeService = {
+  getOrCreateWallet,
   personalSign,
   signTypedDataV1,
   signTypedDataV3,

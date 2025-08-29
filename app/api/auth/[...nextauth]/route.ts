@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { Account, TokenSet } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
@@ -19,14 +19,20 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({
+      token,
+      account,
+    }: {
+      token: TokenSet;
+      account: Account | null;
+    }) {
       // Store the id_token in the token object
       if (account) {
         token.idToken = account.id_token;
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { token: TokenSet }) {
       // Add the id_token to the session object
       session.idToken = token.idToken;
       return session;
