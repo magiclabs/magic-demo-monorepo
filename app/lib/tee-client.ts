@@ -13,7 +13,8 @@ export async function tee(path: TeeEndpoint, jwt: string, init?: RequestInit) {
       Authorization: `Bearer ${jwt}`,
       "X-Magic-API-Key": apiKey,
       "X-OIDC-Provider-ID": oidcProviderId,
-      "X-Magic-Referrer": "http://localhost:3000",
+      "X-Magic-Referrer":
+        "https://nextauth-api-wallets-express-demo.vercel.app",
       ...(init?.headers || {}),
     },
     cache: "no-store",
