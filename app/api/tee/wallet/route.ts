@@ -1,73 +1,9 @@
-import { teeFetch } from "@/app/lib/tee-client";
+import { teeProxy } from "@/app/lib/tee-proxy";
 import { TeeEndpoint } from "@/app/lib/tee-types";
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-// GET /api/tee/wallet → forwards to GET /v1/wallet
-export async function GET() {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Authentication required" },
-        { status: 401 }
-      );
-    }
-
-    const res = await teeFetch(TeeEndpoint.WALLET);
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      return NextResponse.json(
-        { error: `TEE API Error: ${res.status} - ${errorText}` },
-        { status: res.status }
-      );
-    }
-
-    const data = await res.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("GET wallet error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
+export async function GET(req: Request) {
+  return teeProxy(TeeEndpoint.WALLET, req, "GET");
 }
-
-// POST /api/tee/wallet → forwards to POST /v1/wallet
 export async function POST(req: Request) {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Authentication required" },
-        { status: 401 }
-      );
-    }
-
-    const body = await req.text();
-    const res = await teeFetch(TeeEndpoint.WALLET, {
-      method: "POST",
-      body,
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      return NextResponse.json(
-        { error: `TEE API Error: ${res.status} - ${errorText}` },
-        { status: res.status }
-      );
-    }
-
-    const data = await res.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("POST wallet error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
+  return teeProxy(TeeEndpoint.WALLET, req, "POST");
 }

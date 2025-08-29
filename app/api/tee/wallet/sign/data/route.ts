@@ -1,4 +1,4 @@
-import { teeFetch } from "@/app/lib/tee-client";
+import { tee } from "@/app/lib/tee-client";
 import { TeeEndpoint } from "@/app/lib/tee-types";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -8,7 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user?.email) {
+    if (!session?.idToken) {
       return NextResponse.json(
         { error: "Authentication required" },
         { status: 401 }
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.text();
-    const res = await teeFetch(TeeEndpoint.SIGN_DATA, {
+    const res = await tee(TeeEndpoint.SIGN_DATA, session.idToken, {
       method: "POST",
       body,
     });
