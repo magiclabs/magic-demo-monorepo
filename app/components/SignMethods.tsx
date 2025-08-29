@@ -1,4 +1,4 @@
-import { teeService } from "../lib/tee-service";
+import { teeService } from "../types/tee-service";
 import { parseEther } from "ethers";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { SignComponent } from "./SignComponent";
