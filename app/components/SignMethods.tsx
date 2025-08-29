@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { teeService } from "../lib/tee-service";
+import { ethers } from "ethers";
 
 const SmallSignTypedDataV3Payload = {
   types: {
@@ -47,6 +48,7 @@ export function SignMethods() {
   const [typedDataV1, setTypedDataV1] = useState("");
   const [typedDataV3, setTypedDataV3] = useState("");
   const [typedDataV4, setTypedDataV4] = useState("");
+  const [signedTransaction, setSignedTransaction] = useState("");
 
   const handlePersonalSign = async () => {
     try {
@@ -87,6 +89,21 @@ export function SignMethods() {
       const res = await teeService.signTypedDataV4(SmallSignTypedDataV4Payload);
       const signingResponse = await res.json();
       setTypedDataV4(signingResponse.signature);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSignTransaction = async () => {
+    try {
+      const txnParams = {
+        from: "0x695AC519d1346caAE5086Bb0B22443260911a885",
+        to: "0x695AC519d1346caAE5086Bb0B22443260911a885",
+        value: ethers.parseEther("0.00001"),
+        gasLimit: 21000,
+      };
+      const res = await teeService.signTransaction(txnParams);
+      setSignedTransaction(res);
     } catch (error) {
       console.error(error);
     }
@@ -158,6 +175,22 @@ export function SignMethods() {
         <div className="max-w-md">
           <pre className="text-sm text-gray-500 whitespace-pre-wrap break-all">
             Signature: {typedDataV4}
+          </pre>
+        </div>
+      )}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-bold">Sign Transaction</h2>
+        <p className="text-sm text-gray-500">
+          Sign a transaction with your wallet
+        </p>
+      </div>
+      <div className="flex flex-col gap-2">
+        <button onClick={handleSignTransaction}>Sign</button>
+      </div>
+      {signedTransaction && (
+        <div className="max-w-md">
+          <pre className="text-sm text-gray-500 whitespace-pre-wrap break-all">
+            Signed Transaction: {signedTransaction}
           </pre>
         </div>
       )}
