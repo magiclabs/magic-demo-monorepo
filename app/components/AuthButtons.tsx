@@ -13,7 +13,7 @@ export function SignInButton() {
 
 export function SignOutButton() {
   return (
-    <Button className=" bg-red-600! text-white" onClick={() => signOut()}>
+    <Button className=" bg-[#D43100] text-white" onClick={() => signOut()}>
       Sign Out
     </Button>
   );

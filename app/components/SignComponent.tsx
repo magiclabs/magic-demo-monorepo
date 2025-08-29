@@ -23,23 +23,23 @@ export function SignComponent({
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full px-4 py-3">
+    <div className="flex flex-col gap-6 w-full p-4">
       <h2 className="text-lg font-bold">{title}</h2>
       <div className="flex flex-col gap-3">
-        <p>Payload:</p>
-        <pre className="p-2 rounded-md bg-black/80 text-sm text-white whitespace-pre-wrap break-all">
+        <p className="font-medium">Payload:</p>
+        <pre className="p-3 rounded-md bg-[rgb(21,21,22)] text-sm text-white whitespace-pre-wrap break-all">
           {JSON.stringify(formatPayload(payloadDisplay), null, 2)}
         </pre>
-        {signature && (
-          <>
-            <p>Response:</p>
-            <pre className="p-2 rounded-md bg-black/80 text-sm text-white whitespace-pre-wrap break-all">
-              {JSON.stringify(signature, null, 2)}
-            </pre>
-          </>
-        )}
       </div>
-      <Button onClick={handleSign}>Sign</Button>
+      {signature && (
+        <div className="flex flex-col gap-3">
+          <p className="font-medium">Response:</p>
+          <pre className="p-3 rounded-md bg-[rgb(21,21,22)] text-sm text-white whitespace-pre-wrap break-all">
+            {JSON.stringify(signature, null, 2)}
+          </pre>
+        </div>
+      )}
+      <Button onClick={handleSign}>Execute</Button>
     </div>
   );
 }

@@ -10,9 +10,9 @@ import {
 } from "../const/sign-typed-data-payloads";
 
 const TabsClasses = {
-  root: "bg-slate-500/40 rounded-lg w-[661px]",
+  root: "bg-[rgb(36,36,38)] rounded-lg w-[723px]",
   trigger:
-    "px-4 pt-3 pb-2 text-white [&[data-state=active]]:border-b-2 [&[data-state=active]]:border-b-white cursor-pointer",
+    "font-semibold px-4 pt-3 pb-2 text-white [&[data-state=active]]:border-b-2 [&[data-state=active]]:border-b-white cursor-pointer",
 };
 
 export function SignMethods({
@@ -89,7 +89,7 @@ export function SignMethods({
           Typed Data V4
         </TabsTrigger>
         <TabsTrigger className={TabsClasses.trigger} value="transaction">
-          Transaction
+          Sign Transaction
         </TabsTrigger>
       </TabsList>
       <TabsContent value="personal">
@@ -122,7 +122,7 @@ export function SignMethods({
       </TabsContent>
       <TabsContent value="transaction">
         <SignComponent
-          title="Transaction"
+          title="Sign Transaction"
           payloadDisplay={signTransactionPayload}
           onSign={handleSignTransaction}
         />
