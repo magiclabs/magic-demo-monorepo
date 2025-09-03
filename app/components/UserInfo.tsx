@@ -82,7 +82,7 @@ export function UserInfo({ publicAddress }: { publicAddress: string | null }) {
             {publicAddress && (
               <button
                 onClick={() => navigator.clipboard.writeText(publicAddress)}
-                className="ml-auto p-2 hover:bg-white/10 rounded-lg transition-colors"
+                className="ml-auto p-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer active:scale-95"
                 title="Copy address"
               >
                 <svg
