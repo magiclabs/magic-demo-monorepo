@@ -5,17 +5,30 @@ export const Button = ({
   children,
   onClick,
   className,
+  variant = "primary",
 }: {
   children: ReactNode;
   onClick: () => void;
   className?: string;
+  variant?: "primary" | "secondary" | "danger" | "success";
 }) => {
+  const baseClasses =
+    "min-w-[200px] font-semibold px-6 py-4 rounded-xl cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95";
+
+  const variants = {
+    primary:
+      "bg-gradient-to-r from-primary to-secondary text-white glow-primary hover:from-primary-dark hover:to-primary",
+    secondary:
+      "bg-gradient-to-r from-accent to-primary text-white glow-accent hover:from-accent/80 hover:to-primary/80",
+    danger:
+      "bg-gradient-to-r from-error to-red-600 text-white hover:from-red-600 hover:to-red-700",
+    success:
+      "bg-gradient-to-r from-success to-emerald-600 text-white hover:from-emerald-600 hover:to-emerald-700",
+  };
+
   return (
     <button
-      className={cn(
-        "bg-white min-w-[200px] text-black font-semibold px-3 py-4 rounded-xl cursor-pointer hover:opacity-80 active:scale-98 transition-all duration-200",
-        className
-      )}
+      className={cn(baseClasses, variants[variant], className)}
       onClick={onClick}
     >
       {children}
