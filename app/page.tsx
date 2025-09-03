@@ -40,7 +40,7 @@ export default function Home() {
         </a>
       </div>
       {status === "authenticated" && (
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-8">
           <UserInfo publicAddress={publicAddress} />
           <SignMethods publicAddress={publicAddress} />
           <SignOutButton />

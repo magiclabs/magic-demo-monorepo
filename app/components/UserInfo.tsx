@@ -7,7 +7,7 @@ export function UserInfo({ publicAddress }: { publicAddress: string | null }) {
   const { name, email } = session?.user || {};
 
   return (
-    <div className="mb-2 flex flex-col gap-2 w-[595px]">
+    <div className="p-4 flex flex-col gap-2 w-[627px] bg-[rgb(36,36,38)] rounded-lg shadow-[0_4px_24px_0_rgba(0,0,0,0.4)]">
       {name && (
         <h2 className="text-lg">
           <b>Name:</b> {name}

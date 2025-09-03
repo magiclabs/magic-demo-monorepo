@@ -10,9 +10,9 @@ import {
 } from "../const/sign-typed-data-payloads";
 
 const TabsClasses = {
-  root: "bg-[rgb(36,36,38)] rounded-lg w-[723px]",
+  root: "bg-[rgb(36,36,38)] rounded-lg w-[723px] shadow-[0_4px_24px_0_rgba(0,0,0,0.4)]",
   trigger:
-    "font-semibold px-4 pt-3 pb-2 text-white [&[data-state=active]]:border-b-2 [&[data-state=active]]:border-b-white cursor-pointer",
+    "font-semibold px-4 pt-3 pb-2 text-white [&[data-state=active]]:border-b-2 [&[data-state=active]]:border-b-white/80 cursor-pointer",
 };
 
 export function SignMethods({
