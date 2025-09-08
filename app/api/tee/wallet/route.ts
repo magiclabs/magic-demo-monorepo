@@ -1,5 +1,5 @@
 import { teeProxy } from "@/app/lib/tee-proxy";
-import { TeeEndpoint } from "@/app/lib/tee-types";
+import { TeeEndpoint } from "@/app/types/tee-types";
 
 export async function GET(req: Request) {
   return teeProxy(TeeEndpoint.WALLET, req, "GET");

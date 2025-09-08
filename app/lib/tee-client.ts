@@ -1,4 +1,4 @@
-import { TeeEndpoint } from "./tee-types";
+import { TeeEndpoint } from "../types/tee-types";
 
 const TEE_BASE = "https://tee.express.magiclabs.com";
 

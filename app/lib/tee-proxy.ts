@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { TeeEndpoint } from "./tee-types";
+import { TeeEndpoint } from "../types/tee-types";
 import { NextResponse } from "next/server";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { tee } from "./tee-client";

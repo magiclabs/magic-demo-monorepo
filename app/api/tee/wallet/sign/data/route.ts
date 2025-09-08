@@ -1,5 +1,5 @@
 import { tee } from "@/app/lib/tee-client";
-import { TeeEndpoint } from "@/app/lib/tee-types";
+import { TeeEndpoint } from "@/app/types/tee-types";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
