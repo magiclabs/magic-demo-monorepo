@@ -1,10 +1,10 @@
-import { tee } from "@/app/lib/tee-client";
-import { TeeEndpoint } from "@/app/types/tee-types";
+import { tee } from "@/lib/tee-client";
+import { TeeEndpoint } from "@/types/tee-types";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-// POST /api/tee/wallet/sign/data → forwards to POST /v1/wallet/sign/data
+// POST /api/tee/wallet/sign/message → forwards to POST /v1/wallet/sign/message
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.text();
-    const res = await tee(TeeEndpoint.SIGN_DATA, session.idToken, {
+    const res = await tee(TeeEndpoint.SIGN_MESSAGE, session.idToken, {
       method: "POST",
       body,
     });
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("POST sign data error:", error);
+    console.error("POST sign message error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

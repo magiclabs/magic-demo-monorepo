@@ -1,11 +1,11 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { SignInButton, SignOutButton } from "./components/AuthButtons";
-import { UserInfo } from "./components/UserInfo";
-import { SignMethods } from "./components/SignMethods";
+import { SignInButton, SignOutButton } from "../components/AuthButtons";
+import { UserInfo } from "../components/UserInfo";
+import { SignMethods } from "../components/SignMethods";
 import { useEffect, useState } from "react";
-import { teeService } from "./lib/tee-service";
+import { teeService } from "../lib/tee-service";
 
 export default function Home() {
   const { status } = useSession();
