@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { TeeEndpoint } from "../types/tee-types";
 import { NextResponse } from "next/server";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../app/api/auth/[...nextauth]/route";
 import { tee } from "./tee-client";
 
 export async function teeProxy(
