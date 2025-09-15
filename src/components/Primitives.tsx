@@ -6,14 +6,17 @@ export const Button = ({
   onClick,
   className,
   variant = "primary",
+  disabled = false,
 }: {
   children: ReactNode;
-  onClick: () => void;
+  onClick: () => any;
   className?: string;
   variant?: "primary" | "secondary" | "danger" | "success";
+  disabled?: boolean;
 }) => {
-  const baseClasses =
-    "min-w-[200px] font-semibold px-6 py-4 rounded-xl cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95";
+  const baseClasses = disabled
+    ? "min-w-[200px] font-semibold px-6 py-4 rounded-xl cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 opacity-50"
+    : "min-w-[200px] font-semibold px-6 py-4 rounded-xl cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95";
 
   const variants = {
     primary:
@@ -29,7 +32,8 @@ export const Button = ({
   return (
     <button
       className={cn(baseClasses, variants[variant], className)}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
     >
       {children}
     </button>

@@ -1,11 +1,11 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { SignInButton, SignOutButton } from "../../components/AuthButtons";
-import { UserInfo } from "../../components/UserInfo";
-import { SignMethods } from "../../components/SignMethods";
+import { SignInButton, SignOutButton } from "../../../components/AuthButtons";
+import { UserInfo } from "../../../components/UserInfo";
+import { SignMethods } from "../../../components/SignMethods";
 import { useEffect, useState } from "react";
-import { teeService } from "../../lib/tee-service";
+import { teeService } from "../../../lib/tee-service";
 
 export default function Home() {
   const { status } = useSession();
@@ -43,14 +43,8 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-        {/* Header */}
-        <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative">
-            <h1 className="text-6xl font-bold gradient-text mb-4">
-              Magic API Wallets
-            </h1>
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur opacity-20"></div>
-          </div>
+        {/* Top Right Docs Button */}
+        <div className="absolute top-8 right-8 z-20">
           <a
             href="https://tee.express.magiclabs.com/docs"
             target="_blank"
@@ -71,6 +65,16 @@ export default function Home() {
             </svg>
             View TEE Express Docs
           </a>
+        </div>
+
+        {/* Header */}
+        <div className="flex flex-col items-center gap-6 text-center">
+          <div className="relative">
+            <h1 className="text-6xl font-bold gradient-text mb-4">
+              Magic API Wallets
+            </h1>
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur opacity-20"></div>
+          </div>
         </div>
 
         {/* Main Content */}

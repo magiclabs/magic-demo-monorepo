@@ -1,5 +1,7 @@
+"use client";
+
 import { MagicService } from "@/lib/get-magic";
-import "../globals.css";
+import "../../globals.css";
 import { useEffect } from "react";
 
 export default function Layout({
@@ -11,6 +13,7 @@ export default function Layout({
     useEffect(() => {
         // initialize Magic
         MagicService.magic
+        
     }, [])
 
   return (
