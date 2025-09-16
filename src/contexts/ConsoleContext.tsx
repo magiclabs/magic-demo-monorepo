@@ -2,18 +2,34 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
+export enum LogType {
+  INFO = 'info',
+  SUCCESS = 'success',
+  ERROR = 'error',
+  WARNING = 'warning'
+}
+
+export enum LogMethod {
+  MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP = 'magic.auth.loginWithEmailOTP',
+  MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK = 'magic.auth.loginWithMagicLink',
+  MAGIC_OAUTH_LOGIN_WITH_POPUP = 'magic.oauth.loginWithPopup',
+  MAGIC_USER_IS_LOGGED_IN = 'magic.user.isLoggedIn',
+  MAGIC_USER_GET_INFO = 'magic.user.getInfo',
+  MAGIC_USER_LOGOUT = 'magic.user.logout'
+}
+
 interface ConsoleLog {
   id: string;
   timestamp: string;
-  type: 'info' | 'success' | 'error' | 'warning';
+  type: LogType;
   message: string;
-  method?: string;
+  method?: LogMethod;
   data?: any;
 }
 
 interface ConsoleContextType {
   consoleLogs: ConsoleLog[];
-  logToConsole: (type: 'info' | 'success' | 'error' | 'warning', message: string, method?: string, data?: any) => void;
+  logToConsole: (type: LogType, method: LogMethod, message: string, data?: any) => void;
   clearConsole: () => void;
 }
 
@@ -22,7 +38,7 @@ const ConsoleContext = createContext<ConsoleContextType | undefined>(undefined);
 export function ConsoleProvider({ children }: { children: ReactNode }) {
   const [consoleLogs, setConsoleLogs] = useState<ConsoleLog[]>([]);
 
-  const logToConsole = (type: 'info' | 'success' | 'error' | 'warning', message: string, method?: string, data?: any) => {
+  const logToConsole = (type: LogType, method: LogMethod, message: string, data?: any) => {
     const logEntry: ConsoleLog = {
       id: Date.now().toString(),
       timestamp: new Date().toLocaleTimeString(),

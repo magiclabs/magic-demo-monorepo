@@ -1,14 +1,8 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { EmailOTPAuth } from "../../../components/EmailOTPAuth";
-import { OAuthAuth } from "../../../components/OAuthAuth";
+import { EmailOTPAuth } from "../../../components/embedded-wallet/EmailOTPAuth";
+import { OAuthAuth } from "../../../components/embedded-wallet/OAuthAuth";
 
 export default function Home() {
-  const router = useRouter();
-  const handleSuccess = () => {
-    // Redirect to wallet page after successful authentication using Next router
-    router.push('/wallet');
-  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -70,10 +64,10 @@ export default function Home() {
           </div>
 
           {/* Email OTP Authentication */}
-          <EmailOTPAuth onSuccess={handleSuccess} />
+          <EmailOTPAuth />
 
           {/* OAuth Authentication */}
-          <OAuthAuth onSuccess={handleSuccess} />
+          <OAuthAuth />
         </div>
       </div>
     </div>

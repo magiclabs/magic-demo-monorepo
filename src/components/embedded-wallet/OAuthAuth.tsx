@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "./Primitives";
-import { MagicService } from "../lib/get-magic";
-import { useConsole } from "../contexts/ConsoleContext";
+import { useRouter } from "next/navigation";
+import { Button } from "../Primitives";
+import { MagicService } from "../../lib/get-magic";
+import { useConsole, LogType, LogMethod } from "../../contexts/ConsoleContext";
 
 interface OAuthAuthProps {
   onSuccess?: () => void;
@@ -10,31 +11,39 @@ interface OAuthAuthProps {
 
 export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
   const { logToConsole } = useConsole();
+  const router = useRouter();
+
+  const handleSuccess = () => {
+    // Redirect to wallet page after successful authentication using Next router
+    router.push('/embedded-wallet/wallet');
+    // Call the optional onSuccess callback if provided
+    onSuccess?.();
+  };
 
   const handleRedirectLogin = async () => {
     try {
-      logToConsole('info', 'Initiating Magic Link redirect login...', 'magic.auth.loginWithMagicLink', { });
+      logToConsole(LogType.INFO, LogMethod.MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK, 'Initiating Magic Link redirect login...', { });
       await MagicService.magic.oauth.loginWithRedirect({
         redirectURI: `${window.location.origin}/embedded-wallet`,
       });
-      logToConsole('success', 'Magic Link sent successfully', 'magic.auth.loginWithMagicLink', {  });
+      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK, 'Magic Link sent successfully', {  });
     } catch (error: any) {
       const errorMsg = error.message || "Failed to send magic link";
-      logToConsole('error', errorMsg, 'magic.auth.loginWithMagicLink', { error });
+      logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK, errorMsg, { error });
     }
   };
 
   const handlePopupLogin = async () => {
     try {
-      logToConsole('info', 'Initiating OAuth popup login...', 'magic.oauth.loginWithPopup', { showUI: true });
+      logToConsole(LogType.INFO, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, 'Initiating OAuth popup login...', { showUI: true });
       const didToken = await MagicService.magic.oauth.loginWithPopup({});
       
       const userMetadata = await MagicService.magic.user.getInfo();
-      logToConsole('success', 'OAuth popup login successful', 'magic.oauth.loginWithPopup', { userMetadata });
-      onSuccess?.();
+      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, 'OAuth popup login successful', { userMetadata });
+      handleSuccess();
     } catch (error: any) {
       const errorMsg = error.message || "Login failed";
-      logToConsole('error', errorMsg, 'magic.oauth.loginWithPopup', { error });
+      logToConsole(LogType.ERROR, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, errorMsg, { error });
     }
   };
   return (

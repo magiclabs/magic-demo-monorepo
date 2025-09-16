@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { MagicService } from "../lib/get-magic";
-import { Button } from "./Primitives";
-import { useConsole } from "../contexts/ConsoleContext";
+import { useRouter } from "next/navigation";
+import { MagicService } from "../../lib/get-magic";
+import { Button } from "../Primitives";
+import { useConsole, LogType, LogMethod } from "../../contexts/ConsoleContext";
 import { DeviceVerificationEventOnReceived, LoginWithEmailOTPEventEmit, LoginWithEmailOTPEventOnReceived } from "magic-sdk";
 
 interface EmailOTPAuthProps {
@@ -14,23 +15,31 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { logToConsole } = useConsole();
+  const router = useRouter();
+
+  const handleSuccess = () => {
+    // Redirect to wallet page after successful authentication using Next router
+    router.push('/embedded-wallet/wallet');
+    // Call the optional onSuccess callback if provided
+    onSuccess?.();
+  };
 
   const handleEmailOTPLogin = async () => {
     if (!email) {
-      logToConsole('error', "Please enter an email address", 'magic.auth.loginWithEmailOTP');
+      logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, "Please enter an email address");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      logToConsole('info', 'Sending OTP via regular Magic UI...', 'magic.auth.loginWithEmailOTP', { email, showUI: true });
+      logToConsole(LogType.INFO, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, 'Sending OTP via regular Magic UI...', { email, showUI: true });
       await MagicService.magic.auth.loginWithEmailOTP({ email });
-      logToConsole('success', `OTP sent successfully to ${email}`, 'magic.auth.loginWithEmailOTP', { email, method: 'regular' });
-      onSuccess?.();
+      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, `OTP sent successfully to ${email}`, { email });
+      handleSuccess();
     } catch (error: any) {
       const errorMsg = error.message || "Failed to send OTP";
-      logToConsole('error', errorMsg, 'magic.auth.loginWithEmailOTP', { email, error });
+      logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, errorMsg, { email, error });
     } finally {
       setIsLoading(false);
     }
@@ -38,25 +47,24 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
 
   const handleWhitelabelEmailOTPLogin = async () => {
     if (!email) {
-      logToConsole('error', "Please enter an email address", 'MagicService.sendEmailOTP');
+      logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, "Please enter an email address");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      logToConsole('info', 'Sending OTP via whitelabel Magic API...', 'MagicService.sendEmailOTP', { email, showUI: false });
+      logToConsole(LogType.INFO, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, 'Sending OTP via whitelabel Magic API...', { email, showUI: false });
       
-      const showUI = false;
       const deviceCheckUI = false;
       
       const handle = MagicService.magic.auth.loginWithEmailOTP({
         email,
-        showUI,
+        showUI: false,
         deviceCheckUI,
       });
       
-      logToConsole('success', `OTP sent successfully to ${email} (Whitelabel)`, 'MagicService.sendEmailOTP', { email, method: 'whitelabel' });
+      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, `OTP sent successfully to ${email} (Whitelabel)`, { email });
 
       if (!deviceCheckUI) {
         handle.on(
@@ -160,12 +168,12 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
       });
       
       const didToken = await handle;
-      logToConsole('success', 'Whitelabel login completed', 'MagicService.sendEmailOTP', { email, didToken });
+      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, 'Whitelabel login completed', { email, didToken });
       
-      onSuccess?.();
+      handleSuccess();
     } catch (error: any) {
       const errorMsg = error.message || "Failed to send OTP";
-      logToConsole('error', errorMsg, 'MagicService.sendEmailOTP', { email, error });
+      logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, errorMsg, { email, error });
     } finally {
       setIsLoading(false);
     }

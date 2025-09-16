@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button } from "./Primitives";
-import { formatPayload } from "../utils/format";
+import { Button } from "../Primitives";
+import { formatPayload } from "../../utils/format";
 
 export function SignComponent({
   payloadDisplay,
@@ -10,13 +10,17 @@ export function SignComponent({
   onSign: () => Promise<string>;
 }) {
   const [signature, setSignature] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSign = async () => {
     try {
+      setIsLoading(true);
       const signature = await onSign();
       setSignature(signature);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,7 +45,7 @@ export function SignComponent({
             </label>
             <div className="relative">
               <pre className="p-4 rounded-xl bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/30 text-sm text-white whitespace-pre-wrap break-all overflow-x-auto max-h-64 scrollbar-thin scrollbar-thumb-success/20 scrollbar-track-transparent">
-                {JSON.stringify(signature, null, 2)}
+                {signature}
               </pre>
               <div className="absolute top-3 right-3">
                 <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
@@ -51,7 +55,7 @@ export function SignComponent({
         )}
       </div>
 
-      <Button onClick={handleSign} variant="secondary">
+      <Button onClick={handleSign} variant="secondary" disabled={isLoading}>
         <svg
           className="w-5 h-5"
           fill="none"
@@ -65,7 +69,7 @@ export function SignComponent({
             d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
           />
         </svg>
-        Execute Signing
+        {isLoading ? "Signing..." : "Execute Signing"}
       </Button>
     </div>
   );

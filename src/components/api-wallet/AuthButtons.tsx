@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn, signOut } from "next-auth/react";
-import { Button } from "./Primitives";
+import { Button } from "../Primitives";
 
 export function SignInButton() {
   return (
