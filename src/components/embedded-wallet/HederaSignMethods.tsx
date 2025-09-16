@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { MagicService } from "../../lib/get-magic";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "../SigningMethodsLayout";
@@ -7,8 +6,9 @@ function uint8ArrayToBase64(uint8Array: Uint8Array): string {
   return btoa(String.fromCharCode.apply(null, Array.from(uint8Array)));
 }
 
+const HEDERA_SIGN_MESSAGE = "hello world";
+
 export function HederaSignMethods() {
-  const [message, setMessage] = useState("hello world");
 
   const handleGetPublicKey = async (): Promise<string> => {
     const magic = MagicService.magic as any;
@@ -19,7 +19,7 @@ export function HederaSignMethods() {
   const handleSignMessage = async (): Promise<string> => {
     const magic = MagicService.magic as any;
     const encoder = new TextEncoder();
-    const uint8Array = encoder.encode(message);
+    const uint8Array = encoder.encode(HEDERA_SIGN_MESSAGE);
     const sigUint8Array = await magic.hedera.sign(uint8Array);
 
     const base64String = uint8ArrayToBase64(sigUint8Array);
@@ -39,27 +39,13 @@ export function HederaSignMethods() {
       value: "sign-message", 
       label: "Sign Message", 
       functionName: "magic.hedera.sign(message)",
-      payload: message,
+      payload: HEDERA_SIGN_MESSAGE,
       handler: handleSignMessage
     },
   ];
 
   return (
     <div className="space-y-4">
-      {/* Message Input for Sign Message Tab */}
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-          Message to Sign
-        </label>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="p-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-          placeholder="Enter message to sign"
-        />
-      </div>
-
       <SigningMethodsLayout
         title="Hedera Signing Methods"
         description="Test Hedera-specific cryptographic operations with Magic SDK"
