@@ -13,8 +13,7 @@ export default function Layout({
     
     useEffect(() => {
         // initialize Magic
-        MagicService.magic
-        
+        void MagicService.magic;
     }, [])
 
   return (

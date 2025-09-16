@@ -82,11 +82,11 @@ function ConsolePanel() {
                   </span>
                 </div>
                 <div className="text-white mb-2">{log.message}</div>
-                {log.data && (
+                {log.data != null && (
                   <details className="text-gray-300">
                     <summary className="cursor-pointer hover:text-white">View Data</summary>
                     <div className="mt-2">
-                      <JsonBlock data={log.data} maxHeight="8rem" />
+                      <JsonBlock data={log.data as any} maxHeight="8rem" />
                     </div>
                   </details>
                 )}

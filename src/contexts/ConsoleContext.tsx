@@ -24,12 +24,12 @@ interface ConsoleLog {
   type: LogType;
   message: string;
   method?: LogMethod;
-  data?: any;
+  data?: unknown;
 }
 
 interface ConsoleContextType {
   consoleLogs: ConsoleLog[];
-  logToConsole: (type: LogType, method: LogMethod, message: string, data?: any) => void;
+  logToConsole: (type: LogType, method: LogMethod, message: string, data?: unknown) => void;
   clearConsole: () => void;
 }
 
@@ -38,7 +38,7 @@ const ConsoleContext = createContext<ConsoleContextType | undefined>(undefined);
 export function ConsoleProvider({ children }: { children: ReactNode }) {
   const [consoleLogs, setConsoleLogs] = useState<ConsoleLog[]>([]);
 
-  const logToConsole = (type: LogType, method: LogMethod, message: string, data?: any) => {
+  const logToConsole = (type: LogType, method: LogMethod, message: string, data?: unknown) => {
     const logEntry: ConsoleLog = {
       id: Date.now().toString(),
       timestamp: new Date().toLocaleTimeString(),

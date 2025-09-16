@@ -98,7 +98,7 @@ export function CodeBlock({
 
 // Specialized components for different use cases
 interface JsonBlockProps {
-  data: any;
+  data: unknown;
   className?: string;
   maxHeight?: string;
 }

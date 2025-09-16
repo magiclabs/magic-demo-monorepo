@@ -59,7 +59,7 @@ export default function Home() {
           <div className="text-center">
             <h2 className="text-2xl font-semibold mb-4 text-foreground">Get Started</h2>
             <p className="text-muted-foreground mb-8">
-              Connect your account using Magic's embedded wallet authentication
+              Connect your account using Magic&apos;s embedded wallet authentication
             </p>
           </div>
 

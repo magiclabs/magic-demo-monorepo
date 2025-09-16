@@ -27,8 +27,8 @@ export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
         redirectURI: `${window.location.origin}/embedded-wallet`,
       });
       logToConsole(LogType.SUCCESS, LogMethod.MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK, 'Magic Link sent successfully', {  });
-    } catch (error: any) {
-      const errorMsg = error.message || "Failed to send magic link";
+    } catch (error: unknown) {
+      const errorMsg = (error as Error).message || "Failed to send magic link";
       logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK, errorMsg, { error });
     }
   };
@@ -36,13 +36,13 @@ export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
   const handlePopupLogin = async () => {
     try {
       logToConsole(LogType.INFO, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, 'Initiating OAuth popup login...', { showUI: true });
-      const didToken = await MagicService.magic.oauth.loginWithPopup({});
+      await MagicService.magic.oauth.loginWithPopup({});
       
       const userMetadata = await MagicService.magic.user.getInfo();
       logToConsole(LogType.SUCCESS, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, 'OAuth popup login successful', { userMetadata });
       handleSuccess();
-    } catch (error: any) {
-      const errorMsg = error.message || "Login failed";
+    } catch (error: unknown) {
+      const errorMsg = (error as Error).message || "Login failed";
       logToConsole(LogType.ERROR, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, errorMsg, { error });
     }
   };

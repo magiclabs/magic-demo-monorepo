@@ -68,7 +68,7 @@ export class MagicService {
   public static get provider(): ethers.BrowserProvider {
     if (!this._provider) {
       this._provider = new ethers.BrowserProvider(
-        // cast as any if necessary; Magic’s rpcProvider type is slightly different
+        // cast as any if necessary; Magic's rpcProvider type is slightly different
         MagicService.magic.rpcProvider as any
       );
     }

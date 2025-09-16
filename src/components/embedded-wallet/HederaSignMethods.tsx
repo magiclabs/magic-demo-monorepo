@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { MagicService } from "../../lib/get-magic";
-import { type HederaExtension } from "@magic-ext/hedera";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "../SigningMethodsLayout";
 

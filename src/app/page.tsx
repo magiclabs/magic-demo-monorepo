@@ -26,7 +26,7 @@ export default function Home() {
             <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur opacity-20"></div>
           </div>
           <p className="text-muted-foreground text-xl">
-            Select the type of wallet you'd like to use
+            Select the type of wallet you&apos;d like to use
           </p>
         </div>
 

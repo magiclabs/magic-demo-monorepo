@@ -1,10 +1,7 @@
 import { MagicService } from "../../lib/get-magic";
 import { parseEther, ethers } from "ethers";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { Button } from "../Primitives";
 import { SigningMethodsLayout } from "../SigningMethodsLayout";
-import { JsonBlock } from "../CodeBlock";
-import { formatPayload } from "../../utils/format";
 import {
   PERSONAL_SIGN_PAYLOAD,
   SIGN_TYPED_DATA_V1_PAYLOAD,
@@ -46,13 +43,13 @@ export function SignMethods({
       };
 
       return new Promise((resolve, reject) => {
-        MagicService.magic.rpcProvider.sendAsync(payload, (err: any, response: any) => {
+        MagicService.magic.rpcProvider.sendAsync(payload, (err: unknown, response: unknown) => {
           if (err) {
             reject(err);
             return;
           }
 
-          resolve(response?.result);
+          resolve((response as { result: string })?.result);
         });
       });
     } catch (error) {
@@ -75,13 +72,13 @@ export function SignMethods({
       };
 
       return new Promise((resolve, reject) => {
-        MagicService.magic.rpcProvider.sendAsync(payload, (err: any, response: any) => {
+        MagicService.magic.rpcProvider.sendAsync(payload, (err: unknown, response: unknown) => {
           if (err) {
             reject(err);
             return;
           }
 
-          resolve(response?.result);
+          resolve((response as { result: string })?.result);
         });
       });
     } catch (error) {
@@ -104,13 +101,13 @@ export function SignMethods({
       };
 
       return new Promise((resolve, reject) => {
-        MagicService.magic.rpcProvider.sendAsync(payload, (err: any, response: any) => {
+        MagicService.magic.rpcProvider.sendAsync(payload, (err: unknown, response: unknown) => {
           if (err) {
             reject(err);
             return;
           }
 
-          resolve(response?.result);
+          resolve((response as { result: string })?.result);
         });
       });
     } catch (error) {

@@ -9,7 +9,7 @@ export const Button = ({
   disabled = false,
 }: {
   children: ReactNode;
-  onClick: () => any;
+  onClick: () => void;
   className?: string;
   variant?: "primary" | "secondary" | "danger" | "success";
   disabled?: boolean;

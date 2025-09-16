@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
+import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { JsonBlock } from "./CodeBlock";
 import { formatPayload } from "../utils/format";
 import { Button } from "./Primitives";
@@ -14,7 +14,7 @@ interface TabItem {
   value: string;
   label: string;
   functionName?: string;
-  payload?: any;
+  payload?: unknown;
   handler?: () => Promise<string>;
 }
 
@@ -133,13 +133,13 @@ export function SigningMethodsLayout({
               <div className="flex flex-col gap-4">
                 {currentTab && renderFunctionDisplay(currentTab)}
                 
-                {currentTabData?.payload && (
+                {currentTabData?.payload != null && (
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
                       Request Payload
                     </label>
                     <div className="relative">
-                      <JsonBlock data={formatPayload(currentTabData.payload)} maxHeight="16rem" />
+                      <JsonBlock data={formatPayload(currentTabData.payload as any)} maxHeight="16rem" />
                     </div>
                   </div>
                 )}

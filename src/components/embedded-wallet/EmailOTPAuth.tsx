@@ -37,8 +37,8 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
       await MagicService.magic.auth.loginWithEmailOTP({ email });
       logToConsole(LogType.SUCCESS, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, `OTP sent successfully to ${email}`, { email });
       handleSuccess();
-    } catch (error: any) {
-      const errorMsg = error.message || "Failed to send OTP";
+    } catch (error: unknown) {
+      const errorMsg = (error as Error).message || "Failed to send OTP";
       logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, errorMsg, { email, error });
     } finally {
       setIsLoading(false);
@@ -160,7 +160,7 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
         }
       });
       
-      handle.on('error', (error: any) => {
+      handle.on('error', (error: unknown) => {
         alert(`Error: ${error}`);
       });
       handle.on('done', () => {
@@ -171,8 +171,8 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
       logToConsole(LogType.SUCCESS, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, 'Whitelabel login completed', { email, didToken });
       
       handleSuccess();
-    } catch (error: any) {
-      const errorMsg = error.message || "Failed to send OTP";
+    } catch (error: unknown) {
+      const errorMsg = (error as Error).message || "Failed to send OTP";
       logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, errorMsg, { email, error });
     } finally {
       setIsLoading(false);
