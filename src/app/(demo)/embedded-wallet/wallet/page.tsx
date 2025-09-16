@@ -92,7 +92,7 @@ export default function WalletPage() {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl">
           {/* Left Side - Wallet Profile */}
-          <div className="flex flex-col gap-8 w-full lg:w-1/2">
+          <div className="flex flex-col gap-8 w-full lg:w-1/3">
             <UserInfo />
             <Button variant="danger" onClick={handleLogout} className="w-full">
               <svg
@@ -113,7 +113,7 @@ export default function WalletPage() {
           </div>
           
           {/* Right Side - Signing Methods */}
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-2/3">
             {selectedNetwork === "hedera" ? (
               <HederaSignMethods />
             ) : (

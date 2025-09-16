@@ -34,6 +34,22 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const { logToConsole } = useConsole();
   const router = useRouter();
 
+  // Load persisted network selection on component mount
+  useEffect(() => {
+    const savedNetwork = localStorage.getItem('magic_selectedNetwork');
+    if (savedNetwork && ['polygon', 'ethereum', 'optimism', 'hedera'].includes(savedNetwork)) {
+      setSelectedNetwork(savedNetwork);
+    }
+  }, []);
+
+  // Update public address when selected network or network addresses change
+  useEffect(() => {
+    const networkAddress = networkAddresses[selectedNetwork];
+    if (networkAddress) {
+      setPublicAddress(networkAddress);
+    }
+  }, [selectedNetwork, networkAddresses]);
+
   // Check if user is already authenticated on component mount
   useEffect(() => {
     checkAuthStatus();
@@ -111,6 +127,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   const handleNetworkChange = (network: string) => {
     setSelectedNetwork(network);
+    
+    // Persist network selection to localStorage
+    localStorage.setItem('magic_selectedNetwork', network);
     
     // Update the public address based on the selected network
     const networkAddress = networkAddresses[network];
