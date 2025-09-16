@@ -1,6 +1,7 @@
 "use client";
 
 import { ConsoleProvider, useConsole } from "../../contexts/ConsoleContext";
+import { JsonBlock } from "../../components/CodeBlock";
 
 function ConsolePanel() {
   const { consoleLogs, clearConsole } = useConsole();
@@ -56,9 +57,9 @@ function ConsolePanel() {
               {log.data && (
                 <details className="text-gray-300">
                   <summary className="cursor-pointer hover:text-white">View Data</summary>
-                  <pre className="mt-2 p-2 bg-black/30 rounded text-xs overflow-x-auto">
-                    {JSON.stringify(log.data, null, 2)}
-                  </pre>
+                  <div className="mt-2">
+                    <JsonBlock data={log.data} maxHeight="8rem" />
+                  </div>
                 </details>
               )}
             </div>

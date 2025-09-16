@@ -15,13 +15,17 @@
     "@magic-ext/solana": "^27.0.0",
     "@metamask/eth-sig-util": "^8.2.0",
     "@radix-ui/react-tabs": "^1.1.13",
+    "@types/prismjs": "^1.26.5",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "clsx": "^2.1.1",
     "ethers": "^6.15.0",
     "magic-sdk": "^30.0.0",
     "next": "15.5.2",
     "next-auth": "^4.24.11",
+    "prismjs": "^1.30.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-syntax-highlighter": "^15.6.6",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

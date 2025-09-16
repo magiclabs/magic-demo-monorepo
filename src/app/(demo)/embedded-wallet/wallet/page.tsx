@@ -1,83 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { MagicService } from "../../../../lib/get-magic";
 import { Button } from "../../../../components/Primitives";
-import { useConsole, LogType, LogMethod } from "../../../../contexts/ConsoleContext";
 import { UserInfo } from "../../../../components/embedded-wallet/UserInfo";
 import { SignMethods } from "../../../../components/embedded-wallet/SignMethods";
+import { HederaSignMethods } from "../../../../components/embedded-wallet/HederaSignMethods";
+import { useWallet } from "../../../../contexts/WalletContext";
 
 export default function WalletPage() {
-  const [publicAddress, setPublicAddress] = useState<string | null>(null);
-  const { logToConsole } = useConsole();
-  const router = useRouter();
+  const { 
+    publicAddress, 
+    selectedNetwork, 
+    handleLogout,
+    isLoading 
+  } = useWallet();
 
-  // Check if user is already authenticated on component mount
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const getWalletAddress = async () => {
-    try {
-      logToConsole(LogType.INFO, LogMethod.MAGIC_USER_GET_INFO, 'Getting wallet address...');
-      const accounts = await MagicService.magic.wallet.getAccounts();
-      if (accounts && accounts.length > 0) {
-        setPublicAddress(accounts[0]);
-        logToConsole(LogType.SUCCESS, LogMethod.MAGIC_USER_GET_INFO, 'Wallet address retrieved', { address: accounts[0] });
-      }
-    } catch (error) {
-      logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error getting wallet address', error);
-      console.error("Error getting wallet address:", error);
-    }
-  };
-
-  const checkAuthStatus = async () => {
-    try {
-      logToConsole(LogType.INFO, LogMethod.MAGIC_USER_IS_LOGGED_IN, 'Checking authentication status...');
-      const isLoggedIn = await MagicService.magic.user.isLoggedIn();
-      if (isLoggedIn) {
-        const userMetadata = await MagicService.magic.user.getInfo();
-        await getWalletAddress();
-        logToConsole(LogType.SUCCESS, LogMethod.MAGIC_USER_GET_INFO, 'User is already authenticated', userMetadata);
-      } else {
-        logToConsole(LogType.INFO, LogMethod.MAGIC_USER_IS_LOGGED_IN, 'User is not authenticated, redirecting to embedded-wallet page');
-        router.push('/embedded-wallet');
-      }
-    } catch (error) {
-      logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_IS_LOGGED_IN, 'Error checking auth status', error);
-      console.error("Error checking auth status:", error);
-      router.push('/embedded-wallet');
-    }
-  };
-
-
-
-  const handleLogout = async () => {
-    try {
-      logToConsole(LogType.INFO, LogMethod.MAGIC_USER_LOGOUT, 'Logging out user...');
-      const res = await MagicService.magic.user.logout();
-      if (res) {
-        setPublicAddress(null);
-        logToConsole(LogType.SUCCESS, LogMethod.MAGIC_USER_LOGOUT, 'User logged out successfully');
-        router.push('/embedded-wallet');
-      }
-    } catch (error) {
-      logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_LOGOUT, 'Logout error', error);
-      console.error("Logout error:", error);
-    }
-  };
-
-
-  const handleAuthSuccess = async () => {
-    try {
-      const userMetadata = await MagicService.magic.user.getInfo();
-      await getWalletAddress();
-      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_USER_GET_INFO, 'Authentication successful', { userMetadata });
-    } catch (error) {
-      logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error getting user info after auth', error);
-    }
-  };
+  if (isLoading) {
+    return (
+      <div className="relative min-h-screen overflow-hidden flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full"></div>
+          <p className="text-muted-foreground">Loading wallet...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -95,8 +41,22 @@ export default function WalletPage() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-        {/* Top Right Docs Button */}
-        <div className="absolute top-8 right-8 z-20">
+        {/* Top Right Buttons */}
+        <div className="absolute top-8 right-8 z-20 flex gap-3">
+          <a
+            href="https://github.com/magiclabs/nextauth-api-wallets-express-demo"
+            target="_blank"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-300"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            View GitHub
+          </a>
           <a
             href="https://magic.link/docs"
             target="_blank"
@@ -130,25 +90,36 @@ export default function WalletPage() {
         </div>
 
         {/* Main Content */}
-        <div className="flex flex-col items-center gap-12 w-full max-w-4xl">
-          <UserInfo publicAddress={publicAddress} />
-          <SignMethods publicAddress={publicAddress} />
-          <Button variant="danger" onClick={handleLogout}>
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            Logout
-          </Button>
+        <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl">
+          {/* Left Side - Wallet Profile */}
+          <div className="flex flex-col gap-8 w-full lg:w-1/2">
+            <UserInfo />
+            <Button variant="danger" onClick={handleLogout} className="w-full">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+              Logout
+            </Button>
+          </div>
+          
+          {/* Right Side - Signing Methods */}
+          <div className="w-full lg:w-1/2">
+            {selectedNetwork === "hedera" ? (
+              <HederaSignMethods />
+            ) : (
+              <SignMethods publicAddress={publicAddress} />
+            )}
+          </div>
         </div>
         
       </div>

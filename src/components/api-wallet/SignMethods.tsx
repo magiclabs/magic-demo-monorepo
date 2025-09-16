@@ -93,7 +93,7 @@ export function SignMethods({
             </svg>
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">Signing Methods</h2>
+            <h2 className="text-2xl font-bold text-white">EVM Signing Methods</h2>
             <p className="text-muted-foreground">
               Test various cryptographic signing operations
             </p>

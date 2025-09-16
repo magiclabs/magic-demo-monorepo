@@ -1,25 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { MagicService } from "../../lib/get-magic";
+import { useSession } from "next-auth/react";
 
-export function EmbeddedWalletUserInfo({ publicAddress }: { publicAddress: string | null }) {
-  const [userInfo, setUserInfo] = useState<{ email?: string; issuer?: string } | null>(null);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        const info = await MagicService.magic.user.getInfo();
-        setUserInfo(info);
-      } catch (error) {
-        console.error("Error getting user info:", error);
-      }
-    };
-
-    if (publicAddress) {
-      getUserInfo();
-    }
-  }, [publicAddress]);
+export function UserInfo({ publicAddress }: { publicAddress: string | null }) {
+  const { data: session } = useSession();
+  const { name, email } = session?.user || {};
 
   return (
     <div className="glass p-8 rounded-2xl w-full max-w-2xl glow-primary">
@@ -40,29 +25,29 @@ export function EmbeddedWalletUserInfo({ publicAddress }: { publicAddress: strin
           </svg>
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-white">Embedded Wallet Profile</h2>
+          <h2 className="text-2xl font-bold text-white">Wallet Profile</h2>
           <p className="text-muted-foreground">
-            Your Magic embedded wallet information
+            Your secure TEE wallet information
           </p>
         </div>
       </div>
 
       <div className="space-y-4">
-        {userInfo?.email && (
+        {name && (
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              Name
+            </label>
+            <div className="text-lg font-semibold text-white">{name}</div>
+          </div>
+        )}
+
+        {email && (
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
               Email
             </label>
-            <div className="text-lg font-semibold text-white">{userInfo.email}</div>
-          </div>
-        )}
-
-        {userInfo?.issuer && (
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-              User ID
-            </label>
-            <div className="text-lg font-semibold text-white font-mono text-sm break-all">{userInfo.issuer}</div>
+            <div className="text-lg font-semibold text-white">{email}</div>
           </div>
         )}
 

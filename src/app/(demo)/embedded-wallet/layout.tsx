@@ -1,6 +1,7 @@
 "use client";
 
 import { MagicService } from "@/lib/get-magic";
+import { WalletProvider } from "@/contexts/WalletContext";
 import "../../globals.css";
 import { useEffect } from "react";
 
@@ -17,6 +18,8 @@ export default function Layout({
     }, [])
 
   return (
-    <>{children}</>
+    <WalletProvider>
+      {children}
+    </WalletProvider>
   );
 }

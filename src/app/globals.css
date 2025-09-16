@@ -83,3 +83,78 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Custom Prism Syntax Highlighting Overrides */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6b7280 !important; /* muted */
+}
+
+.token.punctuation {
+  color: #d1d5db !important; /* light gray */
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f59e0b !important; /* warning/amber */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #10b981 !important; /* success/emerald */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #06b6d4 !important; /* accent/cyan */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #8b5cf6 !important; /* secondary/violet */
+}
+
+.token.function,
+.token.class-name {
+  color: #6366f1 !important; /* primary/indigo */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #ef4444 !important; /* error/red */
+}
+
+/* Custom scrollbar for code blocks */
+.code-block-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.code-block-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.code-block-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.code-block-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

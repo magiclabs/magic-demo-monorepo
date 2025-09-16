@@ -2,10 +2,10 @@
 
 import { useSession } from "next-auth/react";
 import { SignInButton, SignOutButton } from "../../../components/api-wallet/AuthButtons";
-import { UserInfo } from "../../../components/embedded-wallet/UserInfo";
-import { SignMethods } from "../../../components/api-wallet/SignMethods";
+import { SignMethods } from "@/components/api-wallet/SignMethods";
 import { useEffect, useState } from "react";
 import { teeService } from "../../../lib/tee-service";
+import { UserInfo } from "@/components/api-wallet/UserInfo";
 
 export default function Home() {
   const { status } = useSession();
