@@ -118,7 +118,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [logToConsole, router, fetchAllNetworkAddresses]);
+  }, []);
 
   // Check if user is already authenticated on component mount
   useEffect(() => {
