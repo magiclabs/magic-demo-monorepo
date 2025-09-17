@@ -123,7 +123,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   // Check if user is already authenticated on component mount
   useEffect(() => {
     checkAuthStatus();
-  }, [checkAuthStatus]);
+  }, []);
 
   const handleNetworkChange = (network: string) => {
     setSelectedNetwork(network);
