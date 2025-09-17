@@ -1,4 +1,4 @@
-import { teeService } from "../lib/tee-service";
+import { teeService } from "../../lib/tee-service";
 import { parseEther } from "ethers";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { SignComponent } from "./SignComponent";
@@ -7,7 +7,7 @@ import {
   SIGN_TYPED_DATA_V1_PAYLOAD,
   SIGN_TYPED_DATA_V3_PAYLOAD,
   SIGN_TYPED_DATA_V4_PAYLOAD,
-} from "../const/sign-typed-data-payloads";
+} from "../../const/sign-typed-data-payloads";
 
 const TabsClasses = {
   root: "glass rounded-2xl w-full max-w-4xl glow-secondary",
@@ -93,7 +93,7 @@ export function SignMethods({
             </svg>
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">Signing Methods</h2>
+            <h2 className="text-2xl font-bold text-white">EVM Signing Methods</h2>
             <p className="text-muted-foreground">
               Test various cryptographic signing operations
             </p>

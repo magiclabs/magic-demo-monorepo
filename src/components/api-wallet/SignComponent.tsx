@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button } from "./Primitives";
-import { formatPayload } from "../utils/format";
+import { Button } from "../Primitives";
+import { formatPayload } from "../../utils/format";
+import { JsonBlock } from "../CodeBlock";
 
 export function SignComponent({
   payloadDisplay,
@@ -28,9 +29,7 @@ export function SignComponent({
             Request Payload
           </label>
           <div className="relative">
-            <pre className="p-4 rounded-xl bg-black/40 border border-white/10 text-sm text-white whitespace-pre-wrap break-all overflow-x-auto max-h-64 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
-              {JSON.stringify(formatPayload(payloadDisplay), null, 2)}
-            </pre>
+            <JsonBlock data={formatPayload(payloadDisplay)} maxHeight="16rem" />
           </div>
         </div>
 
@@ -40,9 +39,9 @@ export function SignComponent({
               Signature Response
             </label>
             <div className="relative">
-              <pre className="p-4 rounded-xl bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/30 text-sm text-white whitespace-pre-wrap break-all overflow-x-auto max-h-64 scrollbar-thin scrollbar-thumb-success/20 scrollbar-track-transparent">
-                {JSON.stringify(signature, null, 2)}
-              </pre>
+              <div className="p-4 rounded-xl bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/30">
+                <JsonBlock data={signature} maxHeight="16rem" />
+              </div>
               <div className="absolute top-3 right-3">
                 <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
               </div>

@@ -1,5 +1,5 @@
-import "../globals.css";
-import SessionProviderComponent from "../../providers/SessionProvider";
+import "../../globals.css";
+import SessionProviderComponent from "../../../providers/SessionProvider";
 
 export default function Layout({
   children,
