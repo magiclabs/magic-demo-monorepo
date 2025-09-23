@@ -5,24 +5,23 @@ import { UserInfo } from "../../../../components/embedded-wallet/UserInfo";
 import { SignMethods } from "../../../../components/embedded-wallet/SignMethods";
 import { HederaSignMethods } from "../../../../components/embedded-wallet/HederaSignMethods";
 import { useWallet } from "../../../../contexts/WalletContext";
+import { BackButton } from "@/components/BackButton";
 
 export default function WalletPage() {
-  const { 
-    publicAddress, 
-    selectedNetwork, 
-    handleLogout, 
-  } = useWallet();
+  const { publicAddress, selectedNetwork, handleLogout } = useWallet();
 
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+        <BackButton />
+
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative">
-            <h1 className="text-6xl font-bold gradient-text mb-4">
+          <div className="relative py-4">
+            <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
               Magic Wallet
             </h1>
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur opacity-20"></div>
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 rounded-3xl blur-2xl opacity-40 scale-110"></div>
           </div>
         </div>
 
@@ -48,7 +47,7 @@ export default function WalletPage() {
               Logout
             </Button>
           </div>
-          
+
           {/* Right Side - Signing Methods */}
           <div className="w-full lg:w-2/3">
             {selectedNetwork === "hedera" ? (
@@ -58,7 +57,6 @@ export default function WalletPage() {
             )}
           </div>
         </div>
-        
       </div>
     </div>
   );
