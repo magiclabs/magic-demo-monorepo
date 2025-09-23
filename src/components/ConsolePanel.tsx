@@ -26,14 +26,14 @@ export function ConsolePanel() {
             {!isCollapsed && (
               <button
                 onClick={clearConsole}
-                className="text-xs text-gray-400 hover:text-white transition-colors"
+                className="text-xs text-gray-400 hover:text-white transition-colors cursor-pointer"
               >
                 Clear
               </button>
             )}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="text-gray-400 hover:text-white transition-colors p-1 rounded"
+              className="text-gray-400 hover:text-white transition-colors p-1 rounded cursor-pointer"
               title={isCollapsed ? "Expand Console" : "Collapse Console"}
             >
               <svg
