@@ -34,7 +34,7 @@ export default function Home() {
         <div className="flex flex-col gap-6 w-full max-w-md">
           <Link
             href="/api-wallet"
-            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 glow-primary"
+            className="group relative font-semibold inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 glow-primary"
           >
             <svg
               className="w-6 h-6"
@@ -54,7 +54,7 @@ export default function Home() {
 
           <Link
             href="/embedded-wallet"
-            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-secondary to-accent text-white rounded-xl hover:from-secondary hover:to-accent transition-all duration-300 glow-secondary"
+            className="group relative font-semibold inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-secondary to-accent text-white rounded-xl hover:from-secondary hover:to-accent transition-all duration-300 glow-secondary"
           >
             <svg
               className="w-6 h-6"
