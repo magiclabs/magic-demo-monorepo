@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,11 +19,11 @@ export default function Home() {
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative">
-            <h1 className="text-6xl font-bold gradient-text mb-4">
+          <div className="relative py-4">
+            <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
               Choose Wallet Type
             </h1>
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-lg blur opacity-20"></div>
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 rounded-3xl blur-2xl opacity-40 scale-110"></div>
           </div>
           <p className="text-muted-foreground text-xl">
             Select the type of wallet you&apos;d like to use
@@ -51,7 +51,7 @@ export default function Home() {
             </svg>
             API Wallet
           </Link>
-          
+
           <Link
             href="/embedded-wallet"
             className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-secondary to-accent text-white rounded-xl hover:from-secondary hover:to-accent transition-all duration-300 glow-secondary"
