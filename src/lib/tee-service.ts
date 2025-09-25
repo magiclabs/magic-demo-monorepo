@@ -25,9 +25,6 @@ const computeEip712Hash = (
 const getOrCreateWallet = async () => {
   const res = await fetch("/api/tee/wallet", {
     method: "POST",
-    body: JSON.stringify({
-      chain: "ETH",
-    }),
   });
   const data = await res.json();
   return data.public_address;
@@ -35,7 +32,7 @@ const getOrCreateWallet = async () => {
 
 const personalSign = async (data: string) => {
   const message = Buffer.from(data, "utf-8").toString("base64");
-  const body = { message_base64: message, chain: "ETH" };
+  const body = { message_base64: message };
   return await fetch("/api/tee/wallet/sign/message", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -45,7 +42,7 @@ const personalSign = async (data: string) => {
 
 const signTypedDataV1 = async (data: TypedDataV1) => {
   const rawDataHash = typedSignatureHash(data);
-  const body = { raw_data_hash: rawDataHash, chain: "ETH" };
+  const body = { raw_data_hash: rawDataHash };
   return await fetch("/api/tee/wallet/sign/data", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -55,7 +52,7 @@ const signTypedDataV1 = async (data: TypedDataV1) => {
 
 const signTypedDataV3 = async (data: TypedMessage<MessageTypes>) => {
   const rawDataHash = computeEip712Hash(data, SignTypedDataVersion.V3);
-  const body = { raw_data_hash: rawDataHash, chain: "ETH" };
+  const body = { raw_data_hash: rawDataHash };
   return await fetch("/api/tee/wallet/sign/data", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -65,7 +62,7 @@ const signTypedDataV3 = async (data: TypedMessage<MessageTypes>) => {
 
 const signTypedDataV4 = async (data: TypedMessage<MessageTypes>) => {
   const rawDataHash = computeEip712Hash(data, SignTypedDataVersion.V4);
-  const body = { raw_data_hash: rawDataHash, chain: "ETH" };
+  const body = { raw_data_hash: rawDataHash };
   return await fetch("/api/tee/wallet/sign/data", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -80,7 +77,7 @@ const signTransaction = async (tx: TransactionRequest) => {
 
   const btx = Transaction.from(txForSigning as TransactionLike);
 
-  const body = { raw_data_hash: btx.unsignedHash, chain: "ETH" };
+  const body = { raw_data_hash: btx.unsignedHash };
   const res = await fetch("/api/tee/wallet/sign/data", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
