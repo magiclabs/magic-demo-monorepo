@@ -5,9 +5,12 @@ import { MagicService } from "../../lib/get-magic";
 import { useWallet } from "../../contexts/WalletContext";
 
 export function UserInfo() {
-  const [userInfo, setUserInfo] = useState<{ email?: string; issuer?: string } | null>(null);
+  const [userInfo, setUserInfo] = useState<{
+    email?: string;
+    issuer?: string;
+  } | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
+
   const { publicAddress, selectedNetwork, handleNetworkChange } = useWallet();
   const currentNetwork = selectedNetwork;
 
@@ -38,22 +41,22 @@ export function UserInfo() {
     const handleClickOutside = (event: MouseEvent) => {
       if (isDropdownOpen) {
         const target = event.target as Element;
-        if (!target.closest('.dropdown-container')) {
+        if (!target.closest(".dropdown-container")) {
           setIsDropdownOpen(false);
         }
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownOpen]);
 
   return (
-    <div className="glass p-8 rounded-2xl w-full max-w-2xl glow-primary">
+    <div className="glass p-8 rounded-2xl w-full lg:max-w-2xl glow-primary">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+        <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex flex-shrink-0 items-center justify-center">
           <svg
             className="w-6 h-6 text-white"
             fill="none"
@@ -82,7 +85,9 @@ export function UserInfo() {
             <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
               Email
             </label>
-            <div className="text-lg font-semibold text-white">{userInfo.email}</div>
+            <div className="text-lg font-semibold text-white">
+              {userInfo.email}
+            </div>
           </div>
         )}
 
@@ -91,7 +96,9 @@ export function UserInfo() {
             <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
               User ID
             </label>
-            <div className="text-lg font-semibold text-white font-mono text-sm break-all">{userInfo.issuer}</div>
+            <div className="text-lg font-semibold text-white font-mono text-sm break-all">
+              {userInfo.issuer}
+            </div>
           </div>
         )}
 
@@ -105,11 +112,19 @@ export function UserInfo() {
               className="flex items-center justify-between w-full p-3 bg-black/30 rounded-xl border border-white/10 text-white hover:bg-black/40 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <div className={`w-3 h-3 ${networks.find(n => n.value === currentNetwork)?.color} rounded-full`}></div>
-                <span>{networks.find(n => n.value === currentNetwork)?.label}</span>
+                <div
+                  className={`w-3 h-3 ${
+                    networks.find((n) => n.value === currentNetwork)?.color
+                  } rounded-full`}
+                ></div>
+                <span>
+                  {networks.find((n) => n.value === currentNetwork)?.label}
+                </span>
               </div>
               <svg
-                className={`w-4 h-4 text-muted-foreground transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                className={`w-4 h-4 text-muted-foreground transition-transform ${
+                  isDropdownOpen ? "rotate-180" : ""
+                }`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -122,7 +137,7 @@ export function UserInfo() {
                 />
               </svg>
             </button>
-            
+
             {isDropdownOpen && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-black/90 border border-white/10 rounded-xl p-1 shadow-lg backdrop-blur-sm z-10">
                 {networks.map((network) => (
@@ -134,7 +149,9 @@ export function UserInfo() {
                     }}
                     className="flex items-center gap-2 w-full p-3 text-white hover:bg-white/10 rounded-lg cursor-pointer transition-colors"
                   >
-                    <div className={`w-3 h-3 ${network.color} rounded-full`}></div>
+                    <div
+                      className={`w-3 h-3 ${network.color} rounded-full`}
+                    ></div>
                     <span>{network.label}</span>
                   </button>
                 ))}

@@ -6,12 +6,12 @@ import { BackButton } from "@/components/BackButton";
 export default function Home() {
   return (
     <div className="relative min-h-screen">
-      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-        <BackButton />
+      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">
+        <BackButton className="hidden sm:block" />
 
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative py-4">
+          <div className="relative py-8 sm:py-4">
             <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
               Magic Embedded Wallets
             </h1>

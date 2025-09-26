@@ -2,6 +2,7 @@
 
 import { signIn, signOut } from "next-auth/react";
 import { Button } from "../Primitives";
+import { cn } from "@/utils/tailwind";
 
 export function SignInButton() {
   return (
@@ -32,9 +33,13 @@ export function SignInButton() {
   );
 }
 
-export function SignOutButton() {
+export function SignOutButton({ className }: { className?: string }) {
   return (
-    <Button variant="danger" onClick={() => signOut()}>
+    <Button
+      variant="danger"
+      onClick={() => signOut()}
+      className={cn("w-full", className)}
+    >
       <svg
         className="w-5 h-5"
         fill="none"

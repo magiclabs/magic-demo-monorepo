@@ -12,8 +12,8 @@ export default function WalletPage() {
 
   return (
     <div className="relative min-h-screen">
-      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-        <BackButton />
+      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">
+        <BackButton className="hidden sm:block" />
 
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
