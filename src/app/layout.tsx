@@ -20,12 +20,12 @@ export const metadata: Metadata = {
     description: "Magic API Wallets and Embedded Wallets Demo",
     type: "website",
     url: "https://demo.magic.link",
-    images: ["https://magic.link/images/og-img.png"],
+    images: ["https://assets.magiclabs.com/assets/og-img.png"],
   },
   twitter: {
     title: "Demo | Magic",
     description: "Magic API Wallets and Embedded Wallets Demo",
-    images: ["https://magic.link/images/og-img.png"],
+    images: ["https://assets.magiclabs.com/assets/og-img.png"],
   },
 };
 

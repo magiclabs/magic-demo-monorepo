@@ -12,7 +12,11 @@ export function MagicDocsButton({
 
   return (
     <div className={className}>
-      <a href="https://magic.link/docs" target="_blank" className={linkClass}>
+      <a
+        href="https://docs.magic.link/embedded-wallets/introduction"
+        target="_blank"
+        className={linkClass}
+      >
         <svg
           className="w-4 h-4"
           fill="none"
