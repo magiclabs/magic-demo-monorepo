@@ -261,7 +261,7 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
         </Button>
 
         {/* Whitelabel Email OTP */}
-        <Button
+        {/* <Button
           onClick={handleWhitelabelEmailOTPLogin}
           variant="success"
           className="flex-1 relative overflow-hidden"
@@ -286,7 +286,7 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
               showUI: false
             </span>
           </div>
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
