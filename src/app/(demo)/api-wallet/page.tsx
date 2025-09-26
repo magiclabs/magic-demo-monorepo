@@ -37,7 +37,16 @@ export default function Home() {
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 pt-16 sm:pt-20 gap-8 sm:gap-16 sm:p-20">
         {/* Mobile: Hamburger Menu */}
-        <MobileMenu />
+        <MobileMenu>
+          <div onClick={() => {}}>
+            <TeeDocsButton className="w-full" />
+          </div>
+          {status === "authenticated" && (
+            <div onClick={() => {}}>
+              <SignOutButton className="h-12" />
+            </div>
+          )}
+        </MobileMenu>
 
         {/* Desktop: Positioned buttons */}
         <div className="hidden sm:block">

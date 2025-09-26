@@ -12,8 +12,8 @@ export function BackButton({ href = "/", className = "" }: BackButtonProps) {
     ? `${className}`
     : `absolute top-8 left-8 z-20 ${className}`;
   const linkClass = isFullWidth
-    ? "inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-500 to-gray-700 text-white rounded-xl hover:from-gray-600 hover:to-gray-800 transition-all duration-300 font-semibold w-full"
-    : "inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-500 to-gray-700 text-white rounded-xl hover:from-gray-600 hover:to-gray-800 transition-all duration-300 font-semibold";
+    ? "inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300 font-semibold w-full"
+    : "inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300 font-semibold";
 
   return (
     <div className={containerClass}>
