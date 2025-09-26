@@ -26,7 +26,11 @@ export default function Home() {
         })
         .catch((error) => {
           console.error("Failed to get or create wallet:", error);
-          signOut();
+          // Only sign out if it's an auth-related error
+          if (error.requiresReauth) {
+            console.log("Auth error detected, signing out...");
+            signOut();
+          }
         });
     }
   }, [publicAddress, status]);
