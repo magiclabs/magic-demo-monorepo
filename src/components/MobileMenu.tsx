@@ -5,9 +5,10 @@ import { BackButton } from "./BackButton";
 
 interface MobileMenuProps {
   children?: ReactNode;
+  hasConsole?: boolean;
 }
 
-export function MobileMenu({ children }: MobileMenuProps) {
+export function MobileMenu({ children, hasConsole = false }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -59,7 +60,9 @@ export function MobileMenu({ children }: MobileMenuProps) {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-gray-900 to-gray-800 z-25 transform transition-transform duration-300 ease-in-out sm:hidden ${
+        className={`fixed top-0 ${
+          hasConsole ? "right-12" : "right-0"
+        } h-full w-80 bg-gradient-to-b from-gray-900 to-gray-800 z-25 transform transition-transform duration-300 ease-in-out sm:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

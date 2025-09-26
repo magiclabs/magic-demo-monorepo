@@ -22,7 +22,7 @@ export default function Layout({
     <WalletProvider>
       <div className="relative">
         {/* Mobile: Hamburger Menu */}
-        <MobileMenu>
+        <MobileMenu hasConsole={true}>
           <div onClick={() => {}}>
             <GitHubButton className="w-full" />
           </div>
