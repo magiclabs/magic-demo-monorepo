@@ -13,7 +13,7 @@ export function TeeDocsButton({
   return (
     <div className={className}>
       <a
-        href="https://tee.express.magiclabs.com/docs"
+        href="https://docs.magic.link/api-wallets/express-api/overview"
         target="_blank"
         className={linkClass}
       >
