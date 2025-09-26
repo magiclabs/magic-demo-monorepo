@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Magic API Wallets",
-  description: "Magic API Wallets",
+  title: "Demo | Magic",
+  description: "Magic API Wallets and Embedded Wallets Demo",
 };
 
 export default function RootLayout({
