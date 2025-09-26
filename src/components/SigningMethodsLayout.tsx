@@ -34,11 +34,13 @@ export function SigningMethodsLayout({
   children,
 }: SigningMethodsLayoutProps) {
   const [signatures, setSignatures] = useState<Record<string, string>>({});
-  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
+  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>(
+    {}
+  );
   const [errors, setErrors] = useState<Record<string, string | Error>>({});
   const [currentTab, setCurrentTab] = useState<string>(defaultTab);
 
-  const currentTabData = tabs.find(t => t.value === currentTab);
+  const currentTabData = tabs.find((t) => t.value === currentTab);
   const signature = signatures[currentTab];
   const error = errors[currentTab];
   const isLoading = loadingStates[currentTab];
@@ -46,30 +48,33 @@ export function SigningMethodsLayout({
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab);
     // Clear signature and error for the new tab
-    setSignatures(prev => ({ ...prev, [tab]: '' }));
-    setErrors(prev => ({ ...prev, [tab]: '' }));
+    setSignatures((prev) => ({ ...prev, [tab]: "" }));
+    setErrors((prev) => ({ ...prev, [tab]: "" }));
   };
 
-  const handleSign = async (type: string, signFunction: () => Promise<string>) => {
+  const handleSign = async (
+    type: string,
+    signFunction: () => Promise<string>
+  ) => {
     try {
-      setLoadingStates(prev => ({ ...prev, [type]: true }));
+      setLoadingStates((prev) => ({ ...prev, [type]: true }));
       // Clear previous results
-      setSignatures(prev => ({ ...prev, [type]: '' }));
-      setErrors(prev => ({ ...prev, [type]: '' }));
-      
+      setSignatures((prev) => ({ ...prev, [type]: "" }));
+      setErrors((prev) => ({ ...prev, [type]: "" }));
+
       const signature = await signFunction();
-      setSignatures(prev => ({ ...prev, [type]: signature }));
+      setSignatures((prev) => ({ ...prev, [type]: signature }));
     } catch (error) {
-      setErrors(prev => ({ ...prev, [type]: error as Error }));
+      setErrors((prev) => ({ ...prev, [type]: error as Error }));
     } finally {
-      setLoadingStates(prev => ({ ...prev, [type]: false }));
+      setLoadingStates((prev) => ({ ...prev, [type]: false }));
     }
   };
-  
+
   const renderFunctionDisplay = (tabValue: string) => {
-    const tab = tabs.find(t => t.value === tabValue);
-    const functionName = tab?.functionName || 'Unknown function';
-    const [funcPart, paramsPart] = functionName.split('(');
+    const tab = tabs.find((t) => t.value === tabValue);
+    const functionName = tab?.functionName || "Unknown function";
+    const [funcPart, paramsPart] = functionName.split("(");
     return (
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
@@ -78,7 +83,7 @@ export function SigningMethodsLayout({
         <div className="p-4 rounded-lg bg-[#1e1e1e] border border-[#3e3e3e] font-mono text-sm leading-relaxed">
           <span className="text-[#9cdcfe]">{funcPart}</span>
           <span className="text-[#ffd700]">(</span>
-          <span className="text-[#ce9178]">{paramsPart?.replace(')', '')}</span>
+          <span className="text-[#ce9178]">{paramsPart?.replace(")", "")}</span>
           <span className="text-[#ffd700]">)</span>
         </div>
       </div>
@@ -86,15 +91,15 @@ export function SigningMethodsLayout({
   };
 
   return (
-    <Tabs 
-      defaultValue={defaultTab} 
+    <Tabs
+      defaultValue={defaultTab}
       value={currentTab}
       onValueChange={handleTabChange}
       className={TabsClasses.root}
     >
       <div className="p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex flex-shrink-0 items-center justify-center">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -115,31 +120,38 @@ export function SigningMethodsLayout({
           </div>
         </div>
 
-        <div className="flex gap-6">
-          {/* Left side - Tabs */}
-          <div className="w-1/3">
-            <TabsList className="flex flex-col gap-2 bg-transparent">
+        <div className="flex flex-col gap-6 max-[740px]:gap-4 min-[741px]:flex-row">
+          {/* Tabs - Above content on mobile, left side on desktop */}
+          <div className="w-full min-[741px]:w-1/3">
+            <TabsList className="flex gap-2 bg-transparent flex-col">
               {tabs.map((tab) => (
-                <TabsTrigger key={tab.value} className={TabsClasses.trigger} value={tab.value}>
+                <TabsTrigger
+                  key={tab.value}
+                  className={TabsClasses.trigger}
+                  value={tab.value}
+                >
                   {tab.label}
                 </TabsTrigger>
               ))}
             </TabsList>
           </div>
 
-          {/* Right side - Content */}
-          <div className="w-2/3">
+          {/* Content - Below tabs on mobile, right side on desktop */}
+          <div className="w-full min-[741px]:w-2/3">
             <div className="flex flex-col gap-6 w-full">
               <div className="flex flex-col gap-4">
                 {currentTab && renderFunctionDisplay(currentTab)}
-                
+
                 {currentTabData?.payload != null && (
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
                       Request Payload
                     </label>
                     <div className="relative">
-                      <JsonBlock data={formatPayload(currentTabData.payload as any)} maxHeight="16rem" />
+                      <JsonBlock
+                        data={formatPayload(currentTabData.payload as any)}
+                        maxHeight="16rem"
+                      />
                     </div>
                   </div>
                 )}
@@ -167,7 +179,18 @@ export function SigningMethodsLayout({
                     </label>
                     <div className="relative">
                       <div className="p-4 rounded-xl bg-gradient-to-r from-error/10 to-red-500/10 border border-error/30">
-                        <JsonBlock data={error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error} maxHeight="16rem" />
+                        <JsonBlock
+                          data={
+                            error instanceof Error
+                              ? {
+                                  message: error.message,
+                                  name: error.name,
+                                  stack: error.stack,
+                                }
+                              : error
+                          }
+                          maxHeight="16rem"
+                        />
                       </div>
                       <div className="absolute top-3 right-3">
                         <div className="w-2 h-2 bg-error rounded-full animate-pulse"></div>
@@ -178,9 +201,12 @@ export function SigningMethodsLayout({
               </div>
 
               {currentTabData?.handler && (
-                <Button 
-                  onClick={() => currentTabData.handler && handleSign(currentTab, currentTabData.handler)} 
-                  variant="secondary" 
+                <Button
+                  onClick={() =>
+                    currentTabData.handler &&
+                    handleSign(currentTab, currentTabData.handler)
+                  }
+                  variant="secondary"
                   disabled={isLoading}
                 >
                   <svg

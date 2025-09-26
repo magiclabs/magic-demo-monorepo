@@ -14,14 +14,12 @@ export function SignMethods({
 }: {
   publicAddress: string | null;
 }) {
-
   const signTransactionPayload = {
     from: publicAddress,
     to: publicAddress,
     value: parseEther("0.00001"),
     gasLimit: 21000,
   };
-
 
   const handlePersonalSign = async (): Promise<string> => {
     const signer = await MagicService.provider.getSigner();
@@ -30,7 +28,7 @@ export function SignMethods({
 
   const handleSignTypedDataV1 = async (): Promise<string> => {
     const provider = new ethers.BrowserProvider(
-      MagicService.magic.rpcProvider as any,
+      MagicService.magic.rpcProvider as any
     );
     try {
       const accounts = await provider.listAccounts();
@@ -38,19 +36,22 @@ export function SignMethods({
 
       const payload = {
         id: 1,
-        method: 'eth_signTypedData',
+        method: "eth_signTypedData",
         params: [SIGN_TYPED_DATA_V1_PAYLOAD, publicAddress],
       };
 
       return new Promise((resolve, reject) => {
-        MagicService.magic.rpcProvider.sendAsync(payload, (err: unknown, response: unknown) => {
-          if (err) {
-            reject(err);
-            return;
-          }
+        MagicService.magic.rpcProvider.sendAsync(
+          payload,
+          (err: unknown, response: unknown) => {
+            if (err) {
+              reject(err);
+              return;
+            }
 
-          resolve((response as { result: string })?.result);
-        });
+            resolve((response as { result: string })?.result);
+          }
+        );
       });
     } catch (error) {
       throw error;
@@ -59,7 +60,7 @@ export function SignMethods({
 
   const handleSignTypedDataV3 = async (): Promise<string> => {
     const provider = new ethers.BrowserProvider(
-      MagicService.magic.rpcProvider as any,
+      MagicService.magic.rpcProvider as any
     );
     try {
       const accounts = await provider.listAccounts();
@@ -67,19 +68,22 @@ export function SignMethods({
 
       const payload = {
         id: 1,
-        method: 'eth_signTypedData_v3',
+        method: "eth_signTypedData_v3",
         params: [publicAddress, JSON.stringify(SIGN_TYPED_DATA_V3_PAYLOAD)],
       };
 
       return new Promise((resolve, reject) => {
-        MagicService.magic.rpcProvider.sendAsync(payload, (err: unknown, response: unknown) => {
-          if (err) {
-            reject(err);
-            return;
-          }
+        MagicService.magic.rpcProvider.sendAsync(
+          payload,
+          (err: unknown, response: unknown) => {
+            if (err) {
+              reject(err);
+              return;
+            }
 
-          resolve((response as { result: string })?.result);
-        });
+            resolve((response as { result: string })?.result);
+          }
+        );
       });
     } catch (error) {
       throw error;
@@ -88,7 +92,7 @@ export function SignMethods({
 
   const handleSignTypedDataV4 = async (): Promise<string> => {
     const provider = new ethers.BrowserProvider(
-      MagicService.magic.rpcProvider as any,
+      MagicService.magic.rpcProvider as any
     );
     try {
       const accounts = await provider.listAccounts();
@@ -96,19 +100,22 @@ export function SignMethods({
 
       const payload = {
         id: 1,
-        method: 'eth_signTypedData_v4',
+        method: "eth_signTypedData_v4",
         params: [publicAddress, JSON.stringify(SIGN_TYPED_DATA_V4_PAYLOAD)],
       };
 
       return new Promise((resolve, reject) => {
-        MagicService.magic.rpcProvider.sendAsync(payload, (err: unknown, response: unknown) => {
-          if (err) {
-            reject(err);
-            return;
-          }
+        MagicService.magic.rpcProvider.sendAsync(
+          payload,
+          (err: unknown, response: unknown) => {
+            if (err) {
+              reject(err);
+              return;
+            }
 
-          resolve((response as { result: string })?.result);
-        });
+            resolve((response as { result: string })?.result);
+          }
+        );
       });
     } catch (error) {
       throw error;
@@ -120,42 +127,44 @@ export function SignMethods({
     return await signer.signTransaction(signTransactionPayload);
   };
 
-
   const tabs = [
-    { 
-      value: "personal", 
-      label: "Personal Sign", 
+    {
+      value: "personal",
+      label: "Personal Sign",
       functionName: "signer.signMessage(message)",
       payload: PERSONAL_SIGN_PAYLOAD,
-      handler: handlePersonalSign
+      handler: handlePersonalSign,
     },
-    { 
-      value: "typed-data-v1", 
-      label: "Sign Typed Data V1", 
-      functionName: "magic.rpcProvider.sendAsync({ method: 'eth_signTypedData', params: [data, address] })",
+    {
+      value: "typed-data-v1",
+      label: "Sign Typed Data V1",
+      functionName:
+        "magic.rpcProvider.sendAsync({ method: 'eth_signTypedData', params: [data, address] })",
       payload: SIGN_TYPED_DATA_V1_PAYLOAD,
-      handler: handleSignTypedDataV1
+      handler: handleSignTypedDataV1,
     },
-    { 
-      value: "typed-data-v3", 
-      label: "Sign Typed Data V3", 
-      functionName: "magic.rpcProvider.sendAsync({ method: 'eth_signTypedData_v3', params: [address, data] })",
+    {
+      value: "typed-data-v3",
+      label: "Sign Typed Data V3",
+      functionName:
+        "magic.rpcProvider.sendAsync({ method: 'eth_signTypedData_v3', params: [address, data] })",
       payload: SIGN_TYPED_DATA_V3_PAYLOAD,
-      handler: handleSignTypedDataV3
+      handler: handleSignTypedDataV3,
     },
-    { 
-      value: "typed-data-v4", 
-      label: "Sign Typed Data V4", 
-      functionName: "magic.rpcProvider.sendAsync({ method: 'eth_signTypedData_v4', params: [address, data] })",
+    {
+      value: "typed-data-v4",
+      label: "Sign Typed Data V4",
+      functionName:
+        "magic.rpcProvider.sendAsync({ method: 'eth_signTypedData_v4', params: [address, data] })",
       payload: SIGN_TYPED_DATA_V4_PAYLOAD,
-      handler: handleSignTypedDataV4
+      handler: handleSignTypedDataV4,
     },
-    { 
-      value: "transaction", 
-      label: "Sign Transaction", 
+    {
+      value: "transaction",
+      label: "Sign Transaction",
       functionName: "signer.signTransaction(transaction)",
       payload: signTransactionPayload,
-      handler: handleSignTransaction
+      handler: handleSignTransaction,
     },
   ];
 
