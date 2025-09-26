@@ -6,24 +6,73 @@ import { JsonBlock } from "./CodeBlock";
 
 export function ConsolePanel() {
   const { consoleLogs, clearConsole } = useConsole();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   // Check if screen is 1300px or under and set default collapsed state
   useEffect(() => {
+    setMounted(true);
+
     const checkScreenSize = () => {
-      setIsCollapsed(window.innerWidth <= 1300);
+      const smallScreen = window.innerWidth <= 1300;
+      setIsSmallScreen(smallScreen);
+      // Only expand on large screens, keep collapsed on small screens
+      setIsCollapsed(smallScreen);
     };
 
-    // Set initial state
-    checkScreenSize();
+    // Set initial state with a small delay to allow transition
+    const timer = setTimeout(() => {
+      checkScreenSize();
+    }, 50);
 
     // Listen for resize events
     window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkScreenSize);
+    };
   }, []);
 
-  const isSmallScreen =
-    typeof window !== "undefined" && window.innerWidth <= 1300;
+  // Don't render client-specific content during SSR
+  if (!mounted) {
+    return (
+      <div className="w-12 h-screen bg-black/90 backdrop-blur-sm border-l border-white/10 flex flex-col">
+        {/* Console Header */}
+        <div className="p-4 border-b border-white/10">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <button
+                className="text-gray-400 hover:text-white transition-colors p-1 rounded cursor-pointer"
+                title="Expand Console"
+              >
+                <svg
+                  className="w-4 h-4 transition-transform duration-300 rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Collapsed State Indicator */}
+        <div className="flex-1 flex flex-col items-center justify-center p-2">
+          <div className="writing-mode-vertical text-gray-400 text-xs font-semibold tracking-wider transform rotate-90">
+            CONSOLE
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -97,7 +146,7 @@ export function ConsolePanel() {
             ) : (
               consoleLogs.map((log) => (
                 <div
-                  key={log.id}
+                  key={`${log.id}-${log.timestamp}`}
                   className={`p-3 rounded-lg text-xs font-mono border ${
                     log.type === "error"
                       ? "bg-red-900/20 border-red-500/30 text-red-300"
@@ -144,15 +193,17 @@ export function ConsolePanel() {
         {/* Collapsed State Indicator */}
         {isCollapsed && (
           <div className="flex-1 flex flex-col items-center justify-center p-2">
-            <div className="writing-mode-vertical text-gray-400 text-xs font-semibold tracking-wider transform rotate-90">
-              CONSOLE
+            <div className="relative">
+              <div className="writing-mode-vertical text-gray-400 text-xs font-semibold tracking-wider transform rotate-90">
+                CONSOLE
+              </div>
+              {consoleLogs.length > 0 && (
+                <div
+                  className="w-2 h-2 bg-blue-500 rounded-full animate-pulse absolute -bottom-9 left-1/2 transform -translate-x-1/2"
+                  title={`${consoleLogs.length} logs`}
+                />
+              )}
             </div>
-            {consoleLogs.length > 0 && (
-              <div
-                className="mt-4 w-2 h-2 bg-blue-500 rounded-full animate-pulse"
-                title={`${consoleLogs.length} logs`}
-              />
-            )}
           </div>
         )}
       </div>
