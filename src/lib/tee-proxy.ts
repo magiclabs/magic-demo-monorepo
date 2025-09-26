@@ -18,6 +18,17 @@ export async function teeProxy(
     );
   }
 
+  // Check if there was an error refreshing the token
+  if (session.error === "RefreshAccessTokenError") {
+    return NextResponse.json(
+      {
+        error: "Token refresh failed. Please sign in again.",
+        requiresReauth: true,
+      },
+      { status: 401 }
+    );
+  }
+
   const body = method === "POST" ? await req.text() : undefined;
   const res = await tee(path, session.idToken, {
     method,
@@ -26,6 +37,18 @@ export async function teeProxy(
 
   if (!res.ok) {
     const err = await res.text();
+
+    // If we get a 401 from TEE service, it might be due to token expiry
+    if (res.status === 401) {
+      return NextResponse.json(
+        {
+          error: `Authentication failed: ${err}`,
+          requiresReauth: true,
+        },
+        { status: 401 }
+      );
+    }
+
     return NextResponse.json(
       { error: `TEE Error ${res.status}: ${err}` },
       { status: res.status }
