@@ -1,0 +1,102 @@
+"use client";
+
+import { useState } from "react";
+import { BackButton } from "./BackButton";
+
+interface MobileMenuProps {
+  docsUrl?: string;
+  docsLabel?: string;
+}
+
+export function MobileMenu({
+  docsUrl = "https://tee.express.magiclabs.com/docs",
+  docsLabel = "View TEE Express Docs",
+}: MobileMenuProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
+
+  return (
+    <>
+      {/* Mobile Menu Button */}
+      <div className="absolute top-4 right-4 z-30 sm:hidden">
+        <button
+          onClick={toggleMenu}
+          className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-600 text-white rounded-xl hover:from-gray-600 hover:to-gray-500 transition-all duration-300"
+          aria-label="Toggle menu"
+        >
+          <svg
+            className={`w-6 h-6 transition-transform duration-300 ${
+              isOpen ? "rotate-90" : ""
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-20 sm:hidden"
+          onClick={closeMenu}
+        />
+      )}
+
+      {/* Mobile Menu Panel */}
+      <div
+        className={`fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-gray-900 to-gray-800 z-25 transform transition-transform duration-300 ease-in-out sm:hidden ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="p-6 pt-20">
+          <div className="flex flex-col gap-4">
+            <a
+              href={docsUrl}
+              target="_blank"
+              onClick={closeMenu}
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 glow-primary"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+              {docsLabel}
+            </a>
+
+            <div onClick={closeMenu}>
+              <BackButton className="w-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

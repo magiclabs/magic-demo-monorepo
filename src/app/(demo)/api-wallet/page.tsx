@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { teeService } from "../../../lib/tee-service";
 import { UserInfo } from "@/components/api-wallet/UserInfo";
 import { BackButton } from "@/components/BackButton";
+import { MobileMenu } from "@/components/MobileMenu";
 
 export default function Home() {
   const { status } = useSession();
@@ -33,31 +34,35 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen">
-      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-        <BackButton />
+      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 pt-16 sm:pt-20 gap-8 sm:gap-16 sm:p-20">
+        {/* Mobile: Hamburger Menu */}
+        <MobileMenu />
 
-        {/* Top Right Docs Button */}
-        <div className="absolute top-8 right-8 z-20">
-          <a
-            href="https://tee.express.magiclabs.com/docs"
-            target="_blank"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 glow-primary"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+        {/* Desktop: Positioned buttons */}
+        <div className="hidden sm:block">
+          <BackButton />
+          <div className="absolute top-8 right-8 z-20">
+            <a
+              href="https://tee.express.magiclabs.com/docs"
+              target="_blank"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 glow-primary"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-              />
-            </svg>
-            View TEE Express Docs
-          </a>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+              View TEE Express Docs
+            </a>
+          </div>
         </div>
 
         {/* Header */}
