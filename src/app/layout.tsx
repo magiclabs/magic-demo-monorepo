@@ -15,6 +15,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Demo | Magic",
   description: "Magic API Wallets and Embedded Wallets Demo",
+  openGraph: {
+    title: "Demo | Magic",
+    description: "Magic API Wallets and Embedded Wallets Demo",
+    type: "website",
+    url: "https://demo.magic.link",
+    images: ["https://magic.link/images/og-img.png"],
+  },
+  twitter: {
+    title: "Demo | Magic",
+    description: "Magic API Wallets and Embedded Wallets Demo",
+    images: ["https://magic.link/images/og-img.png"],
+  },
 };
 
 export default function RootLayout({
