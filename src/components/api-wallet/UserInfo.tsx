@@ -9,7 +9,7 @@ export function UserInfo({ publicAddress }: { publicAddress: string | null }) {
   return (
     <div className="glass p-8 rounded-2xl w-full max-w-2xl glow-primary">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+        <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex flex-shrink-0 items-center justify-center">
           <svg
             className="w-6 h-6 text-white"
             fill="none"

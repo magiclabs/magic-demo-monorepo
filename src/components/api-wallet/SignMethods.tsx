@@ -12,7 +12,7 @@ import {
 const TabsClasses = {
   root: "glass rounded-2xl w-full max-w-4xl glow-secondary",
   trigger:
-    "font-semibold px-6 py-4 text-muted-foreground hover:text-white [&[data-state=active]]:text-white [&[data-state=active]]:bg-gradient-to-r [&[data-state=active]]:from-primary/20 [&[data-state=active]]:to-secondary/20 [&[data-state=active]]:border [&[data-state=active]]:border-primary/30 cursor-pointer rounded-xl ",
+    "font-semibold px-6 py-4 w-full sm:w-auto text-muted-foreground hover:text-white [&[data-state=active]]:text-white [&[data-state=active]]:bg-gradient-to-r [&[data-state=active]]:from-primary/20 [&[data-state=active]]:to-secondary/20 [&[data-state=active]]:border [&[data-state=active]]:border-primary/30 cursor-pointer rounded-xl ",
 };
 
 export function SignMethods({
@@ -77,7 +77,7 @@ export function SignMethods({
     <Tabs defaultValue="personal" className={TabsClasses.root}>
       <div className="p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex flex-shrink-0 items-center justify-center">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -93,7 +93,9 @@ export function SignMethods({
             </svg>
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">EVM Signing Methods</h2>
+            <h2 className="text-2xl font-bold text-white">
+              EVM Signing Methods
+            </h2>
             <p className="text-muted-foreground">
               Test various cryptographic signing operations
             </p>

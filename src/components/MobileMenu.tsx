@@ -2,16 +2,10 @@
 
 import { useState } from "react";
 import { BackButton } from "./BackButton";
+import { SignOutButton } from "./api-wallet/AuthButtons";
+import { TeeDocsButton } from "./TeeDocsButton";
 
-interface MobileMenuProps {
-  docsUrl?: string;
-  docsLabel?: string;
-}
-
-export function MobileMenu({
-  docsUrl = "https://tee.express.magiclabs.com/docs",
-  docsLabel = "View TEE Express Docs",
-}: MobileMenuProps) {
+export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -69,30 +63,16 @@ export function MobileMenu({
       >
         <div className="p-6 pt-20">
           <div className="flex flex-col gap-4">
-            <a
-              href={docsUrl}
-              target="_blank"
-              onClick={closeMenu}
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 glow-primary"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-              {docsLabel}
-            </a>
+            <div onClick={closeMenu}>
+              <TeeDocsButton className="w-full" />
+            </div>
 
             <div onClick={closeMenu}>
               <BackButton className="w-full" />
+            </div>
+
+            <div onClick={closeMenu}>
+              <SignOutButton className="h-12" />
             </div>
           </div>
         </div>
