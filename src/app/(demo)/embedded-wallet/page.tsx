@@ -35,7 +35,7 @@ export default function Home() {
           <EmailOTPAuth />
 
           {/* OAuth Authentication */}
-          <OAuthAuth />
+          {/* <OAuthAuth /> */}
         </div>
       </div>
     </div>

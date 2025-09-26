@@ -13,7 +13,7 @@ export function GitHubButton({
   return (
     <div className={className}>
       <a
-        href="https://github.com/magiclabs/nextauth-api-wallets-express-demo"
+        href="https://github.com/magiclabs/magic-demo-monorepo"
         target="_blank"
         className={linkClass}
       >
