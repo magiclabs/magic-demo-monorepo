@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
   SignInButton,
   SignOutButton,
@@ -19,9 +19,15 @@ export default function Home() {
 
   useEffect(() => {
     if (!publicAddress && status === "authenticated") {
-      teeService.getOrCreateWallet().then((address) => {
-        setPublicAddress(address);
-      });
+      teeService
+        .getOrCreateWallet()
+        .then((address) => {
+          setPublicAddress(address);
+        })
+        .catch((error) => {
+          console.error("Failed to get or create wallet:", error);
+          signOut();
+        });
     }
   }, [publicAddress, status]);
 
