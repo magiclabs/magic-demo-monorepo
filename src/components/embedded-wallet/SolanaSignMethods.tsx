@@ -1,7 +1,7 @@
 import { MagicService } from "../../lib/get-magic";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "../SigningMethodsLayout";
-import * as web3 from "@solana/web3.js";
+import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL, Keypair } from "@solana/web3.js";
 
 const SOLANA_SIGN_MESSAGE = "Hello Solana World!";
 const SOLANA_RPC_URL = "https://api.devnet.solana.com";
@@ -22,28 +22,28 @@ export function SolanaSignMethods() {
   const handleSignTransaction = async (): Promise<string> => {
     try {
       const magic = MagicService.magic as any;
-      const connection = new web3.Connection(SOLANA_RPC_URL);
+      const connection = new Connection(SOLANA_RPC_URL);
       
       // Get user's public key
       const publicAddress= await magic.solana.getPublicAddress();
-      const userPublicKey = new web3.PublicKey(publicAddress);
+      const userPublicKey = new PublicKey(publicAddress);
       
       // Create a simple transfer transaction
-      const recipientPubkey = new web3.Keypair().publicKey;
+      const recipientPubkey = new Keypair().publicKey;
       
       const blockhash = await connection.getLatestBlockhash();
       if (!blockhash) {
         throw new Error("Failed to get latest blockhash");
       }
 
-      const transaction = new web3.Transaction({
+      const transaction = new Transaction({
         ...blockhash,
         feePayer: userPublicKey,
       }).add(
-        web3.SystemProgram.transfer({
+        SystemProgram.transfer({
           fromPubkey: userPublicKey,
           toPubkey: recipientPubkey,
-          lamports: web3.LAMPORTS_PER_SOL * 0.001, // 0.001 SOL
+          lamports: LAMPORTS_PER_SOL * 0.001, // 0.001 SOL
         })
       );
 
@@ -61,28 +61,28 @@ export function SolanaSignMethods() {
   const handleSignAndSendTransaction = async (): Promise<string> => {
     try {
       const magic = MagicService.magic as any;
-      const connection = new web3.Connection(SOLANA_RPC_URL);
+      const connection = new Connection(SOLANA_RPC_URL);
       
       // Get user's public address
       const publicAddress = await magic.solana.getPublicAddress();
-      const userPublicKey = new web3.PublicKey(publicAddress);
+      const userPublicKey = new PublicKey(publicAddress);
       
       // Create a simple transfer transaction
-      const recipientPubkey = new web3.Keypair().publicKey;
+      const recipientPubkey = new Keypair().publicKey;
       
       const blockhash = await connection.getLatestBlockhash();
       if (!blockhash) {
         throw new Error("Failed to get latest blockhash");
       }
 
-      const transaction = new web3.Transaction({
+      const transaction = new Transaction({
         ...blockhash,
         feePayer: userPublicKey,
       }).add(
-        web3.SystemProgram.transfer({
+        SystemProgram.transfer({
           fromPubkey: userPublicKey,
           toPubkey: recipientPubkey,
-          lamports: web3.LAMPORTS_PER_SOL * 0.001, // 0.001 SOL
+          lamports: LAMPORTS_PER_SOL * 0.001, // 0.001 SOL
         })
       );
 

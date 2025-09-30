@@ -26,7 +26,7 @@ export class MagicService {
         extensions: [
           new OAuthExtension(),
           new SolanaExtension({
-            rpcUrl: "https://rpc.ankr.com/solana"
+            rpcUrl: "https://api.devnet.solana.com"
           }),
           new HederaExtension({
             network: 'mainnet',
