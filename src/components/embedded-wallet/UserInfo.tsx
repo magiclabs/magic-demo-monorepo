@@ -19,6 +19,7 @@ export function UserInfo() {
     { value: "ethereum", label: "Ethereum", color: "bg-blue-500" },
     { value: "optimism", label: "Optimism", color: "bg-red-500" },
     { value: "hedera", label: "Hedera", color: "bg-green-500" },
+    { value: "solana", label: "Solana", color: "bg-orange-500" },
   ];
 
   useEffect(() => {
@@ -162,7 +163,7 @@ export function UserInfo() {
 
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-            {currentNetwork === "hedera" ? "Public Key" : "Wallet Address"}
+            Wallet Address
           </label>
           <div className="flex items-center gap-3 p-4 bg-black/30 rounded-xl border border-white/10">
             <div className="w-8 h-8 bg-gradient-to-r from-accent to-primary rounded-full flex items-center justify-center flex-shrink-0">

@@ -4,6 +4,7 @@ import { Button } from "../../../../components/Primitives";
 import { UserInfo } from "../../../../components/embedded-wallet/UserInfo";
 import { SignMethods } from "../../../../components/embedded-wallet/SignMethods";
 import { HederaSignMethods } from "../../../../components/embedded-wallet/HederaSignMethods";
+import { SolanaSignMethods } from "../../../../components/embedded-wallet/SolanaSignMethods";
 import { useWallet } from "../../../../contexts/WalletContext";
 import { BackButton } from "@/components/BackButton";
 
@@ -52,6 +53,8 @@ export default function WalletPage() {
           <div className="w-full lg:w-2/3">
             {selectedNetwork === "hedera" ? (
               <HederaSignMethods />
+            ) : selectedNetwork === "solana" ? (
+              <SolanaSignMethods />
             ) : (
               <SignMethods publicAddress={publicAddress} />
             )}

@@ -12,7 +12,7 @@ export function HederaSignMethods() {
 
   const handleGetPublicKey = async (): Promise<string> => {
     const magic = MagicService.magic as any;
-    const { publicKeyDer } = await magic.hedera.getPublicKey();
+    const { publicKeyDer } = await magic.hedera.getPublicAddress();
     return publicKeyDer;
   };
 

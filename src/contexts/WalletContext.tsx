@@ -27,6 +27,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     ethereum: null,
     optimism: null,
     hedera: null,
+    solana: null,
   });
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,7 +38,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   // Load persisted network selection on component mount
   useEffect(() => {
     const savedNetwork = localStorage.getItem('magic_selectedNetwork');
-    if (savedNetwork && ['polygon', 'ethereum', 'optimism', 'hedera'].includes(savedNetwork)) {
+    if (savedNetwork && ['polygon', 'ethereum', 'optimism', 'hedera', 'solana'].includes(savedNetwork)) {
       setSelectedNetwork(savedNetwork);
     }
   }, []);
@@ -57,6 +58,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         ethereum: null,
         optimism: null,
         hedera: null,
+        solana: null,
       };
 
       // Fetch EVM addresses (Polygon, Ethereum, Optimism)
@@ -87,6 +89,18 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         }
       } catch (error) {
         logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error fetching Hedera address', error);
+      }
+
+      // Fetch Solana address
+      try {
+        const magic = MagicService.magic as any;
+        if (magic.solana) {
+          const publicAddress = await magic.solana.getPublicAddress();
+          // For Solana, we'll use the public address as the identifier
+          addresses.solana = publicAddress;
+        }
+      } catch (error) {
+        logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error fetching Solana address', error);
       }
 
       setNetworkAddresses(addresses);
