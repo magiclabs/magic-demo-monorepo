@@ -1,9 +1,38 @@
 "use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { EmailOTPAuth } from "../../../components/embedded-wallet/EmailOTPAuth";
 import { OAuthAuth } from "../../../components/embedded-wallet/OAuthAuth";
 import { BackButton } from "@/components/BackButton";
+import { useWallet } from "@/contexts/WalletContext";
 
 export default function Home() {
+  const { isAuthenticated, isLoading } = useWallet();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.push('/embedded-wallet/wallet');
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="relative min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render the auth form if user is authenticated (redirect will happen)
+  if (isAuthenticated) {
+    return null;
+  }
+
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">

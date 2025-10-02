@@ -40,7 +40,7 @@ export function ConsoleProvider({ children }: { children: ReactNode }) {
 
   const logToConsole = (type: LogType, method: LogMethod, message: string, data?: unknown) => {
     const logEntry: ConsoleLog = {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       timestamp: new Date().toLocaleTimeString(),
       type,
       message,

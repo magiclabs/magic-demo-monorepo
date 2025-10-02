@@ -1,17 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MagicService } from "../../lib/get-magic";
 import { useWallet } from "../../contexts/WalletContext";
 
 export function UserInfo() {
-  const [userInfo, setUserInfo] = useState<{
-    email?: string;
-    issuer?: string;
-  } | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { publicAddress, selectedNetwork, handleNetworkChange } = useWallet();
+  const { publicAddress, selectedNetwork, handleNetworkChange, isAuthenticated, userInfo } = useWallet();
   const currentNetwork = selectedNetwork;
 
   const networks = [
@@ -22,20 +17,6 @@ export function UserInfo() {
     { value: "solana", label: "Solana", color: "bg-orange-500" },
   ];
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        const info = await MagicService.magic.user.getInfo();
-        setUserInfo(info);
-      } catch (error) {
-        console.error("Error getting user info:", error);
-      }
-    };
-
-    if (publicAddress) {
-      getUserInfo();
-    }
-  }, [publicAddress]);
 
   // Close dropdown when clicking outside
   useEffect(() => {

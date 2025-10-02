@@ -12,6 +12,7 @@ interface WalletContextType {
   networkAddresses: Record<string, string | null>;
   isAuthenticated: boolean;
   isLoading: boolean;
+  userInfo: any | null;
   handleNetworkChange: (network: string) => void;
   handleLogout: () => Promise<void>;
   fetchAllNetworkAddresses: () => Promise<void>;
@@ -31,6 +32,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   });
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userInfo, setUserInfo] = useState<any | null>(null);
   
   const { logToConsole } = useConsole();
   const router = useRouter();
@@ -61,46 +63,36 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         solana: null,
       };
 
-      // Fetch EVM addresses (Polygon, Ethereum, Optimism)
+      // Fetch user info
       try {
-        const provider = new ethers.BrowserProvider(
-          MagicService.magic.rpcProvider as any,
-        );
-        const accounts = await provider.listAccounts();
-        const evmAddress = accounts[0]?.address;
+        const fetchedUserInfo = await MagicService.magic.user.getInfo();
+        logToConsole(LogType.INFO, LogMethod.MAGIC_USER_GET_INFO, 'User info fetched', fetchedUserInfo);
         
-        if (evmAddress) {
-          addresses.polygon = evmAddress;
-          addresses.ethereum = evmAddress;
-          addresses.optimism = evmAddress;
-          setPublicAddress(evmAddress); // Set default to EVM address
-        }
-      } catch (error) {
-        logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error fetching EVM addresses', error);
-      }
+        // Store user info for other components to use
+        setUserInfo(fetchedUserInfo);
+        
+        // Extract addresses from user info wallets object
+        if (fetchedUserInfo.wallets) {
+          // EVM networks (Polygon, Ethereum, Optimism) use the same eth address
+          if (fetchedUserInfo.wallets.eth?.publicAddress) {
+            addresses.polygon = fetchedUserInfo.wallets.eth.publicAddress;
+            addresses.ethereum = fetchedUserInfo.wallets.eth.publicAddress;
+            addresses.optimism = fetchedUserInfo.wallets.eth.publicAddress;
+            setPublicAddress(fetchedUserInfo.wallets.eth.publicAddress); // Set default to the EVM address
+          }
 
-      // Fetch Hedera address
-      try {
-        const magic = MagicService.magic as any;
-        if (magic.hedera) {
-          const { publicKeyDer } = await magic.hedera.getPublicKey();
-          // For Hedera, we'll use the public key as the identifier
-          addresses.hedera = publicKeyDer;
-        }
-      } catch (error) {
-        logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error fetching Hedera address', error);
-      }
+          // Hedera address
+          if (fetchedUserInfo.wallets.hedera?.publicAddress) {
+            addresses.hedera = fetchedUserInfo.wallets.hedera.publicAddress;
+          }
 
-      // Fetch Solana address
-      try {
-        const magic = MagicService.magic as any;
-        if (magic.solana) {
-          const publicAddress = await magic.solana.getPublicAddress();
-          // For Solana, we'll use the public address as the identifier
-          addresses.solana = publicAddress;
+          // Solana address
+          if (fetchedUserInfo.wallets.solana?.publicAddress) {
+            addresses.solana = fetchedUserInfo.wallets.solana.publicAddress;
+          }
         }
       } catch (error) {
-        logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error fetching Solana address', error);
+        logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_GET_INFO, 'Error fetching user info', error);
       }
 
       setNetworkAddresses(addresses);
@@ -176,6 +168,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     networkAddresses,
     isAuthenticated,
     isLoading,
+    userInfo,
     handleNetworkChange,
     handleLogout,
     fetchAllNetworkAddresses,

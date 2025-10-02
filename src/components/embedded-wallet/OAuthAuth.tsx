@@ -38,8 +38,7 @@ export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
       logToConsole(LogType.INFO, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, 'Initiating OAuth popup login...', { showUI: true });
       await MagicService.magic.oauth.loginWithPopup({});
       
-      const userMetadata = await MagicService.magic.user.getInfo();
-      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, 'OAuth popup login successful', { userMetadata });
+      logToConsole(LogType.SUCCESS, LogMethod.MAGIC_OAUTH_LOGIN_WITH_POPUP, 'OAuth popup login successful');
       handleSuccess();
     } catch (error: unknown) {
       const errorMsg = (error as Error).message || "Login failed";
