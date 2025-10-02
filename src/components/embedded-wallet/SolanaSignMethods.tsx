@@ -52,7 +52,7 @@ export function SolanaSignMethods() {
         verifySignatures: true,
       });
 
-      return `Transaction signed successfully. Signature: ${signedTransaction.signature}`;
+      return signedTransaction;
     } catch (error) {
       throw new Error(`Failed to sign transaction: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
