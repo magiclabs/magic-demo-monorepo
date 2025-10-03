@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useWallet } from "../../contexts/WalletContext";
+import { useWallet } from "@/contexts/WalletContext";
 
 export function UserInfo() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

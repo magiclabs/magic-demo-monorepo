@@ -1,6 +1,6 @@
-import { MagicService } from "../../lib/get-magic";
+import { MagicService } from "@/lib/get-magic";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { SigningMethodsLayout } from "../SigningMethodsLayout";
+import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
 import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL, Keypair } from "@solana/web3.js";
 
 const SOLANA_SIGN_MESSAGE = "Hello Solana World!";

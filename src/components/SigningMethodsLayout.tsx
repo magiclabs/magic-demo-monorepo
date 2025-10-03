@@ -1,8 +1,8 @@
 import { ReactNode, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { JsonBlock } from "./CodeBlock";
-import { formatPayload } from "../utils/format";
-import { Button } from "./Primitives";
+import { JsonBlock } from "@/components/CodeBlock";
+import { formatPayload } from "@/utils/format";
+import { Button } from "@/components/Primitives";
 
 const TabsClasses = {
   root: "glass rounded-2xl w-full max-w-4xl glow-secondary",

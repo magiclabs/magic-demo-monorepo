@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MagicService } from "../../lib/get-magic";
-import { Button } from "../Primitives";
-import { useConsole, LogType, LogMethod } from "../../contexts/ConsoleContext";
+import { MagicService } from "@/lib/get-magic";
+import { Button } from "@/components/Primitives";
+import { useConsole, LogType, LogMethod } from "@/contexts/ConsoleContext";
 import {
-  DeviceVerificationEventOnReceived,
   LoginWithEmailOTPEventEmit,
   LoginWithEmailOTPEventOnReceived,
 } from "magic-sdk";
@@ -88,12 +87,9 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
         { email, showUI: false }
       );
 
-      const deviceCheckUI = false;
-
       const handle = MagicService.magic.auth.loginWithEmailOTP({
         email,
         showUI: false,
-        deviceCheckUI,
       });
 
       logToConsole(
@@ -102,27 +98,6 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
         `OTP sent successfully to ${email} (Whitelabel)`,
         { email }
       );
-
-      if (!deviceCheckUI) {
-        handle.on(DeviceVerificationEventOnReceived.DeviceNeedsApproval, () => {
-          window.alert("Device Needs Approval, Check your Email Inbox");
-        });
-        handle.on(
-          DeviceVerificationEventOnReceived.DeviceVerificationEmailSent,
-          () => {
-            window.alert("Device Verification Email Sent");
-          }
-        );
-        handle.on(DeviceVerificationEventOnReceived.DeviceApproved, () => {
-          window.alert("Device has been approved");
-        });
-        handle.on(
-          DeviceVerificationEventOnReceived.DeviceVerificationLinkExpired,
-          () => {
-            window.alert("Device Verification link Expired");
-          }
-        );
-      }
 
       handle.on(LoginWithEmailOTPEventOnReceived.EmailOTPSent, () => {
         const otp = window.prompt("Enter Email OTP");
@@ -261,7 +236,7 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
         </Button>
 
         {/* Whitelabel Email OTP */}
-        {/* <Button
+        <Button
           onClick={handleWhitelabelEmailOTPLogin}
           variant="success"
           className="flex-1 relative overflow-hidden"
@@ -286,7 +261,7 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
               showUI: false
             </span>
           </div>
-        </Button> */}
+        </Button>
       </div>
     </div>
   );

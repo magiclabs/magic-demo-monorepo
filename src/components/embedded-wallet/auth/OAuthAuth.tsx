@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "../Primitives";
-import { MagicService } from "../../lib/get-magic";
-import { useConsole, LogType, LogMethod } from "../../contexts/ConsoleContext";
+import { Button } from "@/components/Primitives";
+import { MagicService } from "@/lib/get-magic";
+import { useConsole, LogType, LogMethod } from "@/contexts/ConsoleContext";
 
 interface OAuthAuthProps {
   onSuccess?: () => void;

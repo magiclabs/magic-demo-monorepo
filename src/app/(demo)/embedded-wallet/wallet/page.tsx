@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "../../../../components/Primitives";
-import { UserInfo } from "../../../../components/embedded-wallet/UserInfo";
-import { SignMethods } from "../../../../components/embedded-wallet/SignMethods";
-import { HederaSignMethods } from "../../../../components/embedded-wallet/HederaSignMethods";
-import { SolanaSignMethods } from "../../../../components/embedded-wallet/SolanaSignMethods";
-import { useWallet } from "../../../../contexts/WalletContext";
+import { Button } from "@/components/Primitives";
+import { UserInfo } from "@/components/embedded-wallet/UserInfo";
+import { SignMethods } from "@/components/embedded-wallet/wallet/SignMethods";
+import { HederaSignMethods } from "@/components/embedded-wallet/wallet/HederaSignMethods";
+import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSignMethods";
+import { useWallet } from "@/contexts/WalletContext";
 import { BackButton } from "@/components/BackButton";
 
 export default function WalletPage() {

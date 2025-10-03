@@ -1,8 +1,8 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { EmailOTPAuth } from "../../../components/embedded-wallet/EmailOTPAuth";
-import { OAuthAuth } from "../../../components/embedded-wallet/OAuthAuth";
+import { EmailOTPAuth } from "@/components/embedded-wallet/auth/EmailOTPAuth";
+import { OAuthAuth } from "@/components/embedded-wallet/auth/OAuthAuth";
 import { BackButton } from "@/components/BackButton";
 import { useWallet } from "@/contexts/WalletContext";
 
