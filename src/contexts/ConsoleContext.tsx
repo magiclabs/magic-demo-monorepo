@@ -15,7 +15,9 @@ export enum LogMethod {
   MAGIC_OAUTH_LOGIN_WITH_POPUP = 'magic.oauth.loginWithPopup',
   MAGIC_USER_IS_LOGGED_IN = 'magic.user.isLoggedIn',
   MAGIC_USER_GET_INFO = 'magic.user.getInfo',
-  MAGIC_USER_LOGOUT = 'magic.user.logout'
+  MAGIC_USER_LOGOUT = 'magic.user.logout',
+  TEE_GET_WALLET = 'tee.getWallet',
+  NEXTAUTH_SIGNOUT = 'nextauth.signOut'
 }
 
 interface ConsoleLog {

@@ -153,8 +153,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const res = await MagicService.magic.user.logout();
       if (res) {
         setPublicAddress(null);
+        setIsAuthenticated(false);
         logToConsole(LogType.SUCCESS, LogMethod.MAGIC_USER_LOGOUT, 'User logged out successfully');
-        router.push('/embedded-wallet');
+        router.replace('/embedded-wallet');
       }
     } catch (error) {
       logToConsole(LogType.ERROR, LogMethod.MAGIC_USER_LOGOUT, 'Logout error', error);
@@ -181,10 +182,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useWallet() {
+export function useEmbeddedWallet() {
   const context = useContext(WalletContext);
   if (context === undefined) {
-    throw new Error('useWallet must be used within a WalletProvider');
+    throw new Error('useEmbeddedWallet must be used within a WalletProvider');
   }
   return context;
 }

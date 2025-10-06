@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useWallet } from "@/contexts/WalletContext";
+import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 
 export function UserInfo() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { publicAddress, selectedNetwork, handleNetworkChange, isAuthenticated, userInfo } = useWallet();
+  const { publicAddress, selectedNetwork, handleNetworkChange, isAuthenticated, userInfo } = useEmbeddedWallet();
   const currentNetwork = selectedNetwork;
 
   const networks = [

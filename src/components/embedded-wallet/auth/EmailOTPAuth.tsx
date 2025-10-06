@@ -1,14 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MagicService } from "@/lib/get-magic";
 import { Button } from "@/components/Primitives";
+import { Modal } from "@/components/Modal";
 import { useConsole, LogType, LogMethod } from "@/contexts/ConsoleContext";
-import {
-  LoginWithEmailOTPEventEmit,
-  LoginWithEmailOTPEventOnReceived,
-} from "magic-sdk";
+import { useEmailOTPModal } from "@/hooks/useEmailOTPModal";
 
 interface EmailOTPAuthProps {
   onSuccess?: () => void;
@@ -19,6 +17,22 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { logToConsole } = useConsole();
   const router = useRouter();
+  const { modalState, handleWhitelabelEmailOTPLogin: whitelabelLogin, closeModal } = useEmailOTPModal();
+
+  // Load persisted email on component mount
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('magic_login_email');
+    if (savedEmail) {
+      setEmail(savedEmail);
+    }
+  }, []);
+
+  // Persist email to localStorage whenever it changes
+  useEffect(() => {
+    if (email) {
+      localStorage.setItem('magic_login_email', email);
+    }
+  }, [email]);
 
   const handleSuccess = () => {
     // Redirect to wallet page after successful authentication using Next router
@@ -68,122 +82,11 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
   };
 
   const handleWhitelabelEmailOTPLogin = async () => {
-    if (!email) {
-      logToConsole(
-        LogType.ERROR,
-        LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP,
-        "Please enter an email address"
-      );
-      return;
-    }
-
     setIsLoading(true);
-
     try {
-      logToConsole(
-        LogType.INFO,
-        LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP,
-        "Sending OTP via whitelabel Magic API...",
-        { email, showUI: false }
-      );
-
-      const handle = MagicService.magic.auth.loginWithEmailOTP({
-        email,
-        showUI: false,
+      await whitelabelLogin(email, handleSuccess, (error) => {
+        logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, error);
       });
-
-      logToConsole(
-        LogType.SUCCESS,
-        LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP,
-        `OTP sent successfully to ${email} (Whitelabel)`,
-        { email }
-      );
-
-      handle.on(LoginWithEmailOTPEventOnReceived.EmailOTPSent, () => {
-        const otp = window.prompt("Enter Email OTP");
-        handle.emit(LoginWithEmailOTPEventEmit.VerifyEmailOtp, otp as never);
-      });
-      handle.on(LoginWithEmailOTPEventOnReceived.MfaSentHandle, () => {
-        const otp = window.prompt("Please enter the MFA code!");
-        handle.emit(LoginWithEmailOTPEventEmit.VerifyMFACode, otp as never);
-      });
-
-      // MFA Recovery Code
-      let retriesRecoveryMFA = 2;
-      handle.on(LoginWithEmailOTPEventOnReceived.RecoveryCodeSentHandle, () => {
-        const otp = window.prompt(`Input MFA Recovery`);
-        handle.emit(
-          LoginWithEmailOTPEventEmit.VerifyRecoveryCode,
-          otp as string
-        );
-      });
-      handle.on(LoginWithEmailOTPEventOnReceived.InvalidRecoveryCode, () => {
-        if (!retriesRecoveryMFA) {
-          handle.emit(LoginWithEmailOTPEventEmit.Cancel);
-        } else {
-          const otp = window.prompt(
-            `Invalid code, Please enter OTP again. Retries left: ${retriesRecoveryMFA}`
-          );
-          retriesRecoveryMFA--;
-          handle.emit(
-            LoginWithEmailOTPEventEmit.VerifyRecoveryCode,
-            otp as never
-          );
-        }
-      });
-
-      // MFA
-      let retriesMFA = 2;
-      handle.on(LoginWithEmailOTPEventOnReceived.InvalidMfaOtp, () => {
-        if (!retriesMFA) {
-          handle.emit(LoginWithEmailOTPEventEmit.LostDevice);
-        } else {
-          const otp = window.prompt(
-            `Invalid MFA code, Please enter MFA code again. Retries left: ${retriesMFA}`
-          );
-          retriesMFA--;
-          handle.emit(LoginWithEmailOTPEventEmit.VerifyMFACode, otp as string);
-        }
-      });
-
-      // Email OTP
-      let retries = 2;
-      handle.on(LoginWithEmailOTPEventOnReceived.InvalidEmailOtp, () => {
-        if (!retries) {
-          handle.emit(LoginWithEmailOTPEventEmit.Cancel);
-        } else {
-          const otp = window.prompt(
-            `Invalid code, Please enter OTP again. Retries left: ${retries}`
-          );
-          retries--;
-          handle.emit(LoginWithEmailOTPEventEmit.VerifyEmailOtp, otp as never);
-        }
-      });
-
-      handle.on("error", (error: unknown) => {
-        alert(`Error: ${error}`);
-      });
-      handle.on("done", () => {
-        alert("Login complete!");
-      });
-
-      const didToken = await handle;
-      logToConsole(
-        LogType.SUCCESS,
-        LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP,
-        "Whitelabel login completed",
-        { email, didToken }
-      );
-
-      handleSuccess();
-    } catch (error: unknown) {
-      const errorMsg = (error as Error).message || "Failed to send OTP";
-      logToConsole(
-        LogType.ERROR,
-        LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP,
-        errorMsg,
-        { email, error }
-      );
     } finally {
       setIsLoading(false);
     }
@@ -263,6 +166,20 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
           </div>
         </Button>
       </div>
+
+      {/* Modal */}
+      <Modal
+        isOpen={modalState.isOpen}
+        type={modalState.type}
+        title={modalState.title}
+        message={modalState.message}
+        retries={modalState.retries}
+        maxRetries={modalState.maxRetries}
+        errorMessage={modalState.errorMessage}
+        onSubmit={modalState.onSubmit}
+        onCancel={modalState.onCancel}
+        onClose={closeModal}
+      />
     </div>
   );
 }

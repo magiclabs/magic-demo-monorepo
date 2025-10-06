@@ -1,15 +1,38 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/Primitives";
-import { UserInfo } from "@/components/embedded-wallet/UserInfo";
-import { SignMethods } from "@/components/embedded-wallet/wallet/SignMethods";
-import { HederaSignMethods } from "@/components/embedded-wallet/wallet/HederaSignMethods";
-import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSignMethods";
-import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
+import { SolanaSignMethods } from "@/components/api-wallet/SolanaSignMethods";
+import { EVMSignMethods } from "@/components/api-wallet/EVMSignMethods";
+import { UserInfo } from "@/components/api-wallet/UserInfo";
 import { BackButton } from "@/components/BackButton";
+import { useApiWallet } from "@/contexts/ApiWalletContext";
 
-export default function WalletPage() {
-  const { publicAddress, selectedNetwork, handleLogout } = useEmbeddedWallet();
+export default function ApiWalletPage() {
+  const router = useRouter();
+  const { 
+    publicAddress, 
+    selectedNetwork, 
+    isAuthenticated, 
+    isLoading, 
+    handleLogout 
+  } = useApiWallet();
+
+  if (isLoading) {
+    return (
+      <div className="relative min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render if not authenticated (redirect will happen)
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="relative min-h-screen">
@@ -20,7 +43,7 @@ export default function WalletPage() {
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="relative py-4">
             <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
-              Magic Wallet
+              Magic API Wallet
             </h1>
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 rounded-3xl blur-2xl opacity-40 scale-110"></div>
           </div>
@@ -51,12 +74,12 @@ export default function WalletPage() {
 
           {/* Right Side - Signing Methods */}
           <div className="w-full lg:w-2/3">
-            {selectedNetwork === "hedera" ? (
-              <HederaSignMethods />
-            ) : selectedNetwork === "solana" ? (
-              <SolanaSignMethods />
+            {/* Show Solana methods if Solana network is selected */}
+            {selectedNetwork === "solana" ? (
+              <SolanaSignMethods publicAddress={publicAddress} />
             ) : (
-              <SignMethods publicAddress={publicAddress} />
+              /* Default to EVM methods for Ethereum and other EVM networks */
+              <EVMSignMethods publicAddress={publicAddress} />
             )}
           </div>
         </div>

@@ -1,72 +1,46 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
-import {
-  SignInButton,
-  SignOutButton,
-} from "../../../components/api-wallet/AuthButtons";
-import { SignMethods } from "@/components/api-wallet/SignMethods";
-import { useEffect, useState } from "react";
-import { teeService } from "../../../lib/tee-service";
-import { UserInfo } from "@/components/api-wallet/UserInfo";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { SignInButton } from "../../../components/api-wallet/AuthButtons";
 import { BackButton } from "@/components/BackButton";
-import { MobileMenu } from "@/components/MobileMenu";
-import { TeeDocsButton } from "@/components/TeeDocsButton";
+import { useApiWallet } from "@/contexts/ApiWalletContext";
 
 export default function Home() {
-  const { status } = useSession();
-  const [publicAddress, setPublicAddress] = useState<string | null>(null);
+  const router = useRouter();
+  const { isAuthenticated, isLoading } = useApiWallet();
 
   useEffect(() => {
-    if (!publicAddress && status === "authenticated") {
-      teeService
-        .getOrCreateWallet()
-        .then((address) => {
-          setPublicAddress(address);
-        })
-        .catch((error) => {
-          console.error("Failed to get or create wallet:", error);
-          // Only sign out if it's an auth-related error
-          if (error.requiresReauth) {
-            console.log("Auth error detected, signing out...");
-            signOut();
-          }
-        });
+    if (isAuthenticated) {
+      router.push('/api-wallet/wallet');
     }
-  }, [publicAddress, status]);
+  }, [isAuthenticated, router]);
 
-  if (status === "loading") {
+  // Show loading state while checking authentication
+  if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[500px]">
-        <div className="text-2xl font-bold">Loading...</div>
+      <div className="relative min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Checking authentication...</p>
+        </div>
       </div>
     );
   }
 
+  // Don't render the auth form if user is authenticated (redirect will happen)
+  if (isAuthenticated) {
+    return null;
+  }
+
   return (
     <div className="relative min-h-screen">
-      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 pt-16 sm:pt-20 gap-8 sm:gap-16 sm:p-20">
-        {/* Mobile: Hamburger Menu */}
-        <MobileMenu>
-          <div onClick={() => {}}>
-            <TeeDocsButton className="w-full" />
-          </div>
-          {status === "authenticated" && (
-            <div onClick={() => {}}>
-              <SignOutButton className="h-12" />
-            </div>
-          )}
-        </MobileMenu>
-
-        {/* Desktop: Positioned buttons */}
-        <div className="hidden sm:block">
-          <BackButton />
-          <TeeDocsButton />
-        </div>
+      <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">
+        <BackButton className="hidden sm:block" />
 
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative py-4">
+          <div className="relative py-8 sm:py-4">
             <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
               Magic API Wallets
             </h1>
@@ -75,27 +49,19 @@ export default function Home() {
         </div>
 
         {/* Main Content */}
-        {status === "authenticated" && (
-          <div className="flex flex-col items-center gap-12 w-full max-w-4xl">
-            <UserInfo publicAddress={publicAddress} />
-            <SignMethods publicAddress={publicAddress} />
-            <div className="hidden sm:block">
-              <SignOutButton />
-            </div>
+        <div className="flex flex-col items-center gap-8 w-full max-w-2xl">
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold mb-4 text-foreground">
+              Get Started
+            </h2>
+            <p className="text-muted-foreground mb-8">
+              Connect your account to access your secure TEE wallet
+            </p>
           </div>
-        )}
 
-        {status === "unauthenticated" && (
-          <div className="flex flex-col items-center gap-8">
-            <div className="text-center">
-              <h2 className="text-2xl font-semibold mb-4">Get Started</h2>
-              <p className="text-muted-foreground mb-8">
-                Connect your account to access your secure TEE wallet
-              </p>
-            </div>
-            <SignInButton />
-          </div>
-        )}
+          {/* Sign In Button */}
+          <SignInButton />
+        </div>
       </div>
     </div>
   );

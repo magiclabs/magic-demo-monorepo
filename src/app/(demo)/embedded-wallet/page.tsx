@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { EmailOTPAuth } from "@/components/embedded-wallet/auth/EmailOTPAuth";
 import { OAuthAuth } from "@/components/embedded-wallet/auth/OAuthAuth";
 import { BackButton } from "@/components/BackButton";
-import { useWallet } from "@/contexts/WalletContext";
+import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 
 export default function Home() {
-  const { isAuthenticated, isLoading } = useWallet();
+  const { isAuthenticated, isLoading } = useEmbeddedWallet();
   const router = useRouter();
 
   useEffect(() => {

@@ -52,6 +52,37 @@ const personalSign = async (data: string) => {
   });
 };
 
+const solanaSignMessage = async (data: string | Uint8Array) => {
+  // Convert string to Uint8Array if needed, then encode as base64
+  const messageUint8 = typeof data === 'string' ? new TextEncoder().encode(data) : data;
+  const message = Buffer.from(messageUint8).toString('base64');
+  
+  const body = { message_base64: message };
+  return await fetch("/api/tee/wallet/sign/message", {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "X-Magic-Chain": "SOL"
+    },
+    body: JSON.stringify(body),
+  });
+};
+
+const solanaSignTransaction = async (transactionMessage: Uint8Array) => {
+  // Encode transaction message as base64
+  const message = Buffer.from(transactionMessage).toString('base64');
+  
+  const body = { message_base64: message };
+  return await fetch("/api/tee/wallet/sign/message", {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "X-Magic-Chain": "SOL"
+    },
+    body: JSON.stringify(body),
+  });
+};
+
 const signTypedDataV1 = async (data: TypedDataV1) => {
   const rawDataHash = typedSignatureHash(data);
   const body = { raw_data_hash: rawDataHash };
@@ -103,6 +134,8 @@ const signTransaction = async (tx: TransactionRequest) => {
 export const teeService = {
   getOrCreateWallet,
   personalSign,
+  solanaSignMessage,
+  solanaSignTransaction,
   signTypedDataV1,
   signTypedDataV3,
   signTypedDataV4,
