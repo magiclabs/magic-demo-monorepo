@@ -1,6 +1,7 @@
-import { teeService } from "../../lib/tee-service";
+import { solanaService } from "../../lib/tee/solana";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
+import { useApiWallet } from "@/contexts/ApiWalletContext";
 import { Transaction, PublicKey, SystemProgram, LAMPORTS_PER_SOL, Keypair } from "@solana/web3.js";
 
 // Sample messages for signing
@@ -15,11 +16,12 @@ export function SolanaSignMethods({
 }: {
   publicAddress: string | null;
 }) {
+  const { session } = useApiWallet();
   // Message Signing - Simple String
   const handleSignSimpleMessage = async (): Promise<string> => {
     try {
       const message = SOLANA_MESSAGE_EXAMPLES.simple;
-      const res = await teeService.solanaSignMessage(message);
+      const res = await solanaService.solanaSignMessage(message, session?.idToken!);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -37,7 +39,7 @@ export function SolanaSignMethods({
   const handleSignComplexMessage = async (): Promise<string> => {
     try {
       const message = SOLANA_MESSAGE_EXAMPLES.complex;
-      const res = await teeService.solanaSignMessage(message);
+      const res = await solanaService.solanaSignMessage(message, session?.idToken!);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -55,7 +57,7 @@ export function SolanaSignMethods({
   const handleSignUnicodeMessage = async (): Promise<string> => {
     try {
       const message = SOLANA_MESSAGE_EXAMPLES.unicode;
-      const res = await teeService.solanaSignMessage(message);
+      const res = await solanaService.solanaSignMessage(message, session?.idToken!);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -88,7 +90,7 @@ export function SolanaSignMethods({
 
       // Serialize the transaction message
       const messageBytes = transaction.serializeMessage();
-      const res = await teeService.solanaSignTransaction(messageBytes);
+      const res = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -133,7 +135,7 @@ export function SolanaSignMethods({
       );
 
       const messageBytes = transaction.serializeMessage();
-      const res = await teeService.solanaSignTransaction(messageBytes);
+      const res = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -177,7 +179,7 @@ export function SolanaSignMethods({
       );
 
       const messageBytes = transaction.serializeMessage();
-      const res = await teeService.solanaSignTransaction(messageBytes);
+      const res = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -207,7 +209,7 @@ export function SolanaSignMethods({
     {
       value: "simple-message",
       label: "Simple Message",
-      functionName: "teeService.solanaSignMessage(message)",
+      functionName: "solanaService.solanaSignMessage(message)",
       payload: {
         message: SOLANA_MESSAGE_EXAMPLES.simple,
         encoding: "base64",
@@ -218,7 +220,7 @@ export function SolanaSignMethods({
     {
       value: "complex-message",
       label: "Complex Message",
-      functionName: "teeService.solanaSignMessage(message)",
+      functionName: "solanaService.solanaSignMessage(message)",
       payload: {
         message: SOLANA_MESSAGE_EXAMPLES.complex,
         encoding: "base64",
@@ -229,7 +231,7 @@ export function SolanaSignMethods({
     {
       value: "unicode-message",
       label: "Unicode Message",
-      functionName: "teeService.solanaSignMessage(message)",
+      functionName: "solanaService.solanaSignMessage(message)",
       payload: {
         message: SOLANA_MESSAGE_EXAMPLES.unicode,
         encoding: "base64",
@@ -240,7 +242,7 @@ export function SolanaSignMethods({
     {
       value: "legacy-tx",
       label: "Legacy Transaction",
-      functionName: "teeService.solanaSignTransaction(messageBytes)",
+      functionName: "solanaService.solanaSignTransaction(messageBytes)",
       payload: {
         type: "Legacy Transaction",
         operation: "SystemProgram.transfer",
@@ -252,7 +254,7 @@ export function SolanaSignMethods({
     {
       value: "versioned-tx",
       label: "Versioned Transaction",
-      functionName: "teeService.solanaSignTransaction(messageBytes)",
+      functionName: "solanaService.solanaSignTransaction(messageBytes)",
       payload: {
         type: "Versioned Transaction",
         operation: "SystemProgram.transfer",
@@ -264,7 +266,7 @@ export function SolanaSignMethods({
     {
       value: "partial-tx",
       label: "Partial Transaction",
-      functionName: "teeService.solanaSignTransaction(messageBytes)",
+      functionName: "solanaService.solanaSignTransaction(messageBytes)",
       payload: {
         type: "Partial Transaction",
         operation: "SystemProgram.transfer",

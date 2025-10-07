@@ -1,7 +1,8 @@
-import { teeService } from "../../lib/tee-service";
+import { ethereumService } from "../../lib/tee/ethereum";
 import { parseEther } from "ethers";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
+import { useApiWallet } from "@/contexts/ApiWalletContext";
 import {
   PERSONAL_SIGN_PAYLOAD,
   SIGN_TYPED_DATA_V1_PAYLOAD,
@@ -14,6 +15,8 @@ export function EVMSignMethods({
 }: {
   publicAddress: string | null;
 }) {
+  const { session } = useApiWallet();
+  
   const signTransactionPayload = {
     from: publicAddress,
     to: publicAddress,
@@ -23,7 +26,7 @@ export function EVMSignMethods({
 
   const handlePersonalSign = async (): Promise<string> => {
     try {
-      const res = await teeService.personalSign(PERSONAL_SIGN_PAYLOAD);
+      const res = await ethereumService.personalSign(PERSONAL_SIGN_PAYLOAD, session?.idToken!);
       const signingResponse = await res.json();
       return JSON.stringify(signingResponse, null, 2);
     } catch (error) {
@@ -34,7 +37,7 @@ export function EVMSignMethods({
 
   const handleSignTypedDataV1 = async (): Promise<string> => {
     try {
-      const res = await teeService.signTypedDataV1(SIGN_TYPED_DATA_V1_PAYLOAD);
+      const res = await ethereumService.signTypedDataV1(SIGN_TYPED_DATA_V1_PAYLOAD, session?.idToken!);
       const response = await res.json();
       return JSON.stringify(response, null, 2);
     } catch (error) {
@@ -45,7 +48,7 @@ export function EVMSignMethods({
 
   const handleSignTypedDataV3 = async (): Promise<string> => {
     try {
-      const res = await teeService.signTypedDataV3(SIGN_TYPED_DATA_V3_PAYLOAD);
+      const res = await ethereumService.signTypedDataV3(SIGN_TYPED_DATA_V3_PAYLOAD, session?.idToken!);
       const response = await res.json();
       return JSON.stringify(response, null, 2);
     } catch (error) {
@@ -56,7 +59,7 @@ export function EVMSignMethods({
 
   const handleSignTypedDataV4 = async (): Promise<string> => {
     try {
-      const res = await teeService.signTypedDataV4(SIGN_TYPED_DATA_V4_PAYLOAD);
+      const res = await ethereumService.signTypedDataV4(SIGN_TYPED_DATA_V4_PAYLOAD, session?.idToken!);
       const response = await res.json();
       return JSON.stringify(response, null, 2);
     } catch (error) {
@@ -67,7 +70,7 @@ export function EVMSignMethods({
 
   const handleSignTransaction = async (): Promise<string> => {
     try {
-      const result = await teeService.signTransaction(signTransactionPayload);
+      const result = await ethereumService.signTransaction(signTransactionPayload, session?.idToken!);
       return JSON.stringify(result, null, 2);
     } catch (error) {
       console.error(error);
@@ -79,35 +82,35 @@ export function EVMSignMethods({
     {
       value: "personal",
       label: "Personal Sign",
-      functionName: "teeService.personalSign(message)",
+      functionName: "ethereumService.personalSign(message)",
       payload: PERSONAL_SIGN_PAYLOAD,
       handler: handlePersonalSign,
     },
     {
       value: "typed-data-v1",
       label: "Sign Typed Data V1",
-      functionName: "teeService.signTypedDataV1(data)",
+      functionName: "ethereumService.signTypedDataV1(data)",
       payload: SIGN_TYPED_DATA_V1_PAYLOAD,
       handler: handleSignTypedDataV1,
     },
     {
       value: "typed-data-v3",
       label: "Sign Typed Data V3",
-      functionName: "teeService.signTypedDataV3(data)",
+      functionName: "ethereumService.signTypedDataV3(data)",
       payload: SIGN_TYPED_DATA_V3_PAYLOAD,
       handler: handleSignTypedDataV3,
     },
     {
       value: "typed-data-v4",
       label: "Sign Typed Data V4",
-      functionName: "teeService.signTypedDataV4(data)",
+      functionName: "ethereumService.signTypedDataV4(data)",
       payload: SIGN_TYPED_DATA_V4_PAYLOAD,
       handler: handleSignTypedDataV4,
     },
     {
       value: "transaction",
       label: "Sign Transaction",
-      functionName: "teeService.signTransaction(transaction)",
+      functionName: "ethereumService.signTransaction(transaction)",
       payload: signTransactionPayload,
       handler: handleSignTransaction,
     },

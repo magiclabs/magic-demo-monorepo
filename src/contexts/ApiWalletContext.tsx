@@ -12,6 +12,7 @@ interface ApiWalletContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   userInfo: any | null;
+  session: any | null;
   handleNetworkChange: (network: string) => void;
   handleLogout: () => Promise<void>;
   refreshWallet: () => Promise<void>;
@@ -63,12 +64,12 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
 
   // Reusable function to create/fetch wallet address
   const createOrFetchWallet = useCallback(async (context: string = 'wallet') => {
-    if (!isAuthenticated) return null;
+    if (!isAuthenticated || !session?.idToken) return null;
     
     try {
       setIsLoading(true);
       logToConsole(LogType.INFO, LogMethod.TEE_GET_WALLET, `Fetching wallet address for ${context}...`);
-      const address = await teeService.getOrCreateWallet();
+      const address = await teeService.getOrCreateWallet(session.idToken);
       setPublicAddress(address);
       logToConsole(LogType.SUCCESS, LogMethod.TEE_GET_WALLET, `Wallet address fetched for ${context}`, { address, context });
       return address;
@@ -85,7 +86,7 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated, logToConsole]);
+  }, [isAuthenticated, session?.idToken, logToConsole]);
 
   // Load wallet address when authenticated
   useEffect(() => {
@@ -144,6 +145,7 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     isAuthenticated,
     isLoading,
     userInfo,
+    session,
     handleNetworkChange,
     handleLogout,
     refreshWallet,
