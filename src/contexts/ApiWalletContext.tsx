@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { teeService } from "@/lib/tee-service";
+import { walletService } from "@/lib/tee/wallet";
 import { useConsole, LogType, LogMethod } from "./ConsoleContext";
 
 interface ApiWalletContextType {
@@ -69,9 +69,10 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     try {
       setIsLoading(true);
       logToConsole(LogType.INFO, LogMethod.TEE_GET_WALLET, `Fetching wallet address for ${context}...`);
-      const address = await teeService.getOrCreateWallet(session.idToken);
+      
+      const address = await walletService.getOrCreateWallet(session.idToken, selectedNetwork);
       setPublicAddress(address);
-      logToConsole(LogType.SUCCESS, LogMethod.TEE_GET_WALLET, `Wallet address fetched for ${context}`, { address, context });
+      logToConsole(LogType.SUCCESS, LogMethod.TEE_GET_WALLET, `Wallet address fetched for ${context}`, { address, context, network: selectedNetwork });
       return address;
     } catch (error: any) {
       logToConsole(LogType.ERROR, LogMethod.TEE_GET_WALLET, `Error fetching wallet for ${context}`, error.message);
@@ -86,7 +87,7 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated, session?.idToken, logToConsole]);
+  }, [isAuthenticated, session?.idToken, selectedNetwork, logToConsole]);
 
   // Load wallet address when authenticated
   useEffect(() => {

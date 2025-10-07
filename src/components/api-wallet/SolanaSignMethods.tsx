@@ -21,13 +21,8 @@ export function SolanaSignMethods({
   const handleSignSimpleMessage = async (): Promise<string> => {
     try {
       const message = SOLANA_MESSAGE_EXAMPLES.simple;
-      const res = await solanaService.solanaSignMessage(message, session?.idToken!);
+      const result = await solanaService.solanaSignMessage(message, session?.idToken!);
       
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      
-      const result = await res.json();
       return JSON.stringify(result, null, 2);
     } catch (error) {
       console.error("Failed to sign simple message:", error);
@@ -39,13 +34,8 @@ export function SolanaSignMethods({
   const handleSignComplexMessage = async (): Promise<string> => {
     try {
       const message = SOLANA_MESSAGE_EXAMPLES.complex;
-      const res = await solanaService.solanaSignMessage(message, session?.idToken!);
+      const result = await solanaService.solanaSignMessage(message, session?.idToken!);
       
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      
-      const result = await res.json();
       return JSON.stringify(result, null, 2);
     } catch (error) {
       console.error("Failed to sign complex message:", error);
@@ -57,13 +47,8 @@ export function SolanaSignMethods({
   const handleSignUnicodeMessage = async (): Promise<string> => {
     try {
       const message = SOLANA_MESSAGE_EXAMPLES.unicode;
-      const res = await solanaService.solanaSignMessage(message, session?.idToken!);
+      const result = await solanaService.solanaSignMessage(message, session?.idToken!);
       
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      
-      const result = await res.json();
       return JSON.stringify(result, null, 2);
     } catch (error) {
       console.error("Failed to sign unicode message:", error);
@@ -90,13 +75,7 @@ export function SolanaSignMethods({
 
       // Serialize the transaction message
       const messageBytes = transaction.serializeMessage();
-      const res = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
-      
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      
-      const { signature } = await res.json();
+      const { signature } = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
       
       // Return the signature and transaction info
       const result = {
@@ -135,13 +114,7 @@ export function SolanaSignMethods({
       );
 
       const messageBytes = transaction.serializeMessage();
-      const res = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
-      
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      
-      const { signature } = await res.json();
+      const { signature } = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
       
       const result = {
         signature,
@@ -179,13 +152,7 @@ export function SolanaSignMethods({
       );
 
       const messageBytes = transaction.serializeMessage();
-      const res = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
-      
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      
-      const { signature } = await res.json();
+      const { signature } = await solanaService.solanaSignTransaction(messageBytes, session?.idToken!);
       
       const result = {
         signature,

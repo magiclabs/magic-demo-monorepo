@@ -22,7 +22,7 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [publicAddress, setPublicAddress] = useState<string | null>(null);
-  const [selectedNetwork, setSelectedNetwork] = useState<string>("polygon");
+  const [selectedNetwork, setSelectedNetwork] = useState<string>("ethereum");
   const [networkAddresses, setNetworkAddresses] = useState<Record<string, string | null>>({
     polygon: null,
     ethereum: null,

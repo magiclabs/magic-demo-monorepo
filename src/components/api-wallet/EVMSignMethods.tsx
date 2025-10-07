@@ -26,8 +26,7 @@ export function EVMSignMethods({
 
   const handlePersonalSign = async (): Promise<string> => {
     try {
-      const res = await ethereumService.personalSign(PERSONAL_SIGN_PAYLOAD, session?.idToken!);
-      const signingResponse = await res.json();
+      const signingResponse = await ethereumService.personalSign(PERSONAL_SIGN_PAYLOAD, session?.idToken!);
       return JSON.stringify(signingResponse, null, 2);
     } catch (error) {
       console.error(error);
@@ -37,8 +36,7 @@ export function EVMSignMethods({
 
   const handleSignTypedDataV1 = async (): Promise<string> => {
     try {
-      const res = await ethereumService.signTypedDataV1(SIGN_TYPED_DATA_V1_PAYLOAD, session?.idToken!);
-      const response = await res.json();
+      const response = await ethereumService.signTypedDataV1(SIGN_TYPED_DATA_V1_PAYLOAD, session?.idToken!);
       return JSON.stringify(response, null, 2);
     } catch (error) {
       console.error(error);
@@ -48,8 +46,7 @@ export function EVMSignMethods({
 
   const handleSignTypedDataV3 = async (): Promise<string> => {
     try {
-      const res = await ethereumService.signTypedDataV3(SIGN_TYPED_DATA_V3_PAYLOAD, session?.idToken!);
-      const response = await res.json();
+      const response = await ethereumService.signTypedDataV3(SIGN_TYPED_DATA_V3_PAYLOAD, session?.idToken!);
       return JSON.stringify(response, null, 2);
     } catch (error) {
       console.error(error);
@@ -59,8 +56,7 @@ export function EVMSignMethods({
 
   const handleSignTypedDataV4 = async (): Promise<string> => {
     try {
-      const res = await ethereumService.signTypedDataV4(SIGN_TYPED_DATA_V4_PAYLOAD, session?.idToken!);
-      const response = await res.json();
+      const response = await ethereumService.signTypedDataV4(SIGN_TYPED_DATA_V4_PAYLOAD, session?.idToken!);
       return JSON.stringify(response, null, 2);
     } catch (error) {
       console.error(error);

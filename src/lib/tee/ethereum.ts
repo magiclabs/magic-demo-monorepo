@@ -68,11 +68,10 @@ const signTransaction = async (tx: TransactionRequest, jwt: string) => {
   const btx = Transaction.from(txForSigning as TransactionLike);
 
   const body = { raw_data_hash: btx.unsignedHash };
-  const res = await tee(TeeEndpoint.SIGN_DATA, jwt, {
+  const { r, s, v } = await tee(TeeEndpoint.SIGN_DATA, jwt, {
     method: "POST",
     body: JSON.stringify(body),
   });
-  const { r, s, v } = await res.json();
   btx.signature = Signature.from({ r, s, v });
   return btx.serialized;
 };
