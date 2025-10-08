@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { SolanaSignMethods } from "@/components/api-wallet/SolanaSignMethods";
 import { EVMSignMethods } from "@/components/api-wallet/EVMSignMethods";
 import { UserInfo } from "@/components/api-wallet/UserInfo";

@@ -1,10 +1,9 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { useConsole, LogType, LogMethod } from "./ConsoleContext";
-import { ethers } from "ethers";
 
 interface WalletContextType {
   publicAddress: string | null;
