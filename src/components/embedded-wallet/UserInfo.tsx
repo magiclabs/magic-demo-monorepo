@@ -8,6 +8,10 @@ export function UserInfo() {
 
   const { publicAddress, selectedNetwork, handleNetworkChange, userInfo } = useEmbeddedWallet();
 
+  console.log('publicAddress', publicAddress)
+  console.log('selectedNetwork', selectedNetwork)
+  console.log('userInfo', userInfo)
+
   const networks = [
     { value: "polygon", label: "Polygon", color: "bg-purple-500" },
     { value: "ethereum", label: "Ethereum", color: "bg-blue-500" },

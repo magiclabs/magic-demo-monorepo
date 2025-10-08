@@ -9,9 +9,7 @@ import { BackButton } from "@/components/BackButton";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
 
 export default function ApiWalletPage() {
-  const router = useRouter();
   const { 
-    publicAddress, 
     selectedNetwork, 
     isAuthenticated, 
     isLoading, 

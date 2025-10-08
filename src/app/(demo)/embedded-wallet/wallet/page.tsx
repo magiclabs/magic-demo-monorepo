@@ -56,7 +56,7 @@ export default function WalletPage() {
             ) : selectedNetwork === "solana" ? (
               <SolanaSignMethods />
             ) : (
-              <SignMethods publicAddress={publicAddress} />
+              <SignMethods />
             )}
           </div>
         </div>
