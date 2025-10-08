@@ -74,11 +74,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         // Extract addresses from user info wallets object
         if (fetchedUserInfo.wallets) {
           // EVM networks (Polygon, Ethereum, Optimism) use the same eth address
-          if (fetchedUserInfo.wallets.eth?.publicAddress) {
-            addresses.polygon = fetchedUserInfo.wallets.eth.publicAddress;
-            addresses.ethereum = fetchedUserInfo.wallets.eth.publicAddress;
-            addresses.optimism = fetchedUserInfo.wallets.eth.publicAddress;
-            setPublicAddress(fetchedUserInfo.wallets.eth.publicAddress); // Set default to the EVM address
+          if (fetchedUserInfo.wallets.ethereum?.publicAddress) {
+            addresses.polygon = fetchedUserInfo.wallets.ethereum.publicAddress;
+            addresses.ethereum = fetchedUserInfo.wallets.ethereum.publicAddress;
+            addresses.optimism = fetchedUserInfo.wallets.ethereum.publicAddress;
+            setPublicAddress(fetchedUserInfo.wallets.ethereum.publicAddress); // Set default to the EVM address
           }
 
           // Hedera address
