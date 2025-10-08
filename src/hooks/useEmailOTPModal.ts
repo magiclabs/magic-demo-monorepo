@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { MagicService } from "@/lib/get-magic";
+import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { useConsole, LogType, LogMethod } from "@/contexts/ConsoleContext";
 import {
   LoginWithEmailOTPEventEmit,

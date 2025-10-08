@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { MagicService } from "@/lib/get-magic";
+import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { Button } from "@/components/Primitives";
 import { Modal } from "@/components/Modal";
 import { useConsole, LogType, LogMethod } from "@/contexts/ConsoleContext";

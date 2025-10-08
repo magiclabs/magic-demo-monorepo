@@ -1,4 +1,4 @@
-import { MagicService } from "@/lib/get-magic";
+import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
 

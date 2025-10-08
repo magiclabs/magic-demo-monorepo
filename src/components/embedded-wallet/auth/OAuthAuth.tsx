@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/Primitives";
-import { MagicService } from "@/lib/get-magic";
+import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { useConsole, LogType, LogMethod } from "@/contexts/ConsoleContext";
 
 interface OAuthAuthProps {

@@ -76,10 +76,10 @@ export default function ApiWalletPage() {
           <div className="w-full lg:w-2/3">
             {/* Show Solana methods if Solana network is selected */}
             {selectedNetwork === "solana" ? (
-              <SolanaSignMethods publicAddress={publicAddress} />
+              <SolanaSignMethods />
             ) : (
               /* Default to EVM methods for Ethereum and other EVM networks */
-              <EVMSignMethods publicAddress={publicAddress} />
+              <EVMSignMethods />
             )}
           </div>
         </div>

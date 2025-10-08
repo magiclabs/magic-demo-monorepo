@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { walletService } from "@/lib/tee/wallet";
+import { walletService } from "@/lib/api-wallet/wallet";
 import { useConsole, LogType, LogMethod } from "./ConsoleContext";
 
 interface ApiWalletContextType {
@@ -15,7 +15,6 @@ interface ApiWalletContextType {
   session: any | null;
   handleNetworkChange: (network: string) => void;
   handleLogout: () => Promise<void>;
-  refreshWallet: () => Promise<void>;
 }
 
 const ApiWalletContext = createContext<ApiWalletContextType | undefined>(undefined);
@@ -63,20 +62,15 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
   }, [status, router]);
 
   // Reusable function to create/fetch wallet address
-  const createOrFetchWallet = useCallback(async (context: string = 'wallet') => {
-    if (!isAuthenticated || !session?.idToken) return null;
+  const createOrFetchWallet = useCallback(async () => {
+    if (!isAuthenticated) return null;
     
     try {
-      setIsLoading(true);
-      logToConsole(LogType.INFO, LogMethod.TEE_GET_WALLET, `Fetching wallet address for ${context}...`);
-      
-      const address = await walletService.getOrCreateWallet(session.idToken, selectedNetwork);
+      setIsLoading(true);      
+      const address = await walletService.getOrCreateWallet(selectedNetwork);
       setPublicAddress(address);
-      logToConsole(LogType.SUCCESS, LogMethod.TEE_GET_WALLET, `Wallet address fetched for ${context}`, { address, context, network: selectedNetwork });
       return address;
     } catch (error: any) {
-      logToConsole(LogType.ERROR, LogMethod.TEE_GET_WALLET, `Error fetching wallet for ${context}`, error.message);
-      console.error(`Failed to get or create wallet for ${context}:`, error);
       
       // Only sign out if it's an auth-related error
       if (error.requiresReauth) {
@@ -87,18 +81,14 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated, session?.idToken, selectedNetwork, logToConsole]);
+  }, [isAuthenticated, selectedNetwork, logToConsole]);
 
   // Load wallet address when authenticated
   useEffect(() => {
     if (isAuthenticated && !publicAddress) {
-      createOrFetchWallet('initial');
+      createOrFetchWallet();
     }
-  }, [isAuthenticated, publicAddress, createOrFetchWallet]);
-
-  const refreshWallet = useCallback(async () => {
-    return await createOrFetchWallet('refresh');
-  }, [createOrFetchWallet]);
+  }, [isAuthenticated, publicAddress]);
 
   const handleNetworkChange = useCallback(async (network: string) => {
     if (network === selectedNetwork) return;
@@ -107,7 +97,7 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
       logToConsole(LogType.INFO, LogMethod.TEE_GET_WALLET, `Switching to ${network} network...`);
       
       // Create new wallet for the selected network using reusable function
-      const newAddress = await createOrFetchWallet(`network-${network}`);
+      const newAddress = await createOrFetchWallet();
       
       // Update state with new network
       setSelectedNetwork(network);
@@ -149,7 +139,6 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     session,
     handleNetworkChange,
     handleLogout,
-    refreshWallet,
   };
 
   return (
