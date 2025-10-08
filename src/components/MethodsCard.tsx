@@ -4,7 +4,6 @@ import { Button } from "./Primitives";
 import { JsonBlock } from "./CodeBlock";
 import { formatPayload } from "@/utils/format";
 
-interface TabItem {}
 interface Props {
   title: string;
   description: string;
