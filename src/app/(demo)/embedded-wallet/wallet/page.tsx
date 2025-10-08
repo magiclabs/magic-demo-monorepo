@@ -7,6 +7,7 @@ import { HederaSignMethods } from "@/components/embedded-wallet/wallet/HederaSig
 import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSignMethods";
 import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { BackButton } from "@/components/BackButton";
+import { UserMethods } from "@/components/embedded-wallet/wallet/UserMethods";
 
 export default function WalletPage() {
   const { publicAddress, selectedNetwork, handleLogout } = useEmbeddedWallet();
@@ -29,7 +30,7 @@ export default function WalletPage() {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl">
           {/* Left Side - Wallet Profile */}
-          <div className="flex flex-col gap-8 w-full lg:w-1/3">
+          <div className="flex flex-col gap-8 w-full lg:w-1/3 min-[741px]:self-start min-[741px]:sticky min-[741px]:top-8">
             <UserInfo />
             <Button variant="danger" onClick={handleLogout} className="w-full">
               <svg
@@ -50,7 +51,7 @@ export default function WalletPage() {
           </div>
 
           {/* Right Side - Signing Methods */}
-          <div className="w-full lg:w-2/3">
+          <div className="w-full lg:w-2/3 flex flex-col gap-8">
             {selectedNetwork === "hedera" ? (
               <HederaSignMethods />
             ) : selectedNetwork === "solana" ? (
@@ -58,6 +59,8 @@ export default function WalletPage() {
             ) : (
               <SignMethods publicAddress={publicAddress} />
             )}
+
+            <UserMethods />
           </div>
         </div>
       </div>

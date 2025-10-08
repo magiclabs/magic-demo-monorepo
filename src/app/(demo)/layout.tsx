@@ -15,7 +15,7 @@ export default function DemoLayout({
   return (
     <ConsoleProvider>
       <div className="min-h-screen flex">
-        <div className="flex-1 relative overflow-hidden">
+        <div className="flex-1 relative max-[740px]:overflow-hidden">
           {/* Animated Background Orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="floating-orb absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-xl"></div>
