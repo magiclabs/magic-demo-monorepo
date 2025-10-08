@@ -11,8 +11,12 @@ import {
 } from "../../const/sign-typed-data-payloads";
 
 export function EVMSignMethods() {
-  const { publicAddress } = useApiWallet();
+  const { publicAddress, selectedNetwork } = useApiWallet();
   
+  if (!publicAddress || selectedNetwork !== "ethereum") {
+    return null;
+  }
+
   const signTransactionPayload = {
     from: publicAddress,
     to: publicAddress,
@@ -74,35 +78,35 @@ export function EVMSignMethods() {
     {
       value: "personal",
       label: "Personal Sign",
-      functionName: "ethereumService.personalSign(message)",
+      functionName: "https://tee.express.magiclabs.com/v1/sign/message",
       payload: PERSONAL_SIGN_PAYLOAD,
       handler: handlePersonalSign,
     },
     {
       value: "typed-data-v1",
       label: "Sign Typed Data V1",
-      functionName: "ethereumService.signTypedDataV1(data)",
+      functionName: "https://tee.express.magiclabs.com/v1/sign/data",
       payload: SIGN_TYPED_DATA_V1_PAYLOAD,
       handler: handleSignTypedDataV1,
     },
     {
       value: "typed-data-v3",
       label: "Sign Typed Data V3",
-      functionName: "ethereumService.signTypedDataV3(data)",
+      functionName: "https://tee.express.magiclabs.com/v1/sign/data",
       payload: SIGN_TYPED_DATA_V3_PAYLOAD,
       handler: handleSignTypedDataV3,
     },
     {
       value: "typed-data-v4",
       label: "Sign Typed Data V4",
-      functionName: "ethereumService.signTypedDataV4(data)",
+      functionName: "https://tee.express.magiclabs.com/v1/sign/data",
       payload: SIGN_TYPED_DATA_V4_PAYLOAD,
       handler: handleSignTypedDataV4,
     },
     {
       value: "transaction",
       label: "Sign Transaction",
-      functionName: "ethereumService.signTransaction(transaction)",
+      functionName: "https://tee.express.magiclabs.com/v1/sign/data",
       payload: signTransactionPayload,
       handler: handleSignTransaction,
     },

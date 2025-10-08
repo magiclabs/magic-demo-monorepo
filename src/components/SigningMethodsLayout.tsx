@@ -74,17 +74,13 @@ export function SigningMethodsLayout({
   const renderFunctionDisplay = (tabValue: string) => {
     const tab = tabs.find((t) => t.value === tabValue);
     const functionName = tab?.functionName || "Unknown function";
-    const [funcPart, paramsPart] = functionName.split("(");
     return (
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
           Function
         </label>
         <div className="p-4 rounded-lg bg-[#1e1e1e] border border-[#3e3e3e] font-mono text-sm leading-relaxed">
-          <span className="text-[#9cdcfe]">{funcPart}</span>
-          <span className="text-[#ffd700]">(</span>
-          <span className="text-[#ce9178]">{paramsPart?.replace(")", "")}</span>
-          <span className="text-[#ffd700]">)</span>
+          <span className="text-[#9cdcfe]">{functionName}</span>
         </div>
       </div>
     );

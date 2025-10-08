@@ -20,12 +20,14 @@ interface ApiWalletContextType {
 const ApiWalletContext = createContext<ApiWalletContextType | undefined>(undefined);
 
 export function ApiWalletProvider({ children }: { children: ReactNode }) {
-  const [publicAddress, setPublicAddress] = useState<string | null>(null);
-  const [selectedNetwork, setSelectedNetwork] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("api-wallet-network") || "ethereum";
-    }
-    return "ethereum";
+  const [wallet, setWallet] = useState<{ address: string | null; network: string }>({
+    address: null,
+    network: (() => {
+      if (typeof window !== "undefined") {
+        return localStorage.getItem("api-wallet-network") || "ethereum";
+      }
+      return "ethereum";
+    })(),
   });
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -56,7 +58,7 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     } else if (status === "unauthenticated") {
       setIsAuthenticated(false);
       setIsLoading(false);
-      setPublicAddress(null);
+      setWallet((prev) => ({ ...prev, address: null }));
       router.push('/api-wallet');
     }
   }, [status, router]);
@@ -67,8 +69,8 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     
     try {
       setIsLoading(true);      
-      const address = await walletService.getOrCreateWallet(selectedNetwork);
-      setPublicAddress(address);
+      const address = await walletService.getOrCreateWallet(wallet.network);
+      setWallet((prev) => ({ ...prev, address }));
       return address;
     } catch (error: any) {
       
@@ -81,47 +83,35 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated, selectedNetwork, logToConsole]);
+  }, [isAuthenticated, wallet.network]);
 
   // Load wallet address when authenticated
   useEffect(() => {
-    if (isAuthenticated && !publicAddress) {
-      createOrFetchWallet();
+    if (isAuthenticated && !wallet.address) {
+        createOrFetchWallet();
     }
-  }, [isAuthenticated, publicAddress]);
+  }, [isAuthenticated, wallet.address, createOrFetchWallet]);
 
   const handleNetworkChange = useCallback(async (network: string) => {
-    if (network === selectedNetwork) return;
+    if (network === wallet.network) return;
     
-    try {
-      logToConsole(LogType.INFO, LogMethod.TEE_GET_WALLET, `Switching to ${network} network...`);
-      
-      // Create new wallet for the selected network using reusable function
-      const newAddress = await createOrFetchWallet();
-      
-      // Update state with new network
-      setSelectedNetwork(network);
+    try {      
+      // Update network first, then create wallet for the new network;
       localStorage.setItem("api-wallet-network", network);
       
-      logToConsole(LogType.SUCCESS, LogMethod.TEE_GET_WALLET, `Network changed to ${network}`, { 
-        network, 
-        address: newAddress,
-        previousNetwork: selectedNetwork 
-      });
+      // Create new wallet for the selected network using reusable function
+      const newAddress = await walletService.getOrCreateWallet(network);
+      setWallet((prev) => ({ ...prev, network, address: newAddress }));
     } catch (error: any) {
-      logToConsole(LogType.ERROR, LogMethod.TEE_GET_WALLET, `Error switching to ${network}`, error.message);
       console.error(`Failed to create wallet for network: ${network}`, error);
-      
-      // Reset to previous network on error
-      logToConsole(LogType.WARNING, LogMethod.TEE_GET_WALLET, `Reverting to previous network: ${selectedNetwork}`);
     }
-  }, [selectedNetwork, createOrFetchWallet, logToConsole]);
+  }, [wallet.network]);
 
   const handleLogout = useCallback(async () => {
     try {
       logToConsole(LogType.INFO, LogMethod.NEXTAUTH_SIGNOUT, 'Logging out user...');
       await signOut({ callbackUrl: '/api-wallet' });
-      setPublicAddress(null);
+      setWallet((prev) => ({ ...prev, address: null }));
       setIsAuthenticated(false);
       logToConsole(LogType.SUCCESS, LogMethod.NEXTAUTH_SIGNOUT, 'User logged out successfully');
     } catch (error) {
@@ -131,8 +121,8 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
   }, [logToConsole]);
 
   const value: ApiWalletContextType = {
-    publicAddress,
-    selectedNetwork,
+    publicAddress: wallet.address,
+    selectedNetwork: wallet.network,
     isAuthenticated,
     isLoading,
     userInfo,

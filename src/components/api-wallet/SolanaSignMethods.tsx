@@ -7,9 +7,9 @@ import { TEE_BASE } from "@/lib/api-wallet/express";
 
 
 export function SolanaSignMethods() {
-  const { publicAddress } = useApiWallet();
+  const { publicAddress, selectedNetwork } = useApiWallet();
 
-  if (!publicAddress) {
+  if (!publicAddress || selectedNetwork !== "solana") {
     return null;
   }
 
