@@ -6,7 +6,7 @@ import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 export function UserInfo() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { publicAddress, selectedNetwork, handleNetworkChange, userInfo } = useEmbeddedWallet();
+  const { publicAddress, selectedNetwork, handleNetworkChange, userInfo, handleLogout } = useEmbeddedWallet();
 
   console.log('publicAddress', publicAddress)
   console.log('selectedNetwork', selectedNetwork)
@@ -190,6 +190,16 @@ export function UserInfo() {
               </button>
             )}
           </div>
+        </div>
+
+        {/* Logout Button */}
+        <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
+          <button
+            onClick={handleLogout}
+            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

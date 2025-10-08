@@ -9,7 +9,8 @@ export function UserInfo() {
     selectedNetwork, 
     userInfo, 
     isLoading, 
-    handleNetworkChange 
+    handleNetworkChange,
+    handleLogout
   } = useApiWallet();
   const { name, email } = userInfo || {};
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -210,6 +211,16 @@ export function UserInfo() {
               </button>
             )}
           </div>
+        </div>
+
+        {/* Logout Button */}
+        <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
+          <button
+            onClick={handleLogout}
+            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
