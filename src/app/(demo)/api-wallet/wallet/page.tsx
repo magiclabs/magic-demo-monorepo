@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/Primitives";
 import { SolanaSignMethods } from "@/components/api-wallet/SolanaSignMethods";
 import { EVMSignMethods } from "@/components/api-wallet/EVMSignMethods";
 import { UserInfo } from "@/components/api-wallet/UserInfo";
@@ -9,13 +7,10 @@ import { BackButton } from "@/components/BackButton";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
 
 export default function ApiWalletPage() {
-  const router = useRouter();
   const { 
-    publicAddress, 
     selectedNetwork, 
     isAuthenticated, 
-    isLoading, 
-    handleLogout 
+    isLoading
   } = useApiWallet();
 
   if (isLoading) {
@@ -54,22 +49,6 @@ export default function ApiWalletPage() {
           {/* Left Side - Wallet Profile */}
           <div className="flex flex-col gap-8 w-full lg:w-1/3">
             <UserInfo />
-            <Button variant="danger" onClick={handleLogout} className="w-full">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                />
-              </svg>
-              Logout
-            </Button>
           </div>
 
           {/* Right Side - Signing Methods */}

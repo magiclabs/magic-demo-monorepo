@@ -6,8 +6,7 @@ import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 export function UserInfo() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { publicAddress, selectedNetwork, handleNetworkChange, isAuthenticated, userInfo } = useEmbeddedWallet();
-  const currentNetwork = selectedNetwork;
+  const { publicAddress, selectedNetwork, handleNetworkChange, userInfo, handleLogout } = useEmbeddedWallet();
 
   const networks = [
     { value: "polygon", label: "Polygon", color: "bg-purple-500" },
@@ -96,11 +95,11 @@ export function UserInfo() {
               <div className="flex items-center gap-2">
                 <div
                   className={`w-3 h-3 ${
-                    networks.find((n) => n.value === currentNetwork)?.color
+                    networks.find((n) => n.value === selectedNetwork)?.color
                   } rounded-full`}
                 ></div>
                 <span>
-                  {networks.find((n) => n.value === currentNetwork)?.label}
+                  {networks.find((n) => n.value === selectedNetwork)?.label}
                 </span>
               </div>
               <svg
@@ -187,6 +186,16 @@ export function UserInfo() {
               </button>
             )}
           </div>
+        </div>
+
+        {/* Logout Button */}
+        <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
+          <button
+            onClick={handleLogout}
+            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

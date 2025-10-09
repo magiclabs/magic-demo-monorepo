@@ -80,7 +80,7 @@ export function SigningMethodsLayout({
           Function
         </label>
         <div className="p-4 rounded-lg bg-[#1e1e1e] border border-[#3e3e3e] font-mono text-sm leading-relaxed">
-          <span className="text-[#9cdcfe]">{functionName}</span>
+          <span className="text-[#9cdcfe] break-all">{functionName}</span>
         </div>
       </div>
     );
