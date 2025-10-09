@@ -8,6 +8,7 @@ import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSig
 import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { BackButton } from "@/components/BackButton";
 import { UserMethods } from "@/components/embedded-wallet/wallet/UserMethods";
+import { WalletMethods } from "@/components/embedded-wallet/wallet/WalletMethods";
 
 export default function WalletPage() {
   const { publicAddress, selectedNetwork, handleLogout } = useEmbeddedWallet();
@@ -61,6 +62,7 @@ export default function WalletPage() {
             )}
 
             <UserMethods />
+            <WalletMethods />
           </div>
         </div>
       </div>
