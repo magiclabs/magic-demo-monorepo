@@ -1,40 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MagicService } from "../../lib/get-magic";
-import { useWallet } from "../../contexts/WalletContext";
+import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 
 export function UserInfo() {
-  const [userInfo, setUserInfo] = useState<{
-    email?: string;
-    issuer?: string;
-  } | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { publicAddress, selectedNetwork, handleNetworkChange } = useWallet();
-  const currentNetwork = selectedNetwork;
+  const { publicAddress, selectedNetwork, handleNetworkChange, userInfo, handleLogout } = useEmbeddedWallet();
 
   const networks = [
     { value: "polygon", label: "Polygon", color: "bg-purple-500" },
     { value: "ethereum", label: "Ethereum", color: "bg-blue-500" },
     { value: "optimism", label: "Optimism", color: "bg-red-500" },
     { value: "hedera", label: "Hedera", color: "bg-green-500" },
+    { value: "solana", label: "Solana", color: "bg-orange-500" },
   ];
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        const info = await MagicService.magic.user.getInfo();
-        setUserInfo(info);
-      } catch (error) {
-        console.error("Error getting user info:", error);
-      }
-    };
-
-    if (publicAddress) {
-      getUserInfo();
-    }
-  }, [publicAddress]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -114,11 +95,11 @@ export function UserInfo() {
               <div className="flex items-center gap-2">
                 <div
                   className={`w-3 h-3 ${
-                    networks.find((n) => n.value === currentNetwork)?.color
+                    networks.find((n) => n.value === selectedNetwork)?.color
                   } rounded-full`}
                 ></div>
                 <span>
-                  {networks.find((n) => n.value === currentNetwork)?.label}
+                  {networks.find((n) => n.value === selectedNetwork)?.label}
                 </span>
               </div>
               <svg
@@ -162,7 +143,7 @@ export function UserInfo() {
 
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-            {currentNetwork === "hedera" ? "Public Key" : "Wallet Address"}
+            Wallet Address
           </label>
           <div className="flex items-center gap-3 p-4 bg-black/30 rounded-xl border border-white/10">
             <div className="w-8 h-8 bg-gradient-to-r from-accent to-primary rounded-full flex items-center justify-center flex-shrink-0">
@@ -205,6 +186,16 @@ export function UserInfo() {
               </button>
             )}
           </div>
+        </div>
+
+        {/* Logout Button */}
+        <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
+          <button
+            onClick={handleLogout}
+            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

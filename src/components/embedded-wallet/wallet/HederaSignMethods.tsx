@@ -1,6 +1,6 @@
-import { MagicService } from "../../lib/get-magic";
+import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { SigningMethodsLayout } from "../SigningMethodsLayout";
+import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
 
 function uint8ArrayToBase64(uint8Array: Uint8Array): string {
   return btoa(String.fromCharCode.apply(null, Array.from(uint8Array)));
@@ -12,7 +12,7 @@ export function HederaSignMethods() {
 
   const handleGetPublicKey = async (): Promise<string> => {
     const magic = MagicService.magic as any;
-    const { publicKeyDer } = await magic.hedera.getPublicKey();
+    const { publicKeyDer } = await magic.hedera.getPublicAddress();
     return publicKeyDer;
   };
 

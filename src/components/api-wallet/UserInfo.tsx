@@ -1,10 +1,54 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { useApiWallet } from "@/contexts/ApiWalletContext";
 
-export function UserInfo({ publicAddress }: { publicAddress: string | null }) {
-  const { data: session } = useSession();
-  const { name, email } = session?.user || {};
+export function UserInfo() {
+  const { 
+    publicAddress, 
+    selectedNetwork, 
+    userInfo, 
+    isLoading, 
+    handleNetworkChange,
+    handleLogout
+  } = useApiWallet();
+  const { name, email } = userInfo || {};
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const networks = [
+    { value: "ethereum", label: "Ethereum", color: "bg-blue-500" },
+    { value: "solana", label: "Solana", color: "bg-orange-500" },
+  ];
+
+  // Handle network change
+  const handleNetworkChangeClick = async (network: string) => {
+    if (network === selectedNetwork) return;
+    
+    try {
+      await handleNetworkChange(network);
+      setIsDropdownOpen(false);
+    } catch (error) {
+      console.error("Failed to change network:", network, error);
+      setIsDropdownOpen(false);
+    }
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isDropdownOpen) {
+        const target = event.target as Element;
+        if (!target.closest(".dropdown-container")) {
+          setIsDropdownOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   return (
     <div className="glass p-8 rounded-2xl w-full max-w-2xl glow-primary">
@@ -50,6 +94,72 @@ export function UserInfo({ publicAddress }: { publicAddress: string | null }) {
             <div className="text-lg font-semibold text-white">{email}</div>
           </div>
         )}
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+            Network
+          </label>
+          <div className="relative dropdown-container">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              disabled={isLoading}
+              className="flex items-center justify-between w-full p-3 bg-black/30 rounded-xl border border-white/10 text-white hover:bg-black/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <div className="flex items-center gap-2">
+                <div
+                  className={`w-3 h-3 ${
+                    networks.find((n) => n.value === selectedNetwork)?.color
+                  } rounded-full`}
+                ></div>
+                <span>
+                  {isLoading 
+                    ? "Loading..." 
+                    : networks.find((n) => n.value === selectedNetwork)?.label
+                  }
+                </span>
+              </div>
+              {isLoading ? (
+                <div className="animate-spin w-4 h-4 border-2 border-primary border-t-transparent rounded-full"></div>
+              ) : (
+                <svg
+                  className={`w-4 h-4 text-muted-foreground transition-transform ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              )}
+            </button>
+
+            {isDropdownOpen && !isLoading && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-black/90 border border-white/10 rounded-xl p-1 shadow-lg backdrop-blur-sm z-10">
+                {networks.map((network) => (
+                  <button
+                    key={network.value}
+                    onClick={() => {
+                      setIsDropdownOpen(false);
+                      handleNetworkChangeClick(network.value);
+                    }}
+                    className="flex items-center gap-2 w-full p-3 text-white hover:bg-white/10 rounded-lg cursor-pointer transition-colors"
+                  >
+                    <div
+                      className={`w-3 h-3 ${network.color} rounded-full`}
+                    ></div>
+                    <span>{network.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
@@ -101,6 +211,16 @@ export function UserInfo({ publicAddress }: { publicAddress: string | null }) {
               </button>
             )}
           </div>
+        </div>
+
+        {/* Logout Button */}
+        <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
+          <button
+            onClick={handleLogout}
+            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

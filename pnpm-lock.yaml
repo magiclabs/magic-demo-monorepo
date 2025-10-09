@@ -9,23 +9,26 @@ importers:
   .:
     dependencies:
       '@magic-ext/evm':
-        specifier: 1.0.0-canary.915.17279636506.0
-        version: 1.0.0-canary.915.17279636506.0
+        specifier: 1.0.0
+        version: 1.0.0
       '@magic-ext/hedera':
-        specifier: ^1.0.4
-        version: 1.0.4(@hashgraph/sdk@2.72.0(bn.js@5.2.2)(react-native@0.81.1(@babel/core@7.28.4)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))
+        specifier: ^2.0.0
+        version: 2.0.0(@hashgraph/sdk@2.72.0(bn.js@5.2.2)(react-native@0.81.1(@babel/core@7.28.4)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))
       '@magic-ext/oauth2':
-        specifier: ^12.0.0
-        version: 12.0.0
+        specifier: ^13.0.0
+        version: 13.0.0
       '@magic-ext/solana':
-        specifier: ^27.0.0
-        version: 27.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))
+        specifier: ^28.0.0
+        version: 28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@metamask/eth-sig-util':
         specifier: ^8.2.0
         version: 8.2.0
       '@radix-ui/react-tabs':
         specifier: ^1.1.13
         version: 1.1.13(@types/react-dom@19.1.9(@types/react@19.1.12))(@types/react@19.1.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@solana/web3.js':
+        specifier: ^1.98.4
+        version: 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
       '@types/prismjs':
         specifier: ^1.26.5
         version: 1.26.5
@@ -39,8 +42,8 @@ importers:
         specifier: ^6.15.0
         version: 6.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       magic-sdk:
-        specifier: ^30.0.0
-        version: 30.0.0
+        specifier: ^31.0.0
+        version: 31.0.0
       next:
         specifier: 15.5.2
         version: 15.5.2(@babel/core@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -599,30 +602,24 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
-  '@magic-ext/evm@1.0.0-canary.915.17279636506.0':
-    resolution: {integrity: sha512-mkCEhZg2ZiK3GRdeg9i2Rzrty+3RPwPsMPbgPcWxrI/U36nAf8UeMhfK4xz3xvN/yJsHyLDgRRSGfGYytP6YsQ==}
+  '@magic-ext/evm@1.0.0':
+    resolution: {integrity: sha512-2ObYeANcBB6UkqU3Hso3nO2GDdazB82AbkMjgpeHxIVnzBnPBiDdOF0asY5HWarARPhTE7ZJCLGtaaX3N4VAeg==}
 
-  '@magic-ext/hedera@1.0.4':
-    resolution: {integrity: sha512-6f1Krl0bXMthDT17pfKSXBBfLWwgybjG34T0qsTIsLewenC5CKsMxGYNVDN3AHvwJXdyNzcGuXHKQV/P34EjzQ==}
+  '@magic-ext/hedera@2.0.0':
+    resolution: {integrity: sha512-jAbi2RnIjrJ7peXbjKy8WzIsk+8trfxwhLVC+EsJ6en7m0DZA119MFemHZeM63PLwFeR1MHDqkXWC22thvmozA==}
     peerDependencies:
       '@hashgraph/sdk': ^2.31.0
 
-  '@magic-ext/oauth2@12.0.0':
-    resolution: {integrity: sha512-zDMTv0rxnD6DY2QYJnXj97t5WsX34NvWBjbqmNW1OoKqdV+lhqjFKjCJy7r/w7lodGv7XAhGEo66lG0yVhx4Ug==}
+  '@magic-ext/oauth2@13.0.0':
+    resolution: {integrity: sha512-RI+bWqz7lq9Nj00CxaCiPIIY71KD35iYzQ6R3VFJrx5yT0IxfDuKpw0jMwjwC+i9+vbTqg2h5DcxZOgItA/cHg==}
 
-  '@magic-ext/solana@27.0.0':
-    resolution: {integrity: sha512-A90NzKsRW5VFE9mqGOfR8tc+cqJYKcaXLS/cyOeg/YyjGKclqcDelm5+qqdr4cd5FeE4sHWhtoMQ7Kx70Ohv5w==}
+  '@magic-ext/solana@28.0.0':
+    resolution: {integrity: sha512-mB4uAK3XRMCiHdWZHK+3FS92DoWF7L9KrCUGeqsmL0vBwLxc8lEeWBPDAsK1Hwl/cwRUsFkCsISs+uaYx66mNw==}
     peerDependencies:
       '@solana/web3.js': ^1.87.2
 
-  '@magic-sdk/commons@26.0.0':
-    resolution: {integrity: sha512-km0E8JyTppNm4l3OKqVnNgnf9lrJEmoJobByZDuVolIa0pBLwszw2A62YNRxDO29qq24iXCNLsk89vxTGXG7FQ==}
-    peerDependencies:
-      '@magic-sdk/provider': '>=18.6.0'
-      '@magic-sdk/types': '>=15.8.0'
-
-  '@magic-sdk/provider@30.0.0':
-    resolution: {integrity: sha512-zzIXbzTX/b5iRq43c8vVQDY/GUO891uqEgzXuDVbgs+20yRsUCJFJjvDcU9QC16kQ0tJTMAKHYObWayd5mAYbA==}
+  '@magic-sdk/provider@31.0.0':
+    resolution: {integrity: sha512-R786TotIlleZiyMaIRtfMviSu3KloRQ/kVualOaXCQTObzq7ucH55rJJAnt7HXyDQwLQLkbcNxkR2OljHqJeYQ==}
     peerDependencies:
       localforage: ^1.7.4
 
@@ -2722,8 +2719,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  magic-sdk@30.0.0:
-    resolution: {integrity: sha512-FKrKJw90kvgNC8d3ROst6Y6aahsQDFdXBXkaqwuoDTNoUqy1lvVESGpuwt5fHb5LAtrCsEVbcWKnUm5dk3ouBA==}
+  magic-sdk@31.0.0:
+    resolution: {integrity: sha512-BIv2IA2279emzQ6/znCa1jaiiNb25i+1i5CrV2BVNKRSZPvdol2sbJ7cY97Ikt9kiqd7nsUUH3pZc8e9WdOP6A==}
 
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
@@ -4433,26 +4430,21 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@magic-ext/evm@1.0.0-canary.915.17279636506.0': {}
+  '@magic-ext/evm@1.0.0': {}
 
-  '@magic-ext/hedera@1.0.4(@hashgraph/sdk@2.72.0(bn.js@5.2.2)(react-native@0.81.1(@babel/core@7.28.4)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))':
+  '@magic-ext/hedera@2.0.0(@hashgraph/sdk@2.72.0(bn.js@5.2.2)(react-native@0.81.1(@babel/core@7.28.4)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))':
     dependencies:
       '@hashgraph/sdk': 2.72.0(bn.js@5.2.2)(react-native@0.81.1(@babel/core@7.28.4)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))
 
-  '@magic-ext/oauth2@12.0.0':
+  '@magic-ext/oauth2@13.0.0':
     dependencies:
       crypto-js: 4.2.0
 
-  '@magic-ext/solana@27.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))':
+  '@magic-ext/solana@28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
 
-  '@magic-sdk/commons@26.0.0(@magic-sdk/provider@30.0.0(localforage@1.10.0))(@magic-sdk/types@25.0.0)':
-    dependencies:
-      '@magic-sdk/provider': 30.0.0(localforage@1.10.0)
-      '@magic-sdk/types': 25.0.0
-
-  '@magic-sdk/provider@30.0.0(localforage@1.10.0)':
+  '@magic-sdk/provider@31.0.0(localforage@1.10.0)':
     dependencies:
       '@magic-sdk/types': 25.0.0
       eventemitter3: 4.0.7
@@ -6764,10 +6756,9 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  magic-sdk@30.0.0:
+  magic-sdk@31.0.0:
     dependencies:
-      '@magic-sdk/commons': 26.0.0(@magic-sdk/provider@30.0.0(localforage@1.10.0))(@magic-sdk/types@25.0.0)
-      '@magic-sdk/provider': 30.0.0(localforage@1.10.0)
+      '@magic-sdk/provider': 31.0.0(localforage@1.10.0)
       '@magic-sdk/types': 25.0.0
       localforage: 1.10.0
 

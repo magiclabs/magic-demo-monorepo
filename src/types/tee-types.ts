@@ -4,6 +4,12 @@ export enum TeeEndpoint {
   SIGN_MESSAGE = "/v1/wallet/sign/message",
 }
 
+export enum TeeProxyEndpoint {
+  WALLET = "/api/tee/wallet",
+  SIGN_DATA = "/api/tee/wallet/sign/data",
+  SIGN_MESSAGE = "/api/tee/wallet/sign/message",
+}
+
 export interface Wallet {
   address: string;
   chainId?: number | string;

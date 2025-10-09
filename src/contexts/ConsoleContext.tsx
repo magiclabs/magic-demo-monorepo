@@ -15,7 +15,9 @@ export enum LogMethod {
   MAGIC_OAUTH_LOGIN_WITH_POPUP = 'magic.oauth.loginWithPopup',
   MAGIC_USER_IS_LOGGED_IN = 'magic.user.isLoggedIn',
   MAGIC_USER_GET_INFO = 'magic.user.getInfo',
-  MAGIC_USER_LOGOUT = 'magic.user.logout'
+  MAGIC_USER_LOGOUT = 'magic.user.logout',
+  TEE_GET_WALLET = 'tee.getWallet',
+  NEXTAUTH_SIGNOUT = 'nextauth.signOut'
 }
 
 interface ConsoleLog {
@@ -40,7 +42,7 @@ export function ConsoleProvider({ children }: { children: ReactNode }) {
 
   const logToConsole = (type: LogType, method: LogMethod, message: string, data?: unknown) => {
     const logEntry: ConsoleLog = {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       timestamp: new Date().toLocaleTimeString(),
       type,
       message,

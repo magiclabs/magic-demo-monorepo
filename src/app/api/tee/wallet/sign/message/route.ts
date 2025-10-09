@@ -1,4 +1,4 @@
-import { tee } from "@/lib/tee-client";
+import { express } from "@/lib/api-wallet/express";
 import { TeeEndpoint } from "@/types/tee-types";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -16,21 +16,12 @@ export async function POST(req: Request) {
     }
 
     const body = await req.text();
-    const res = await tee(TeeEndpoint.SIGN_MESSAGE, session.idToken, {
+    const res = await express(TeeEndpoint.SIGN_MESSAGE, session.idToken, {
       method: "POST",
       body,
     });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      return NextResponse.json(
-        { error: `TEE API Error: ${res.status} - ${errorText}` },
-        { status: res.status }
-      );
-    }
-
-    const data = await res.json();
-    return NextResponse.json(data);
+    return NextResponse.json(res);
   } catch (error) {
     console.error("POST sign message error:", error);
     return NextResponse.json(

@@ -9,10 +9,7 @@ import GoogleProvider from "next-auth/providers/google";
  */
 async function refreshAccessToken(token: JWT) {
   try {
-    console.log("🔄 Attempting to refresh token...");
-
     if (!token.refreshToken) {
-      console.log("❌ No refresh token available");
       throw new Error("No refresh token available");
     }
 
@@ -34,11 +31,8 @@ async function refreshAccessToken(token: JWT) {
     const refreshedTokens = await response.json();
 
     if (!response.ok) {
-      console.log("❌ Token refresh failed:", refreshedTokens);
       throw refreshedTokens;
     }
-
-    console.log("✅ Token refreshed successfully");
 
     return {
       ...token,
@@ -48,7 +42,6 @@ async function refreshAccessToken(token: JWT) {
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
     };
   } catch (error) {
-    console.log("❌ Refresh token error:", error);
 
     return {
       ...token,
@@ -77,18 +70,12 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, account }: { token: JWT; account: Account | null }) {
       if (account) {
-        console.log("🔑 New account login, storing tokens");
         token.idToken = account.id_token;
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = account.expires_at
           ? account.expires_at * 1000
           : Date.now() + 60 * 60 * 1000; // Default to 1 hour if not provided
-
-        console.log(
-          "📅 Token expires at:",
-          new Date(token.accessTokenExpires as number)
-        );
       }
 
       // Return previous token if the access token has not expired yet
@@ -96,11 +83,9 @@ export const authOptions: NextAuthOptions = {
         token.accessTokenExpires &&
         Date.now() < (token.accessTokenExpires as number)
       ) {
-        console.log("✅ Token still valid, no refresh needed");
         return token;
       }
 
-      console.log("⏰ Token expired, attempting refresh...");
       // Access token has expired, try to update it
       return refreshAccessToken(token);
     },

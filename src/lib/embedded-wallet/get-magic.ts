@@ -26,7 +26,7 @@ export class MagicService {
         extensions: [
           new OAuthExtension(),
           new SolanaExtension({
-            rpcUrl: "https://api.devnet.solana.com",
+            rpcUrl: "https://api.devnet.solana.com"
           }),
           new HederaExtension({
             network: 'mainnet',
@@ -36,33 +36,6 @@ export class MagicService {
       });
     }
     return this._magic;
-  }
-
-  // Whitelabel Email OTP methods
-  public static async sendEmailOTP(email: string): Promise<void> {
-    try {
-      await this.magic.auth.loginWithEmailOTP({ 
-        email, 
-        showUI: false 
-      });
-    } catch (error) {
-      console.error('Error sending email OTP:', error);
-      throw error;
-    }
-  }
-
-  public static async verifyEmailOTP(email: string, code: string): Promise<string> {
-    try {
-      const didToken = await this.magic.auth.loginWithEmailOTP({
-        email,
-        code,
-        showUI: false
-      });
-      return didToken;
-    } catch (error) {
-      console.error('Error verifying email OTP:', error);
-      throw error;
-    }
   }
 
   public static get provider(): ethers.BrowserProvider {

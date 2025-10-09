@@ -1,22 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { SignInButton } from "../../../components/api-wallet/AuthButtons";
+import { SolanaSignMethods } from "@/components/api-wallet/SolanaSignMethods";
+import { EVMSignMethods } from "@/components/api-wallet/EVMSignMethods";
+import { UserInfo } from "@/components/api-wallet/UserInfo";
 import { BackButton } from "@/components/BackButton";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
 
-export default function Home() {
-  const router = useRouter();
-  const { isAuthenticated, isLoading } = useApiWallet();
+export default function ApiWalletPage() {
+  const { 
+    selectedNetwork, 
+    isAuthenticated, 
+    isLoading
+  } = useApiWallet();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/api-wallet/wallet');
-    }
-  }, [isAuthenticated, router]);
-
-  // Show loading state while checking authentication
   if (isLoading) {
     return (
       <div className="relative min-h-screen flex items-center justify-center">
@@ -28,8 +24,8 @@ export default function Home() {
     );
   }
 
-  // Don't render the auth form if user is authenticated (redirect will happen)
-  if (isAuthenticated) {
+  // Don't render if not authenticated (redirect will happen)
+  if (!isAuthenticated) {
     return null;
   }
 
@@ -40,27 +36,31 @@ export default function Home() {
 
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative py-8 sm:py-4">
+          <div className="relative py-4">
             <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
-              Magic API Wallets
+              Magic API Wallet
             </h1>
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 rounded-3xl blur-2xl opacity-40 scale-110"></div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex flex-col items-center gap-8 w-full max-w-2xl">
-          <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-4 text-foreground">
-              Get Started
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              Connect your account to access your secure TEE wallet
-            </p>
+        <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl">
+          {/* Left Side - Wallet Profile */}
+          <div className="flex flex-col gap-8 w-full lg:w-1/3">
+            <UserInfo />
           </div>
 
-          {/* Sign In Button */}
-          <SignInButton />
+          {/* Right Side - Signing Methods */}
+          <div className="w-full lg:w-2/3">
+            {/* Show Solana methods if Solana network is selected */}
+            {selectedNetwork === "solana" ? (
+              <SolanaSignMethods />
+            ) : (
+              /* Default to EVM methods for Ethereum and other EVM networks */
+              <EVMSignMethods />
+            )}
+          </div>
         </div>
       </div>
     </div>

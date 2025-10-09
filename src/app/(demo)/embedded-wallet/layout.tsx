@@ -1,7 +1,7 @@
 "use client";
 
-import { MagicService } from "@/lib/get-magic";
-import { WalletProvider } from "@/contexts/WalletContext";
+import { MagicService } from "@/lib/embedded-wallet/get-magic";
+import { WalletProvider } from "@/contexts/EmbeddedWalletContext";
 import { MobileMenu } from "@/components/MobileMenu";
 import { GitHubButton } from "@/components/GitHubButton";
 import { MagicDocsButton } from "@/components/MagicDocsButton";

@@ -1,19 +1,18 @@
-import { MagicService } from "../../lib/get-magic";
+import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { parseEther, ethers } from "ethers";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { SigningMethodsLayout } from "../SigningMethodsLayout";
+import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
 import {
   PERSONAL_SIGN_PAYLOAD,
   SIGN_TYPED_DATA_V1_PAYLOAD,
   SIGN_TYPED_DATA_V3_PAYLOAD,
   SIGN_TYPED_DATA_V4_PAYLOAD,
-} from "../../const/sign-typed-data-payloads";
+} from "@/const/sign-typed-data-payloads";
+import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 
-export function SignMethods({
-  publicAddress,
-}: {
-  publicAddress: string | null;
-}) {
+export function SignMethods() {
+  const { publicAddress } = useEmbeddedWallet();
+  
   const signTransactionPayload = {
     from: publicAddress,
     to: publicAddress,
