@@ -41,12 +41,12 @@ export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
       );
 
       await MagicService.magic.oauth2.loginWithRedirect({
-        redirectURI: `${window.location.origin}/embedded-wallet`,
+        redirectURI: `${window.location.origin}/embedded-wallet/callback`,
         provider,
       });
       logToConsole(
         LogType.SUCCESS,
-        LogMethod.MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK,
+        LogMethod.MAGIC_OAUTH_LOGIN_WITH_REDIRECT,
         "Magic Link sent successfully",
         {}
       );
@@ -54,7 +54,7 @@ export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
       const errorMsg = (error as Error).message || "Failed to send magic link";
       logToConsole(
         LogType.ERROR,
-        LogMethod.MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK,
+        LogMethod.MAGIC_OAUTH_LOGIN_WITH_REDIRECT,
         errorMsg,
         { error }
       );
