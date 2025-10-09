@@ -39,7 +39,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="relative min-h-screen overflow-hidden">
+        <div className="relative min-h-screen max-[740px]:overflow-hidden">
           {/* Animated Background Orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="floating-orb absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-xl"></div>

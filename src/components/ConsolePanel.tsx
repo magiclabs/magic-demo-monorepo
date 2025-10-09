@@ -88,7 +88,7 @@ export function ConsolePanel() {
       {isSmallScreen && <div className="w-12 flex-shrink-0" />}
 
       <div
-        className={`h-screen bg-black/90 backdrop-blur-sm border-l border-white/10 flex flex-col transition-all duration-300 ${
+        className={`h-screen bg-black/90 backdrop-blur-sm border-l border-white/10 flex flex-col transition-all duration-300 min-[741px]:self-start min-[741px]:sticky min-[741px]:top-0 ${
           isSmallScreen
             ? `fixed right-0 top-0 z-50 ${isCollapsed ? "w-12" : "w-96"}`
             : isCollapsed
