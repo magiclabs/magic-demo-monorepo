@@ -27,59 +27,59 @@ export const providerConfigs: OAuthProvidersConfig = {
     name: "google",
     title: "Google",
   },
-  github: {
-    logo: LogoGitHub,
-    name: "github",
-    title: "GitHub",
-  },
-  facebook: {
-    logo: LogoFacebook,
-    name: "facebook",
-    title: "Facebook",
-  },
-  apple: {
-    logo: LogoApple,
-    name: "apple",
-    title: "Apple",
-  },
-  linkedin: {
-    logo: LogoLinkedIn,
-    name: "linkedin",
-    title: "LinkedIn",
-  },
-  bitbucket: {
-    logo: LogoBitBucket,
-    name: "bitbucket",
-    title: "Bitbucket",
-  },
-  gitlab: {
-    logo: LogoGitLab,
-    name: "gitlab",
-    title: "GitLab",
-  },
-  twitter: {
-    logo: LogoTwitter,
-    name: "twitter",
-    title: "X (Twitter)",
-  },
-  discord: {
-    logo: LogoDiscord,
-    name: "discord",
-    title: "Discord",
-  },
-  twitch: {
-    logo: LogoTwitch,
-    name: "twitch",
-    title: "Twitch",
-  },
-  microsoft: {
-    logo: LogoMicrosoft,
-    name: "microsoft",
-    title: "Microsoft",
-  },
-  telegram: {
-    logo: LogoTelegram,
-    name: "telegram",
-    title: "Telegram",
-  },
+  // github: {
+  //   logo: LogoGitHub,
+  //   name: "github",
+  //   title: "GitHub",
+  // },
+  // facebook: {
+  //   logo: LogoFacebook,
+  //   name: "facebook",
+  //   title: "Facebook",
+  // },
+  // apple: {
+  //   logo: LogoApple,
+  //   name: "apple",
+  //   title: "Apple",
+  // },
+  // linkedin: {
+  //   logo: LogoLinkedIn,
+  //   name: "linkedin",
+  //   title: "LinkedIn",
+  // },
+  // bitbucket: {
+  //   logo: LogoBitBucket,
+  //   name: "bitbucket",
+  //   title: "Bitbucket",
+  // },
+  // gitlab: {
+  //   logo: LogoGitLab,
+  //   name: "gitlab",
+  //   title: "GitLab",
+  // },
+  // twitter: {
+  //   logo: LogoTwitter,
+  //   name: "twitter",
+  //   title: "X (Twitter)",
+  // },
+  // discord: {
+  //   logo: LogoDiscord,
+  //   name: "discord",
+  //   title: "Discord",
+  // },
+  // twitch: {
+  //   logo: LogoTwitch,
+  //   name: "twitch",
+  //   title: "Twitch",
+  // },
+  // microsoft: {
+  //   logo: LogoMicrosoft,
+  //   name: "microsoft",
+  //   title: "Microsoft",
+  // },
+  // telegram: {
+  //   logo: LogoTelegram,
+  //   name: "telegram",
+  //   title: "Telegram",
+  // },
 };
