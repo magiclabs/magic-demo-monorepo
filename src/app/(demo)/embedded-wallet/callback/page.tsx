@@ -38,7 +38,7 @@ export default function CallbackPage() {
           errorMsg,
           { error }
         );
-        router.push("/embedded-wallet/wallet");
+        router.push("/embedded-wallet");
       });
   }, []);
 
