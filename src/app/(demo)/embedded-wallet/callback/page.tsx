@@ -26,6 +26,8 @@ export default function CallbackPage() {
           "Login with redirect successful",
           result
         );
+
+        router.push("/embedded-wallet/wallet");
       })
       .catch((error: unknown) => {
         const errorMsg =
@@ -36,9 +38,7 @@ export default function CallbackPage() {
           errorMsg,
           { error }
         );
-      })
-      .finally(() => {
-        router.push("/embedded-wallet");
+        router.push("/embedded-wallet/wallet");
       });
   }, []);
 
