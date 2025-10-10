@@ -13,6 +13,7 @@ export enum LogMethod {
   MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP = 'magic.auth.loginWithEmailOTP',
   MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK = 'magic.auth.loginWithMagicLink',
   MAGIC_OAUTH_LOGIN_WITH_POPUP = 'magic.oauth2.loginWithPopup',
+  MAGIC_OAUTH_LOGIN_WITH_REDIRECT = 'magic.oauth2.loginWithRedirect',
   MAGIC_USER_IS_LOGGED_IN = 'magic.user.isLoggedIn',
   MAGIC_USER_GET_INFO = 'magic.user.getInfo',
   MAGIC_USER_LOGOUT = 'magic.user.logout',

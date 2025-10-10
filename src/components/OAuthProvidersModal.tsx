@@ -104,16 +104,25 @@ export function OAuthProvidersModal({
 
         {/* Providers */}
         <div className="flex flex-col gap-2 max-h-[600px] overflow-y-auto scrollbar pr-1">
-          {Object.values(providerConfigs).map((provider) => (
-            <div
-              key={provider.name}
-              className="flex items-center gap-5 p-4 cursor-pointer hover:bg-white/10 active:bg-white/20 rounded-xl"
-              onClick={() => handleProviderClick(provider.name)}
-            >
-              <provider.logo />
-              <p className="text-md text-muted-foreground">{provider.title}</p>
-            </div>
-          ))}
+          {Object.values(providerConfigs).map((provider) => {
+            if (
+              provider.name === "telegram" &&
+              modalState.method === "redirect"
+            )
+              return null;
+            return (
+              <div
+                key={provider.name}
+                className="flex items-center gap-5 p-4 cursor-pointer hover:bg-white/10 active:bg-white/20 rounded-xl"
+                onClick={() => handleProviderClick(provider.name)}
+              >
+                <provider.logo />
+                <p className="text-md text-muted-foreground">
+                  {provider.title}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
