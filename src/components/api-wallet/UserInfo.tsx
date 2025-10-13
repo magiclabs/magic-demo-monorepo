@@ -103,7 +103,7 @@ export function UserInfo() {
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               disabled={isLoading}
-              className="flex items-center justify-between w-full p-3 bg-black/30 rounded-xl border border-white/10 text-white hover:bg-black/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-between w-full p-3 bg-black/30 rounded-xl border border-white/10 text-white hover:bg-black/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <div className="flex items-center gap-2">
                 <div
@@ -217,7 +217,7 @@ export function UserInfo() {
         <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
           <button
             onClick={handleLogout}
-            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg"
+            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg cursor-pointer"
           >
             Logout
           </button>

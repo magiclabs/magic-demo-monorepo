@@ -79,7 +79,7 @@ export function CodeBlock({
       {/* Copy button */}
       <button
         onClick={handleCopy}
-        className="absolute top-3 right-3 p-2 rounded-lg bg-black/50 border border-white/10 text-white/70 hover:text-white hover:bg-black/70 transition-all duration-200 opacity-0 group-hover:opacity-100"
+        className="absolute top-3 right-3 p-2 rounded-lg bg-black/50 border border-white/10 text-white/70 hover:text-white hover:bg-black/70 transition-all duration-200 opacity-0 group-hover:opacity-100 cursor-pointer"
         title={copied ? 'Copied!' : 'Copy code'}
       >
         {copied ? (
