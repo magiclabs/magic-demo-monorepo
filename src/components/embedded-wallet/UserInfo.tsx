@@ -77,7 +77,7 @@ export function UserInfo() {
             <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
               User ID
             </label>
-            <div className="text-lg font-semibold text-white font-mono text-sm break-all">
+            <div className="font-semibold text-white font-mono text-sm break-all">
               {userInfo.issuer}
             </div>
           </div>
@@ -90,7 +90,7 @@ export function UserInfo() {
           <div className="relative dropdown-container">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center justify-between w-full p-3 bg-black/30 rounded-xl border border-white/10 text-white hover:bg-black/40 transition-colors"
+              className="flex items-center justify-between w-full p-3 bg-black/30 rounded-xl border border-white/10 text-white hover:bg-black/40 transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-2">
                 <div
@@ -192,7 +192,7 @@ export function UserInfo() {
         <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
           <button
             onClick={handleLogout}
-            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg"
+            className="text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors px-4 py-2 rounded-lg cursor-pointer"
           >
             Logout
           </button>
