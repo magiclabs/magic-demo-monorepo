@@ -6,7 +6,13 @@ import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 export function UserInfo() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { publicAddress, selectedNetwork, handleNetworkChange, userInfo, handleLogout } = useEmbeddedWallet();
+  const {
+    publicAddress,
+    selectedNetwork,
+    handleNetworkChange,
+    userInfo,
+    handleLogout,
+  } = useEmbeddedWallet();
 
   const networks = [
     { value: "polygon", label: "Polygon", color: "bg-purple-500" },
@@ -14,8 +20,8 @@ export function UserInfo() {
     { value: "optimism", label: "Optimism", color: "bg-red-500" },
     { value: "hedera", label: "Hedera", color: "bg-green-500" },
     { value: "solana", label: "Solana", color: "bg-orange-500" },
+    { value: "algorand", label: "Algorand", color: "bg-blue-500" },
   ];
-
 
   // Close dropdown when clicking outside
   useEffect(() => {

@@ -4,6 +4,7 @@ import { SolanaExtension } from "@magic-ext/solana";
 import { HederaExtension } from "@magic-ext/hedera";
 import { EVMExtension } from "@magic-ext/evm";
 import { ethers } from "ethers";
+import { AlgorandExtension } from "@magic-ext/algorand";
 
 const customPolygonOptions = {
   rpcUrl: "https://polygon-rpc.com/", // Polygon RPC URL
@@ -26,12 +27,15 @@ export class MagicService {
         extensions: [
           new OAuthExtension(),
           new SolanaExtension({
-            rpcUrl: "https://api.devnet.solana.com"
+            rpcUrl: "https://api.devnet.solana.com",
           }),
           new HederaExtension({
-            network: 'mainnet',
+            network: "mainnet",
           }),
           new EVMExtension([customPolygonOptions, customOptimismOptions]),
+          new AlgorandExtension({
+            rpcUrl: "https://testnet-api.algonode.cloud",
+          }),
         ],
       });
     }
