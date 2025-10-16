@@ -7,6 +7,7 @@ interface ButtonProps {
   variant?: "primary" | "secondary";
   glow?: boolean;
   className?: string;
+  fullWidth?: boolean;
 }
 
 const variants = {
@@ -27,13 +28,17 @@ export const Button = ({
   variant = "primary",
   className,
   glow,
+  fullWidth = false,
 }: ButtonProps) => {
   const { buttonClassName, gradientColor, glowColor } = variants[variant];
   const primaryVariant = variant === "primary";
 
   return (
     <div
-      className="p-px rounded-2xl h-fit overflow-auto hover:opacity-85 active:scale-95 transition-all duration-200 ease-out whitespace-nowrap"
+      className={cn(
+        "p-px rounded-2xl h-fit w-fit overflow-auto hover:opacity-85 active:scale-95 transition-all duration-200 ease-out whitespace-nowrap",
+        fullWidth && "w-full"
+      )}
       style={{
         ...(glow && {
           boxShadow: glowColor,
@@ -46,9 +51,10 @@ export const Button = ({
     >
       <div
         className={cn(
-          "px-6 py-3 rounded-2xl font-semibold cursor-pointer",
+          "px-6 py-3 rounded-2xl font-semibold cursor-pointer w-fit",
           buttonClassName,
-          className
+          className,
+          fullWidth && "w-full"
         )}
         style={{
           ...(primaryVariant && {

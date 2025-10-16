@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "./Button";
 import logoGithub from "public/logos/logo-github.svg";
 import iconDoc from "public/icons/icon-doc.svg";
+import { BackButton } from "./BackButton";
 
 export const Header = () => {
   return (
@@ -27,6 +28,7 @@ export const Header = () => {
       </a>
 
       <div className="flex items-center gap-4">
+        <BackButton className="hidden sm:block" />
         <a
           href="https://github.com/magiclabs/magic-demo-monorepo"
           target="_blank"
