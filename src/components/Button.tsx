@@ -33,7 +33,7 @@ export const Button = ({
 
   return (
     <div
-      className="p-px rounded-2xl h-fit overflow-auto w-fit hover:opacity-85 active:scale-95 transition-all duration-200 ease-out"
+      className="p-px rounded-2xl h-fit overflow-auto hover:opacity-85 active:scale-95 transition-all duration-200 ease-out whitespace-nowrap"
       style={{
         ...(glow && {
           boxShadow: glowColor,
