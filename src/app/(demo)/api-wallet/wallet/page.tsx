@@ -5,23 +5,13 @@ import { EVMSignMethods } from "@/components/api-wallet/EVMSignMethods";
 import { UserInfo } from "@/components/api-wallet/UserInfo";
 import { BackButton } from "@/components/BackButton";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 export default function ApiWalletPage() {
-  const { 
-    selectedNetwork, 
-    isAuthenticated, 
-    isLoading
-  } = useApiWallet();
+  const { selectedNetwork, isAuthenticated, isLoading } = useApiWallet();
 
   if (isLoading) {
-    return (
-      <div className="relative min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Checking authentication...</p>
-        </div>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   // Don't render if not authenticated (redirect will happen)

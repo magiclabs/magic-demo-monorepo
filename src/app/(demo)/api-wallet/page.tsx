@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { SignInButton } from "../../../components/api-wallet/AuthButtons";
 import { BackButton } from "@/components/BackButton";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 export default function Home() {
   const router = useRouter();
@@ -12,20 +13,13 @@ export default function Home() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/api-wallet/wallet');
+      router.push("/api-wallet/wallet");
     }
   }, [isAuthenticated, router]);
 
   // Show loading state while checking authentication
-  if (isLoading) {
-    return (
-      <div className="relative min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Checking authentication...</p>
-        </div>
-      </div>
-    );
+  if (true) {
+    return <LoadingScreen />;
   }
 
   // Don't render the auth form if user is authenticated (redirect will happen)
