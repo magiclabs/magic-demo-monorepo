@@ -3,30 +3,14 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="floating-orb absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-xl"></div>
-        <div
-          className="floating-orb absolute top-40 right-20 w-48 h-48 bg-gradient-to-r from-accent/15 to-primary/15 rounded-full blur-2xl"
-          style={{ animationDelay: "2s" }}
-        ></div>
-        <div
-          className="floating-orb absolute bottom-32 left-1/4 w-40 h-40 bg-gradient-to-r from-secondary/20 to-accent/20 rounded-full blur-xl"
-          style={{ animationDelay: "4s" }}
-        ></div>
-      </div>
-
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative py-4">
-            <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
+            <h1 className="text-6xl mb-4 leading-tight font-gt-super">
               Choose Wallet Type
             </h1>
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 rounded-3xl blur-2xl opacity-40 scale-110"></div>
-          </div>
-          <p className="text-muted-foreground text-xl">
-            Select the type of wallet you&apos;d like to use
+          <p className="text-muted-foreground text-xl max-w-2xl text-center">
+          Over 7 years of proven reliability and performance. Spin up wallets, trigger onchain actions, and stay compliant—all with one powerful, production-ready API or White-label Embedded Wallets.
           </p>
         </div>
 
