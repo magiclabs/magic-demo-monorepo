@@ -11,8 +11,8 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ConsoleProvider>
-      <div className="relative min-h-screen max-[740px]:overflow-hidden">
-        <div className="min-h-screen flex">
+      <div className="relative  max-[740px]:overflow-hidden">
+        <div className=" flex">
           <div className="flex-1 flex flex-col">
             <Header />
             <div className="flex-1 relative max-[740px]:overflow-hidden my-10">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, ReactNode, useEffect } from "react";
-import { BackButton } from "./BackButton";
 
 interface MobileMenuProps {
   children?: ReactNode;
@@ -81,13 +80,7 @@ export function MobileMenu({ children, hasConsole = false }: MobileMenuProps) {
         }`}
       >
         <div className="p-6 pt-20">
-          <div className="flex flex-col gap-4">
-            {children}
-
-            <div onClick={closeMenu}>
-              <BackButton className="w-full" />
-            </div>
-          </div>
+          <div className="flex flex-col gap-4">{children}</div>
         </div>
       </div>
     </>

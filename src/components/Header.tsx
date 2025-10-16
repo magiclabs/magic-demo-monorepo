@@ -5,9 +5,16 @@ import Image from "next/image";
 import { Button } from "./Button";
 import logoGithub from "public/logos/logo-github.svg";
 import iconDoc from "public/icons/icon-doc.svg";
-import { BackButton } from "./BackButton";
+import iconExpress from "public/icons/icon-express.svg";
+import iconEmbedded from "public/icons/icon-embedded.svg";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const Header = () => {
+  const pathname = usePathname();
+  const isEmbeddedWalletRoute = pathname?.startsWith("/embedded-wallet");
+  const isApiWalletRoute = pathname?.startsWith("/api-wallet");
+
   return (
     <div className="px-10 py-6 flex items-center justify-between">
       <div
@@ -27,8 +34,37 @@ export const Header = () => {
         <Image src={logoMagic} alt="Magic" width={199} height={40} />
       </a>
 
-      <div className="flex items-center gap-4">
-        <BackButton className="hidden sm:block" />
+      <div className="flex items-center gap-4 z-10">
+        {isApiWalletRoute && (
+          <Link href="/embedded-wallet" className="flex-shrink-0">
+            <Button variant="secondary" onClick={() => {}} glow>
+              <div className="flex items-center gap-2">
+                <Image
+                  src={iconEmbedded}
+                  alt="Embedded Wallet"
+                  width={24}
+                  height={24}
+                />
+                Try Embedded Wallet
+              </div>
+            </Button>
+          </Link>
+        )}
+        {isEmbeddedWalletRoute && (
+          <Link href="/api-wallet" className="flex-shrink-0">
+            <Button variant="secondary" onClick={() => {}} glow>
+              <div className="flex items-center gap-2">
+                <Image
+                  src={iconExpress}
+                  alt="Express API Wallet"
+                  width={24}
+                  height={24}
+                />
+                Try API Wallet
+              </div>
+            </Button>
+          </Link>
+        )}
         <a
           href="https://github.com/magiclabs/magic-demo-monorepo"
           target="_blank"

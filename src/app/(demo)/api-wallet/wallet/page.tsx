@@ -3,7 +3,7 @@
 import { SolanaSignMethods } from "@/components/api-wallet/SolanaSignMethods";
 import { EVMSignMethods } from "@/components/api-wallet/EVMSignMethods";
 import { UserInfo } from "@/components/api-wallet/UserInfo";
-import { BackButton } from "@/components/BackButton";
+
 import { useApiWallet } from "@/contexts/ApiWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 
@@ -22,8 +22,6 @@ export default function ApiWalletPage() {
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">
-        <BackButton className="hidden sm:block" />
-
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="relative py-4">

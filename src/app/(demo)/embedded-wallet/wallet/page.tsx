@@ -5,7 +5,6 @@ import { SignMethods } from "@/components/embedded-wallet/wallet/SignMethods";
 import { HederaSignMethods } from "@/components/embedded-wallet/wallet/HederaSignMethods";
 import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSignMethods";
 import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
-import { BackButton } from "@/components/BackButton";
 import { UserMethods } from "@/components/embedded-wallet/wallet/UserMethods";
 import { WalletMethods } from "@/components/embedded-wallet/wallet/WalletMethods";
 
@@ -15,8 +14,6 @@ export default function WalletPage() {
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">
-        <BackButton className="hidden sm:block" />
-
         {/* Header */}
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="relative py-4">

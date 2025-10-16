@@ -31,7 +31,7 @@ export default function Home() {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center gap-20">
+    <div className="relative  flex flex-col items-center gap-20">
       <GetStartedHeader
         title="Express API Wallet"
         description="Connect your account to access your secure TEE wallet."
