@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
-import { GetStartedHeader } from "@/components/GetStartedHeader";
 import { Button } from "@/components/Button";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import logoGoogle from "public/logos/logo-google.svg";
+import { PageHeader } from "@/components/PageHeader";
 
 export default function Home() {
   const router = useRouter();
@@ -31,9 +31,10 @@ export default function Home() {
   }
 
   return (
-    <div className="relative  flex flex-col items-center gap-20">
-      <GetStartedHeader
-        title="Express API Wallet"
+    <div className="flex flex-col items-center gap-20">
+      <PageHeader
+        product="Express API Wallet"
+        title="Get Started"
         description="Connect your account to access your secure TEE wallet."
       />
 
