@@ -4,6 +4,7 @@ import Link from "next/link";
 import iconEmbedded from "public/icons/icon-embedded.svg";
 import iconExpress from "public/icons/icon-express.svg";
 import Image from "next/image";
+import { getColorWithOpacity } from "@/utils/opacity-converter";
 
 interface ProductButtonProps {
   variant: "embedded" | "express";
@@ -22,12 +23,6 @@ const productMap = {
     icon: iconExpress,
     highlightColor: "#90F0D3",
   },
-};
-
-const getColorWithOpacity = (color: string, opacity: number) => {
-  return `${color}${Math.round(opacity * 255)
-    .toString(16)
-    .padStart(2, "0")}`;
 };
 
 export const ProductButton = ({ variant }: ProductButtonProps) => {
@@ -59,7 +54,10 @@ export const ProductButton = ({ variant }: ProductButtonProps) => {
       }}
     >
       <Image src={icon} alt={label} width={24} height={24} />
-      <span className="text-[19px] text-secondary font-jetbrains text-center uppercase">
+      <span
+        className="text-[19px] font-jetbrains text-center uppercase"
+        style={{ color: "rgba(255, 255, 255, 0.72)" }}
+      >
         {label}
       </span>
     </Link>
