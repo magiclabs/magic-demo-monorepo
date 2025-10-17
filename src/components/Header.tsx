@@ -5,8 +5,8 @@ import Image from "next/image";
 import { Button } from "./Button";
 import logoGithub from "public/logos/logo-github.svg";
 import iconDoc from "public/icons/icon-doc.svg";
-import iconExpress from "public/icons/icon-express.svg";
-import iconEmbedded from "public/icons/icon-embedded.svg";
+import iconExpress from "public/icons/icon-cube.svg";
+import iconEmbedded from "public/icons/icon-wallet.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

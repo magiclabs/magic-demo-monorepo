@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import iconEmbedded from "public/icons/icon-embedded.svg";
-import iconExpress from "public/icons/icon-express.svg";
+import iconEmbedded from "public/icons/icon-wallet.svg";
+import iconExpress from "public/icons/icon-cube.svg";
 import Image from "next/image";
 import { getColorWithOpacity } from "@/utils/opacity-converter";
 

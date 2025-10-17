@@ -49,7 +49,7 @@ export const Button = ({
         )}, ${getColorWithOpacity(gradientColor, 0.15)})`,
       }}
     >
-      <div
+      <button
         className={cn(
           "px-6 py-3 rounded-2xl font-semibold cursor-pointer w-fit",
           buttonClassName,
@@ -65,7 +65,7 @@ export const Button = ({
         onClick={onClick}
       >
         {children}
-      </div>
+      </button>
     </div>
   );
 };

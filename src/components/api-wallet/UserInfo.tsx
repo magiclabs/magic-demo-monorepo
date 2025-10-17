@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { Card } from "@/components/Card";
+import IconProfile from "public/icons/icon-profile.svg";
 
 export function UserInfo() {
-  const { 
-    publicAddress, 
-    selectedNetwork, 
-    userInfo, 
-    isLoading, 
+  const {
+    publicAddress,
+    selectedNetwork,
+    userInfo,
+    isLoading,
     handleNetworkChange,
-    handleLogout
+    handleLogout,
   } = useApiWallet();
   const { name, email } = userInfo || {};
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -23,7 +25,7 @@ export function UserInfo() {
   // Handle network change
   const handleNetworkChangeClick = async (network: string) => {
     if (network === selectedNetwork) return;
-    
+
     try {
       await handleNetworkChange(network);
       setIsDropdownOpen(false);
@@ -51,31 +53,12 @@ export function UserInfo() {
   }, [isDropdownOpen]);
 
   return (
-    <div className="glass p-8 rounded-2xl w-full max-w-2xl glow-primary">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex flex-shrink-0 items-center justify-center">
-          <svg
-            className="w-6 h-6 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-            />
-          </svg>
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold text-white">Wallet Profile</h2>
-          <p className="text-muted-foreground">
-            Your secure TEE wallet information
-          </p>
-        </div>
-      </div>
-
+    <Card
+      icon={IconProfile}
+      title="Wallet Profile"
+      subtitle="Your secure TEE wallet information"
+      className="w-full max-w-2xl"
+    >
       <div className="space-y-4">
         {name && (
           <div className="flex flex-col gap-2">
@@ -112,10 +95,9 @@ export function UserInfo() {
                   } rounded-full`}
                 ></div>
                 <span>
-                  {isLoading 
-                    ? "Loading..." 
-                    : networks.find((n) => n.value === selectedNetwork)?.label
-                  }
+                  {isLoading
+                    ? "Loading..."
+                    : networks.find((n) => n.value === selectedNetwork)?.label}
                 </span>
               </div>
               {isLoading ? (
@@ -223,6 +205,6 @@ export function UserInfo() {
           </button>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
