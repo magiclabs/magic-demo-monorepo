@@ -28,7 +28,7 @@ export const WalletAddress = ({
         <span className="font-mono text-lg text-white break-all md:truncate">
           {address ?? (
             <div className="flex items-center gap-2">
-              <div className="animate-spin w-4 h-4 border-2 border-primary border-t-transparent rounded-full"></div>
+              <div className="animate-spin w-4 h-4 border-2 border-slate-4 border-t-transparent rounded-full"></div>
               Loading wallet...
             </div>
           )}
