@@ -77,95 +77,6 @@ const ModalInput = ({
   );
 };
 
-const ModalIcon = ({ type }: { type: ModalProps["type"] }) => {
-  const iconClass = "w-8 h-8";
-
-  switch (type) {
-    case "otp":
-      return (
-        <svg
-          className={`${iconClass} text-primary`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          />
-        </svg>
-      );
-    case "mfa":
-      return (
-        <svg
-          className={`${iconClass} text-secondary`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-          />
-        </svg>
-      );
-    case "recovery":
-      return (
-        <svg
-          className={`${iconClass} text-warning`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      );
-    case "success":
-      return (
-        <svg
-          className={`${iconClass} text-success`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 13l4 4L19 7"
-          />
-        </svg>
-      );
-    case "error":
-      return (
-        <svg
-          className={`${iconClass} text-destructive`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      );
-    default:
-      return null;
-  }
-};
-
 export const Modal = ({
   isOpen,
   type,
@@ -247,7 +158,7 @@ export const Modal = ({
       />
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-md bg-slate-1 border border-white/10 rounded-2xl shadow-2xl p-6 space-y-6">
+      <div className="relative w-full max-w-md bg-slate-1 border border-slate-4 rounded-3xl shadow-2xl p-6 space-y-6">
         {/* Header with Icon */}
         <div className="flex flex-col items-center justify-between gap-6">
           <div className="flex w-full justify-end">
