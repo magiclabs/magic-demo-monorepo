@@ -17,8 +17,8 @@ export function UserInfo() {
   } = useEmbeddedWallet();
 
   const networks = [
-    { value: "polygon", label: "Polygon" },
     { value: "ethereum", label: "Ethereum" },
+    { value: "polygon", label: "Polygon" },
     { value: "optimism", label: "Optimism" },
     { value: "hedera", label: "Hedera" },
     { value: "solana", label: "Solana" },
