@@ -81,7 +81,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
     const functionName = tab?.functionName || "Unknown function";
     return (
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+        <label className="text-sm font-medium text-secondary tracking-wide">
           Function
         </label>
         <div className="p-4 rounded-lg bg-[#1e1e1e] border border-[#3e3e3e] font-mono text-sm leading-relaxed">
@@ -118,7 +118,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
 
           {tab?.payload != null && (
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="text-sm font-medium text-secondary tracking-wide">
                 Request Payload
               </label>
               <div className="relative">
@@ -132,7 +132,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
 
           {result && (
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="text-sm font-medium text-secondary tracking-wide">
                 Method Result
               </label>
               <div className="relative">
@@ -148,7 +148,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
 
           {error && (
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="text-sm font-medium text-secondary tracking-wide">
                 Error Response
               </label>
               <div className="relative">

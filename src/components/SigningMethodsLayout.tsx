@@ -80,7 +80,7 @@ export function SigningMethodsLayout({
     const functionName = tab?.functionName || "Unknown function";
     return (
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+        <label className="text-sm font-medium text-secondary tracking-wide">
           Function
         </label>
         <div className="p-4 rounded-lg bg-[#1e1e1e] border border-[#3e3e3e] font-mono text-sm leading-relaxed">
@@ -122,7 +122,7 @@ export function SigningMethodsLayout({
 
                 {currentTabData?.payload != null && (
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                    <label className="text-sm font-medium text-secondary tracking-wide">
                       Request Payload
                     </label>
                     <div className="relative">
@@ -136,7 +136,7 @@ export function SigningMethodsLayout({
 
                 {signature && (
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                    <label className="text-sm font-medium text-secondary tracking-wide">
                       Signature Response
                     </label>
                     <div className="relative">
@@ -152,7 +152,7 @@ export function SigningMethodsLayout({
 
                 {error && (
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                    <label className="text-sm font-medium text-secondary tracking-wide">
                       Error Response
                     </label>
                     <div className="relative">

@@ -7,6 +7,7 @@ import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSig
 import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { UserMethods } from "@/components/embedded-wallet/wallet/UserMethods";
 import { WalletMethods } from "@/components/embedded-wallet/wallet/WalletMethods";
+import { PageHeader } from "@/components/PageHeader";
 
 export default function WalletPage() {
   const { selectedNetwork } = useEmbeddedWallet();
@@ -14,20 +15,12 @@ export default function WalletPage() {
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">
-        {/* Header */}
-        <div className="flex flex-col items-center gap-6 text-center">
-          <div className="relative py-4">
-            <h1 className="text-6xl font-bold gradient-text mb-4 leading-tight">
-              Magic Wallet
-            </h1>
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-secondary/30 to-accent/30 rounded-3xl blur-2xl opacity-40 scale-110"></div>
-          </div>
-        </div>
+        <PageHeader product="Embedded Wallet" title="Connected" />
 
         {/* Main Content */}
-        <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl">
+        <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl mt-8">
           {/* Left Side - Wallet Profile */}
-          <div className="flex flex-col gap-8 w-full lg:w-1/3 min-[741px]:self-start min-[741px]:sticky min-[741px]:top-8">
+          <div className="flex flex-col gap-8 w-full lg:w-1/3 min-[741px]:self-start min-[741px]:sticky min-[741px]:top-18">
             <UserInfo />
           </div>
 
