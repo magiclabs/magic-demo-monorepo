@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
-import { Button } from "@/components/Primitives";
 import { Modal } from "@/components/Modal";
 import { useConsole, LogType, LogMethod } from "@/contexts/ConsoleContext";
 import { useEmailOTPModal } from "@/hooks/useEmailOTPModal";
+import { Button } from "@/components/Button";
 
 interface EmailOTPAuthProps {
   onSuccess?: () => void;
@@ -17,11 +17,15 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { logToConsole } = useConsole();
   const router = useRouter();
-  const { modalState, handleWhitelabelEmailOTPLogin: whitelabelLogin, closeModal } = useEmailOTPModal();
+  const {
+    modalState,
+    handleWhitelabelEmailOTPLogin: whitelabelLogin,
+    closeModal,
+  } = useEmailOTPModal();
 
   // Load persisted email on component mount
   useEffect(() => {
-    const savedEmail = localStorage.getItem('magic_login_email');
+    const savedEmail = localStorage.getItem("magic_login_email");
     if (savedEmail) {
       setEmail(savedEmail);
     }
@@ -30,7 +34,7 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
   // Persist email to localStorage whenever it changes
   useEffect(() => {
     if (email) {
-      localStorage.setItem('magic_login_email', email);
+      localStorage.setItem("magic_login_email", email);
     }
   }, [email]);
 
@@ -85,7 +89,11 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
     setIsLoading(true);
     try {
       await whitelabelLogin(email, handleSuccess, (error) => {
-        logToConsole(LogType.ERROR, LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP, error);
+        logToConsole(
+          LogType.ERROR,
+          LogMethod.MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP,
+          error
+        );
       });
     } finally {
       setIsLoading(false);
@@ -93,8 +101,8 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
   };
 
   return (
-    <div className="w-full space-y-6">
-      <h3 className="text-lg font-semibold text-center text-foreground">
+    <div className="w-full space-y-4">
+      <h3 className="text-sm font-semibold text-secondary">
         Email OTP Authentication
       </h3>
       <div className="w-full">
@@ -103,7 +111,7 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
           placeholder="Enter your email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 rounded-xl glass border border-white/10 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 text-foreground placeholder-muted-foreground"
+          className="w-full p-4 text-lg rounded-xl border bg-background border-slate-4 focus:ring-2 focus:ring-white/70 focus:border-transparent outline-none transition-all duration-200 text-foreground placeholder-muted-foreground"
           disabled={isLoading}
         />
       </div>
@@ -113,57 +121,27 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
         {/* Regular Email OTP */}
         <Button
           onClick={handleEmailOTPLogin}
-          variant="primary"
-          className="flex-1 relative overflow-hidden"
+          variant="secondary"
+          fullWidth
+          className="flex flex-col gap-2"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex flex-col items-center justify-center gap-1">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            <span className="text-sm">Regular OTP</span>
-            <span className="px-2 py-1 text-xs bg-white/20 rounded-full">
-              showUI: true
-            </span>
-          </div>
+          <span>Regular OTP</span>
+          <span className="font-jetbrains font-normal text-sm text-secondary">
+            showUI: true
+          </span>
         </Button>
 
         {/* Whitelabel Email OTP */}
         <Button
           onClick={handleWhitelabelEmailOTPLogin}
-          variant="success"
-          className="flex-1 relative overflow-hidden"
+          variant="secondary"
+          fullWidth
+          className="flex flex-col gap-2"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-success/20 to-emerald-600/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex flex-col items-center justify-center gap-1">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            <span className="text-sm">Whitelabel OTP</span>
-            <span className="px-2 py-1 text-xs bg-white/20 rounded-full">
-              showUI: false
-            </span>
-          </div>
+          <span>Whitelabel OTP</span>
+          <span className="font-jetbrains font-normal text-sm text-secondary">
+            showUI: false
+          </span>
         </Button>
       </div>
 

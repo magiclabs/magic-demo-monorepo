@@ -1,15 +1,17 @@
 import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { ReactNode, useState } from "react";
-import { Button } from "./Primitives";
+import { useState } from "react";
 import { JsonBlock } from "./CodeBlock";
 import { formatPayload } from "@/utils/format";
-
+import { Card } from "./Card";
+import IconGlobeCard from "public/icons/icon-globe-card.svg";
+import { Button } from "./Button";
+import Image from "next/image";
+import IconWand from "public/icons/icon-wand.svg";
 interface Props {
   title: string;
   description: string;
   defaultTab: string;
   tabs: TabItem[];
-  icon: ReactNode;
 }
 
 interface TabItem {
@@ -21,31 +23,17 @@ interface TabItem {
 }
 
 const TabsClasses = {
-  root: "glass rounded-2xl w-full max-w-4xl glow-secondary",
+  root: "rounded-2xl w-full max-w-4xl",
   trigger:
-    "font-semibold px-6 py-4 text-muted-foreground bg-white/5 hover:text-white hover:bg-white/10 [&[data-state=active]]:text-white [&[data-state=active]]:bg-gradient-to-r [&[data-state=active]]:from-primary/20 [&[data-state=active]]:to-secondary/20 cursor-pointer rounded-xl transition-all duration-200 w-full text-left",
+    "font-semibold px-6 py-4 text-[#EDEBFF] bg-slate-1 hover:bg-white/10 [&[data-state=active]]:bg-slate-3 cursor-pointer rounded-2xl transition-all duration-200 w-full text-left",
 };
 
-export function MethodsCard({
-  title,
-  description,
-  defaultTab,
-  tabs,
-  icon,
-}: Props) {
+export function MethodsCard({ title, description, defaultTab, tabs }: Props) {
   const [currentTab, setCurrentTab] = useState<string>(defaultTab);
   const currentTabData = tabs.find((t) => t.value === currentTab);
 
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab);
-  };
-
-  const renderIcon = () => {
-    return (
-      <div className="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-full flex flex-shrink-0 items-center justify-center">
-        {icon}
-      </div>
-    );
   };
 
   return (
@@ -55,15 +43,7 @@ export function MethodsCard({
       onValueChange={handleTabChange}
       className={TabsClasses.root}
     >
-      <div className="p-6">
-        <div className="flex items-center gap-3 mb-6">
-          {renderIcon()}
-          <div>
-            <h2 className="text-2xl font-bold text-white">{title}</h2>
-            <p className="text-muted-foreground">{description}</p>
-          </div>
-        </div>
-
+      <Card icon={IconGlobeCard} title={title} subtitle={description}>
         <div className="flex flex-col gap-6 max-[740px]:gap-4 min-[741px]:flex-row">
           {/* Tabs - Above content on mobile, left side on desktop */}
           <div className="w-full min-[741px]:w-1/3">
@@ -83,7 +63,7 @@ export function MethodsCard({
           {/* Content - Below tabs on mobile, right side on desktop */}
           <MethodCardContent tab={currentTabData} key={currentTabData?.value} />
         </div>
-      </div>
+      </Card>
     </Tabs>
   );
 }
@@ -101,11 +81,11 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
     const functionName = tab?.functionName || "Unknown function";
     return (
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+        <label className="text-sm font-medium text-secondary tracking-wide">
           Function
         </label>
-        <div className="p-4 rounded-lg bg-[#1e1e1e] border border-[#3e3e3e] font-mono text-sm leading-relaxed">
-          <span className="text-[#9cdcfe]">{functionName}</span>
+        <div className="p-4 rounded-lg bg-slate-1 border border-slate-4 font-mono text-sm leading-relaxed">
+          <span className="text-[#9AD9FB]">{functionName}</span>
         </div>
       </div>
     );
@@ -138,7 +118,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
 
           {tab?.payload != null && (
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="text-sm font-medium text-secondary tracking-wide">
                 Request Payload
               </label>
               <div className="relative">
@@ -152,7 +132,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
 
           {result && (
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="text-sm font-medium text-secondary tracking-wide">
                 Method Result
               </label>
               <div className="relative">
@@ -168,7 +148,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
 
           {error && (
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="text-sm font-medium text-secondary tracking-wide">
                 Error Response
               </label>
               <div className="relative">
@@ -195,25 +175,11 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
         </div>
 
         {tab?.handler && (
-          <Button
-            onClick={handleExecute}
-            variant="secondary"
-            disabled={isLoading}
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-              />
-            </svg>
-            {isLoading ? "Executing..." : "Execute"}
+          <Button onClick={handleExecute} fullWidth disabled={isLoading}>
+            <div className="flex items-center justify-between">
+              {isLoading ? "Executing..." : "Execute"}
+              <Image src={IconWand} alt="Wand" width={22} height={22} />
+            </div>
           </Button>
         )}
       </div>

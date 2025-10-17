@@ -1,8 +1,173 @@
 @import "tailwindcss";
 
+/* GT Super Display Font */
+@font-face {
+  font-family: "GT Super Display";
+  src: url("/fonts/gt-super/GT-Super-Display-Regular.woff2") format("woff2"),
+    url("/fonts/gt-super/GT-Super-Display-Regular.woff") format("woff"),
+    url("/fonts/gt-super/GT-Super-Display-Regular.ttf") format("truetype"),
+    url("/fonts/gt-super/GT-Super-Display-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Super Display";
+  src: url("/fonts/gt-super/GT-Super-Display-Regular-Italic.woff2")
+      format("woff2"),
+    url("/fonts/gt-super/GT-Super-Display-Regular-Italic.woff") format("woff"),
+    url("/fonts/gt-super/GT-Super-Display-Regular-Italic.ttf")
+      format("truetype"),
+    url("/fonts/gt-super/GT-Super-Display-Regular-Italic.otf")
+      format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* JetBrains Mono Font */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-ThinItalic.ttf")
+    format("truetype");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-ExtraLight.ttf")
+    format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-ExtraLightItalic.ttf")
+    format("truetype");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-LightItalic.ttf")
+    format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-MediumItalic.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-SemiBold.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-SemiBoldItalic.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-BoldItalic.ttf")
+    format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-ExtraBold.ttf")
+    format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono/JetBrainsMono-ExtraBoldItalic.ttf")
+    format("truetype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   /* Web3 Dark Theme */
-  --background: #0a0a0b;
+  --background: #19191a;
   --foreground: #ffffff;
   --primary: #6366f1;
   --primary-dark: #4f46e5;
@@ -15,6 +180,10 @@
   --card-border: #1f1f23;
   --muted: #6b7280;
   --muted-foreground: #9ca3af;
+  --text-secondary: rgba(255, 255, 255, 0.72);
+  --slate-1: #252525;
+  --slate-3: #383838;
+  --slate-4: #474747;
 }
 
 @theme inline {
@@ -28,13 +197,17 @@
   --color-error: var(--error);
   --color-card: var(--card);
   --color-muted: var(--muted);
+  --color-slate-1: var(--slate-1);
+  --color-slate-3: var(--slate-3);
+  --color-slate-4: var(--slate-4);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: "GT Super Display", var(--font-geist-sans), system-ui,
+    sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #0a0a0b 0%, #1a1a1f 50%, #0f0f14 100%);
-  background-attachment: fixed;
+  background: var(--background);
   color: var(--foreground);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
@@ -160,6 +333,68 @@ body {
 }
 
 @layer utilities {
+  .font-gt-super {
+    font-family: "GT Super Display", var(--font-geist-sans), system-ui,
+      sans-serif;
+  }
+
+  .font-jetbrains {
+    font-family: "JetBrains Mono", var(--font-geist-mono), "Courier New",
+      monospace;
+  }
+
+  .text-secondary {
+    color: var(--text-secondary) !important;
+  }
+
+  .card-with-icon-cutout {
+    position: relative;
+    border: 1px solid #b6b4ba;
+    border-radius: 24px;
+    background: var(--background);
+    backdrop-filter: blur(20px);
+  }
+
+  .card-with-icon-cutout::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 125px;
+    height: 4px;
+    background: var(--background);
+    backdrop-filter: blur(20px);
+  }
+
+  .card-icon-wrapper {
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 76.516px;
+    height: 76.516px;
+    border-radius: 50%;
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      rgba(153, 153, 153, 0.34) 100%
+    );
+    padding: 2.258px;
+    z-index: 10;
+  }
+
+  .card-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, var(--background) 40%, #19191a91 100%);
+    backdrop-filter: blur(4.515159606933594px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .scrollbar::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -179,5 +414,32 @@ body {
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
   }
-}
 
+  /* Force code blocks to respect width constraints */
+  .code-block-container {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: auto !important;
+  }
+
+  .code-block-container pre {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+    white-space: pre-wrap !important;
+  }
+
+  .code-block-container code {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+    white-space: pre-wrap !important;
+  }
+}

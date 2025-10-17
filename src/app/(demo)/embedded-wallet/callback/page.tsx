@@ -1,5 +1,6 @@
 "use client";
 
+import { LoadingScreen } from "@/components/LoadingScreen";
 import { LogMethod, LogType, useConsole } from "@/contexts/ConsoleContext";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
 import { OAuthRedirectResult } from "@magic-ext/oauth2";
@@ -42,12 +43,5 @@ export default function CallbackPage() {
       });
   }, []);
 
-  return (
-    <div className="relative min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-        <p className="text-muted-foreground">Getting redirect result...</p>
-      </div>
-    </div>
-  );
+  return <LoadingScreen message="Getting redirect result..." />;
 }

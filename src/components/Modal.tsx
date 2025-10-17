@@ -1,10 +1,10 @@
 import React from "react";
-import { Button } from "@/components/Primitives";
+import { Button } from "./Button";
 
 // Modal Component
 interface ModalProps {
   isOpen: boolean;
-  type: 'otp' | 'mfa' | 'recovery' | 'error' | 'success';
+  type: "otp" | "mfa" | "recovery" | "error" | "success";
   title: string;
   message: string;
   retries?: number;
@@ -16,7 +16,7 @@ interface ModalProps {
 }
 
 interface ModalInputProps {
-  type: 'otp' | 'mfa' | 'recovery';
+  type: "otp" | "mfa" | "recovery";
   value: string;
   onChange: (value: string) => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
@@ -24,10 +24,20 @@ interface ModalInputProps {
   errorMessage?: string;
 }
 
-const ModalInput = ({ type, value, onChange, onKeyDown, inputRef, errorMessage }: ModalInputProps) => {
-  const placeholder = type === 'otp' ? 'Enter 6-digit OTP' :
-                     type === 'mfa' ? 'Enter MFA code' :
-                     'Enter recovery code';
+const ModalInput = ({
+  type,
+  value,
+  onChange,
+  onKeyDown,
+  inputRef,
+  errorMessage,
+}: ModalInputProps) => {
+  const placeholder =
+    type === "otp"
+      ? "Enter 6-digit OTP"
+      : type === "mfa"
+      ? "Enter MFA code"
+      : "Enter recovery code";
 
   return (
     <div className="space-y-2">
@@ -39,61 +49,32 @@ const ModalInput = ({ type, value, onChange, onKeyDown, inputRef, errorMessage }
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={onKeyDown}
         className={`w-full px-4 py-3 rounded-xl glass border outline-none transition-all duration-200 text-foreground placeholder-muted-foreground ${
-          errorMessage 
-            ? 'border-red-500 focus:ring-2 focus:ring-red-500 focus:border-transparent' 
-            : 'border-white/10 focus:ring-2 focus:ring-primary focus:border-transparent'
+          errorMessage
+            ? "border-red-500 focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            : "border-white/10 focus:ring-2 focus:ring-white/70 focus:border-transparent"
         }`}
-        maxLength={type === 'otp' ? 6 : undefined}
+        maxLength={type === "otp" ? 6 : undefined}
       />
       {errorMessage && (
         <div className="flex items-center gap-2 text-red-500 text-sm">
-          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            className="w-4 h-4 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           <span>{errorMessage}</span>
         </div>
       )}
     </div>
   );
-};
-
-const ModalIcon = ({ type }: { type: ModalProps['type'] }) => {
-  const iconClass = "w-8 h-8";
-  
-  switch (type) {
-    case 'otp':
-      return (
-        <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      );
-    case 'mfa':
-      return (
-        <svg className={`${iconClass} text-secondary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      );
-    case 'recovery':
-      return (
-        <svg className={`${iconClass} text-warning`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      );
-    case 'success':
-      return (
-        <svg className={`${iconClass} text-success`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
-      );
-    case 'error':
-      return (
-        <svg className={`${iconClass} text-destructive`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      );
-    default:
-      return null;
-  }
 };
 
 export const Modal = ({
@@ -104,10 +85,12 @@ export const Modal = ({
   errorMessage,
   onSubmit,
   onCancel,
-  onClose
+  onClose,
 }: ModalProps) => {
   const [inputValue, setInputValue] = React.useState("");
-  const [localErrorMessage, setLocalErrorMessage] = React.useState<string | undefined>(errorMessage);
+  const [localErrorMessage, setLocalErrorMessage] = React.useState<
+    string | undefined
+  >(errorMessage);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   // Update local error message when prop changes
@@ -116,7 +99,7 @@ export const Modal = ({
   }, [errorMessage]);
 
   React.useEffect(() => {
-    if (isOpen && (type === 'otp' || type === 'mfa' || type === 'recovery')) {
+    if (isOpen && (type === "otp" || type === "mfa" || type === "recovery")) {
       // Focus on input after modal opens
       setTimeout(() => {
         inputRef.current?.focus();
@@ -157,9 +140,9 @@ export const Modal = ({
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSubmit();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       handleCancel();
     }
   };
@@ -169,39 +152,43 @@ export const Modal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      <div
+        className="absolute inset-0 bg-black/10 backdrop-blur-sm"
         onClick={handleClose}
       />
-      
+
       {/* Modal Content */}
-      <div className="relative w-full max-w-md bg-background border border-white/10 rounded-2xl shadow-2xl p-6 space-y-4">
+      <div className="relative w-full max-w-md bg-slate-1 border border-slate-4 rounded-3xl shadow-2xl p-6 space-y-6">
         {/* Header with Icon */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <ModalIcon type={type} />
-            <h3 className="text-lg font-semibold text-foreground">
-              {title}
-            </h3>
+        <div className="flex flex-col items-center justify-between gap-6">
+          <div className="flex w-full justify-end">
+            <button
+              onClick={handleClose}
+              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer bg-[rgba(255,255,255,0.06)] hover:bg-white/10 active:bg-white/20 rounded-full p-2"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
-          <button
-            onClick={handleClose}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="flex flex-col items-center gap-2">
+            <h3 className="text-2xl font-bold">{title}</h3>
+            <p className="text-sm text-secondary text-center">{message}</p>
+          </div>
         </div>
 
-        {/* Message */}
-        <p className="text-sm text-muted-foreground">
-          {message}
-        </p>
-
-
         {/* Input Field */}
-        {(type === 'otp' || type === 'mfa' || type === 'recovery') && (
+        {(type === "otp" || type === "mfa" || type === "recovery") && (
           <ModalInput
             type={type}
             value={inputValue}
@@ -214,27 +201,23 @@ export const Modal = ({
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-2">
-          {type === 'success' || type === 'error' ? (
+          {type === "success" || type === "error" ? (
             <Button
               onClick={handleSubmit}
-              variant={type === 'success' ? 'primary' : 'danger'}
+              variant={type === "success" ? "primary" : "danger"}
               className="flex-1 min-w-0"
             >
-              {type === 'success' ? 'Continue' : 'Close'}
+              {type === "success" ? "Continue" : "Close"}
             </Button>
           ) : (
             <>
-              <Button
-                onClick={handleCancel}
-                variant="secondary"
-                className="flex-1 min-w-0"
-              >
+              <Button onClick={handleCancel} variant="secondary" fullWidth>
                 Cancel
               </Button>
               <Button
                 onClick={handleSubmit}
                 variant="primary"
-                className="flex-1 min-w-0"
+                fullWidth
                 disabled={!inputValue}
               >
                 Submit
@@ -242,7 +225,6 @@ export const Modal = ({
             </>
           )}
         </div>
-
       </div>
     </div>
   );

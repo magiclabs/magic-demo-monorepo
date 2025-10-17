@@ -1,11 +1,14 @@
 "use client";
 
+import { Button } from "@/components/Button";
 import { OAuthProvidersModal } from "@/components/OAuthProvidersModal";
-import { Button } from "@/components/Primitives";
 import { LogMethod, LogType, useConsole } from "@/contexts/ConsoleContext";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import iconRedirect from "public/icons/icon-external.svg";
+import iconPopup from "public/icons/icon-chat.svg";
 
 interface OAuthAuthProps {
   onSuccess?: () => void;
@@ -120,50 +123,26 @@ export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
 
   return (
     <div className="w-full space-y-4">
-      <h3 className="text-lg font-semibold text-center text-foreground">
-        OAuth
-      </h3>
+      <h3 className="text-sm font-semibold text-secondary">OAuth</h3>
 
       <Button
         onClick={handleRedirectLoginClicked}
         variant="secondary"
-        className="w-full"
+        fullWidth
+        className="flex items-center justify-between gap-2"
       >
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-          />
-        </svg>
         Login with Redirect
+        <Image src={iconRedirect} alt="Redirect" width={24} height={24} />
       </Button>
 
       <Button
         onClick={handlePopupLoginClicked}
-        variant="success"
-        className="w-full"
+        variant="secondary"
+        fullWidth
+        className="flex items-center justify-between gap-2"
       >
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          />
-        </svg>
         Login with Popup
+        <Image src={iconPopup} alt="Popup" width={24} height={24} />
       </Button>
 
       <OAuthProvidersModal
