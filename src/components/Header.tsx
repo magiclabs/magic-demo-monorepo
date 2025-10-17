@@ -9,11 +9,42 @@ import iconExpress from "public/icons/icon-cube.svg";
 import iconEmbedded from "public/icons/icon-wallet.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
   const pathname = usePathname();
-  const isEmbeddedWalletRoute = pathname?.startsWith("/embedded-wallet");
-  const isApiWalletRoute = pathname?.startsWith("/api-wallet");
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  const isEmbeddedWalletRoute =
+    isHydrated && pathname?.startsWith("/embedded-wallet");
+  const isApiWalletRoute = isHydrated && pathname?.startsWith("/api-wallet");
+
+  // Dynamic docs configuration based on pathname
+  const getDocsConfig = () => {
+    if (isEmbeddedWalletRoute) {
+      return {
+        text: "View Embedded Docs",
+        url: "https://docs.magic.link/embedded-wallets/introduction",
+      };
+    }
+    if (isApiWalletRoute) {
+      return {
+        text: "View Express Docs",
+        url: "https://docs.magic.link/api-wallets/express-api/overview",
+      };
+    }
+    // Default Magic docs
+    return {
+      text: "View Magic Docs",
+      url: "https://docs.magic.link/",
+    };
+  };
+
+  const docsConfig = getDocsConfig();
 
   return (
     <div className="px-10 py-6 flex flex-col lg:flex-row items-center justify-between gap-6">
@@ -81,14 +112,19 @@ export const Header = () => {
           </Button>
         </a>
         <a
-          href="https://docs.magic.link/"
+          href={docsConfig.url}
           target="_blank"
           className="flex-shrink-0 w-full md:w-auto"
         >
           <Button variant="primary" onClick={() => {}} fullWidth glow>
             <div className="flex items-center gap-2">
-              <Image src={iconDoc} alt="Magic Docs" width={24} height={24} />
-              View Magic Docs
+              <Image
+                src={iconDoc}
+                alt={docsConfig.text}
+                width={24}
+                height={24}
+              />
+              {docsConfig.text}
             </div>
           </Button>
         </a>
