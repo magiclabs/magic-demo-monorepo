@@ -17,6 +17,7 @@ export enum LogMethod {
   MAGIC_USER_IS_LOGGED_IN = 'magic.user.isLoggedIn',
   MAGIC_USER_GET_INFO = 'magic.user.getInfo',
   MAGIC_USER_LOGOUT = 'magic.user.logout',
+  MAGIC_USER_RECOVER_ACCOUNT = 'magic.user.recoverAccount',
   TEE_GET_WALLET = 'tee.getWallet',
   NEXTAUTH_SIGNOUT = 'nextauth.signOut'
 }
