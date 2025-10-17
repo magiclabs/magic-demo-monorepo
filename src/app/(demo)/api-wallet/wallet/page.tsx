@@ -12,7 +12,7 @@ export default function ApiWalletPage() {
   const { selectedNetwork, isAuthenticated, isLoading } = useApiWallet();
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen message="Checking authentication..." />;
   }
 
   // Don't render if not authenticated (redirect will happen)

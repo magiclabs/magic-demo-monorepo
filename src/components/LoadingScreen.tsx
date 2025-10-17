@@ -1,4 +1,4 @@
-export const LoadingScreen = () => {
+export const LoadingScreen = ({ message }: { message: string }) => {
   return (
     <div className="relative max-h-[580px] h-screen flex flex-col gap-10 items-center justify-center">
       <div className="animate-spin size-6">
@@ -21,7 +21,7 @@ export const LoadingScreen = () => {
         </svg>
       </div>
       <p className="text-secondary font-jetbrains text-[19px] text-center uppercase">
-        Checking authentication...
+        {message}
       </p>
     </div>
   );

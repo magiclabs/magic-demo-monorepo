@@ -37,7 +37,7 @@ export function ConsolePanel() {
   // Don't render client-specific content during SSR
   if (!mounted) {
     return (
-      <div className="w-12 h-screen bg-black/90 backdrop-blur-sm border-l border-white/10 flex flex-col">
+      <div className="hidden sm:flex w-12 h-screen bg-black/90 backdrop-blur-sm border-l border-white/10 flex-col">
         {/* Console Header */}
         <div className="p-4 border-b border-white/10">
           <div className="flex items-center justify-between">
@@ -85,10 +85,10 @@ export function ConsolePanel() {
       )}
 
       {/* Spacer for small screens to prevent content overlap */}
-      {isSmallScreen && <div className="w-12 flex-shrink-0" />}
+      {isSmallScreen && <div className="sm:w-12 flex-shrink-0" />}
 
       <div
-        className={`h-screen bg-black/90 backdrop-blur-sm border-l border-white/10 flex flex-col transition-all duration-300 min-[741px]:self-start min-[741px]:sticky min-[741px]:top-0 ${
+        className={`h-screen bg-black/90 backdrop-blur-sm border-l border-white/10 hidden sm:flex flex-col transition-all duration-300 min-[741px]:self-start min-[741px]:sticky min-[741px]:top-0 ${
           isSmallScreen
             ? `fixed right-0 top-0 z-50 ${isCollapsed ? "w-12" : "w-96"}`
             : isCollapsed

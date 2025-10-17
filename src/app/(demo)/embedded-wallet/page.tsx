@@ -18,7 +18,7 @@ export default function Home() {
 
   // Show loading state while checking authentication
   if (isLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen message="Checking authentication..." />;
   }
 
   // Don't render the auth form if user is authenticated (redirect will happen)
