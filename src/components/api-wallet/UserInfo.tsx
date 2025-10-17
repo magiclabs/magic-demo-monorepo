@@ -41,25 +41,15 @@ export function UserInfo() {
       subtitle={email}
       className="w-full max-w-2xl"
     >
-      <div className="space-y-4">
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-secondary tracking-wide">
-            Network
-          </label>
-          <Dropdown
-            options={networks}
-            selectedValue={selectedNetwork}
-            onSelect={handleNetworkChangeClick}
-            isLoading={isLoading}
-          />
-        </div>
+      <div className="flex flex-col gap-6">
+        <Dropdown
+          options={networks}
+          selectedValue={selectedNetwork}
+          onSelect={handleNetworkChangeClick}
+          isLoading={isLoading}
+        />
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-secondary tracking-wide">
-            Wallet Address
-          </label>
-          <WalletAddress address={publicAddress} isLoading={isLoading} />
-        </div>
+        <WalletAddress address={publicAddress} />
 
         <Button onClick={handleLogout} variant="secondary" fullWidth>
           Logout

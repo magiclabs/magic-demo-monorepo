@@ -181,6 +181,8 @@
   --muted: #6b7280;
   --muted-foreground: #9ca3af;
   --text-secondary: rgba(255, 255, 255, 0.72);
+  --slate-1: #252525;
+  --slate-3: #383838;
   --slate-4: #474747;
 }
 
@@ -195,6 +197,8 @@
   --color-error: var(--error);
   --color-card: var(--card);
   --color-muted: var(--muted);
+  --color-slate-1: var(--slate-1);
+  --color-slate-3: var(--slate-3);
   --color-slate-4: var(--slate-4);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

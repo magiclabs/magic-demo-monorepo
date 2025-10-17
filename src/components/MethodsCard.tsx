@@ -25,7 +25,7 @@ interface TabItem {
 const TabsClasses = {
   root: "rounded-2xl w-full max-w-4xl",
   trigger:
-    "font-semibold px-6 py-4 text-[#EDEBFF] bg-[#252525] hover:bg-white/10 [&[data-state=active]]:bg-[#383838] cursor-pointer rounded-2xl transition-all duration-200 w-full text-left",
+    "font-semibold px-6 py-4 text-[#EDEBFF] bg-slate-1 hover:bg-white/10 [&[data-state=active]]:bg-slate-3 cursor-pointer rounded-2xl transition-all duration-200 w-full text-left",
 };
 
 export function MethodsCard({ title, description, defaultTab, tabs }: Props) {
@@ -84,8 +84,8 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
         <label className="text-sm font-medium text-secondary tracking-wide">
           Function
         </label>
-        <div className="p-4 rounded-lg bg-[#1e1e1e] border border-[#3e3e3e] font-mono text-sm leading-relaxed">
-          <span className="text-[#9cdcfe]">{functionName}</span>
+        <div className="p-4 rounded-lg bg-slate-1 border border-slate-4 font-mono text-sm leading-relaxed">
+          <span className="text-[#9AD9FB]">{functionName}</span>
         </div>
       </div>
     );

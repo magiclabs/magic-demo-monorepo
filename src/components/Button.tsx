@@ -18,7 +18,7 @@ const variants = {
     glowColor: "-2px -2px 4px 0 rgba(255, 255, 255, 0.25)",
   },
   secondary: {
-    buttonClassName: "bg-[#383838] text-white",
+    buttonClassName: "bg-slate-3 text-white",
     gradientColor: "#F8F8FA",
     glowColor: "0 0 40px 0 rgba(255, 255, 255, 0.16)",
   },

@@ -20,7 +20,7 @@ export default function WalletPage() {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl mt-8">
           {/* Left Side - Wallet Profile */}
-          <div className="flex flex-col gap-8 w-full lg:w-1/3 min-[741px]:self-start min-[741px]:sticky min-[741px]:top-18">
+          <div className="flex flex-col gap-8 w-full lg:w-1/3 min-[741px]:self-start">
             <UserInfo />
           </div>
 
