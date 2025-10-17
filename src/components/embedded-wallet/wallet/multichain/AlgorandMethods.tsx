@@ -27,7 +27,7 @@ export default function AlgorandMethods() {
   let client: algosdk.Algodv2 | null = null;
   function setupClient() {
     if (client == null) {
-      let algodClient = new algosdk.Algodv2(
+      const algodClient = new algosdk.Algodv2(
         "",
         "https://testnet-api.algonode.cloud",
         ""
@@ -54,9 +54,9 @@ export default function AlgorandMethods() {
       payload: null,
       handler: async () => {
         const algodClient = setupClient();
-        let params = await algodClient.getTransactionParams().do();
-        let note = new TextEncoder().encode("Hello World");
-        let txn = algosdk.makePaymentTxnWithSuggestedParams(
+        const params = await algodClient.getTransactionParams().do();
+        const note = new TextEncoder().encode("Hello World");
+        const txn = algosdk.makePaymentTxnWithSuggestedParams(
           publicAddress as string,
           publicAddress as string,
           1000,
@@ -65,7 +65,7 @@ export default function AlgorandMethods() {
           params
         );
 
-        let encodedTxn = algosdk.encodeObj(txn.get_obj_for_encoding());
+        const encodedTxn = algosdk.encodeObj(txn.get_obj_for_encoding());
 
         return MagicService.magic.algod.signTransaction(encodedTxn);
       },
@@ -120,7 +120,7 @@ export default function AlgorandMethods() {
       handler: async () => {
         const algodClient = await setupClient();
 
-        let params = await algodClient.getTransactionParams().do();
+        const params = await algodClient.getTransactionParams().do();
 
         const txns = [
           {

@@ -29,11 +29,11 @@ export default function AvalancheMethods() {
       functionName: "magic.avax.signTransaction()",
       payload: null,
       handler: async () => {
-        let assetId = "nznftJBicce1PfWQeNEVBmDyweZZ6zcM3p78z9Hy9Hhdhfaxm";
+        const assetId = "nznftJBicce1PfWQeNEVBmDyweZZ6zcM3p78z9Hy9Hhdhfaxm";
 
-        let fromAddresses = [publicAddress];
-        let toAddresses = [publicAddress];
-        let sendAmount = 1000000;
+        const fromAddresses = [publicAddress];
+        const toAddresses = [publicAddress];
+        const sendAmount = 1000000;
 
         return await MagicService.magic.avax.signTransaction(
           sendAmount,
