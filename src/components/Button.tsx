@@ -5,6 +5,7 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick: () => void;
   variant?: "primary" | "secondary";
+  disabled?: boolean;
   glow?: boolean;
   className?: string;
   fullWidth?: boolean;
@@ -27,6 +28,7 @@ export const Button = ({
   onClick,
   variant = "primary",
   className,
+  disabled = false,
   glow,
   fullWidth = false,
 }: ButtonProps) => {
@@ -37,7 +39,8 @@ export const Button = ({
     <div
       className={cn(
         "p-px rounded-2xl h-fit w-fit overflow-auto hover:opacity-85 active:scale-95 transition-all duration-200 ease-out whitespace-nowrap",
-        fullWidth && "w-full"
+        fullWidth && "w-full",
+        disabled && "opacity-60 pointer-events-none"
       )}
       style={{
         ...(glow && {
@@ -63,6 +66,7 @@ export const Button = ({
           }),
         }}
         onClick={onClick}
+        disabled={disabled}
       >
         {children}
       </button>
