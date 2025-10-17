@@ -31,7 +31,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-20">
+    <div className="flex flex-col items-center gap-20 sm:pt-12">
       <PageHeader
         product="Express API Wallet"
         title="Get Started"
