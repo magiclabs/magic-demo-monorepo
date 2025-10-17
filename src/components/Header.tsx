@@ -36,7 +36,10 @@ export const Header = () => {
 
       <div className="flex flex-col lg:flex-row items-center gap-4 z-10">
         {isApiWalletRoute && (
-          <Link href="/embedded-wallet" className="flex-shrink-0">
+          <Link
+            href="/embedded-wallet"
+            className="flex-shrink-0 w-full lg:w-auto"
+          >
             <Button variant="secondary" onClick={() => {}} fullWidth glow>
               <div className="flex items-center gap-2">
                 <Image
@@ -51,8 +54,8 @@ export const Header = () => {
           </Link>
         )}
         {isEmbeddedWalletRoute && (
-          <Link href="/api-wallet" className="flex-shrink-0">
-            <Button variant="secondary" onClick={() => {}} glow>
+          <Link href="/api-wallet" className="flex-shrink-0 w-full lg:w-auto">
+            <Button variant="secondary" onClick={() => {}} fullWidth glow>
               <div className="flex items-center gap-2">
                 <Image
                   src={iconExpress}
