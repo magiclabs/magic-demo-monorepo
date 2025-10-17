@@ -4,7 +4,7 @@ import { cn } from "@/utils/tailwind";
 interface ButtonProps {
   children: React.ReactNode;
   onClick: () => void;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "danger";
   disabled?: boolean;
   glow?: boolean;
   className?: string;
@@ -22,7 +22,13 @@ const variants = {
     gradientColor: "#F8F8FA",
     glowColor: "0 0 40px 0 rgba(255, 255, 255, 0.16)",
   },
+  danger: {
+    buttonClassName: "bg-red-500 text-white",
+    gradientColor: "#FF0000",
+    glowColor: "0 0 40px 0 rgba(255, 0, 0, 0.16)",
+  },
 };
+
 export const Button = ({
   children,
   onClick,

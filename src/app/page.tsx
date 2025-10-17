@@ -2,7 +2,7 @@ import { ProductButton } from "@/components/ProductButton";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center  p-8 pt-0 pb-20 gap-20 sm:p-20 sm:pt-0">
+    <div className="flex flex-col items-center p-8 pt-0 pb-20 gap-20 sm:p-20 sm:pt-0">
       {/* Header */}
       <div className="flex flex-col items-center gap-4 text-center">
         <h1 className="text-6xl mb-4 leading-tight font-gt-super">
