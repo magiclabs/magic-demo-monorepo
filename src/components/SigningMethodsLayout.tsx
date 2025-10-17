@@ -11,7 +11,7 @@ import IconWand from "public/icons/icon-wand.svg";
 const TabsClasses = {
   root: "rounded-2xl w-full max-w-4xl",
   trigger:
-    "font-semibold px-6 py-4 text-muted-foreground bg-white/5 hover:text-white hover:bg-white/10 [&[data-state=active]]:text-white [&[data-state=active]]:bg-gradient-to-r [&[data-state=active]]:from-primary/20 [&[data-state=active]]:to-secondary/20 cursor-pointer rounded-xl transition-all duration-200 w-full text-left",
+    "font-semibold px-6 py-4 text-[#EDEBFF] bg-[#252525] hover:bg-white/10 [&[data-state=active]]:bg-[#383838] cursor-pointer rounded-2xl transition-all duration-200 w-full text-left",
 };
 
 interface TabItem {
