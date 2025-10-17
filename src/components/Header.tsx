@@ -34,11 +34,11 @@ export const Header = () => {
         <Image src={logoMagic} alt="Magic" width={199} height={40} />
       </a>
 
-      <div className="flex flex-col lg:flex-row items-center gap-4 z-10">
+      <div className="flex flex-col md:flex-row items-center gap-4 z-10">
         {isApiWalletRoute && (
           <Link
             href="/embedded-wallet"
-            className="flex-shrink-0 w-full lg:w-auto"
+            className="flex-shrink-0 w-full md:w-auto"
           >
             <Button variant="secondary" onClick={() => {}} fullWidth glow>
               <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export const Header = () => {
           </Link>
         )}
         {isEmbeddedWalletRoute && (
-          <Link href="/api-wallet" className="flex-shrink-0 w-full lg:w-auto">
+          <Link href="/api-wallet" className="flex-shrink-0 w-full md:w-auto">
             <Button variant="secondary" onClick={() => {}} fullWidth glow>
               <div className="flex items-center gap-2">
                 <Image
@@ -71,7 +71,7 @@ export const Header = () => {
         <a
           href="https://github.com/magiclabs/magic-demo-monorepo"
           target="_blank"
-          className="flex-shrink-0 w-full lg:w-auto"
+          className="flex-shrink-0 w-full md:w-auto"
         >
           <Button variant="secondary" onClick={() => {}} fullWidth glow>
             <div className="flex items-center gap-2">
@@ -83,7 +83,7 @@ export const Header = () => {
         <a
           href="https://docs.magic.link/"
           target="_blank"
-          className="flex-shrink-0 w-full lg:w-auto"
+          className="flex-shrink-0 w-full md:w-auto"
         >
           <Button variant="primary" onClick={() => {}} fullWidth glow>
             <div className="flex items-center gap-2">

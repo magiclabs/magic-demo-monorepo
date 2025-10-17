@@ -53,7 +53,7 @@ export function CodeBlock({
   };
 
   return (
-    <div className={`relative group ${className}`}>
+    <div className={`relative group w-full min-w-0 ${className}`}>
       <SyntaxHighlighter
         language={language}
         style={customStyle}
@@ -70,8 +70,13 @@ export function CodeBlock({
           overflow: "auto",
           fontSize: "0.875rem",
           lineHeight: "1.5",
+          width: "100%",
+          minWidth: 0,
+          maxWidth: "100%",
+          overflowX: "auto",
+          overflowY: "auto",
         }}
-        className="code-block-container"
+        className="code-block-container w-full min-w-0"
       >
         {code}
       </SyntaxHighlighter>

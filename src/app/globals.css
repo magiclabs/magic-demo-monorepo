@@ -414,4 +414,32 @@ body {
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
   }
+
+  /* Force code blocks to respect width constraints */
+  .code-block-container {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: auto !important;
+  }
+
+  .code-block-container pre {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+    white-space: pre-wrap !important;
+  }
+
+  .code-block-container code {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+    white-space: pre-wrap !important;
+  }
 }
