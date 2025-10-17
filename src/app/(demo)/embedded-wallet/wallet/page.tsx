@@ -1,16 +1,39 @@
 "use client";
 
+import { BackButton } from "@/components/BackButton";
 import { UserInfo } from "@/components/embedded-wallet/UserInfo";
 import { SignMethods } from "@/components/embedded-wallet/wallet/SignMethods";
-import { HederaSignMethods } from "@/components/embedded-wallet/wallet/HederaSignMethods";
-import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSignMethods";
-import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
-import { BackButton } from "@/components/BackButton";
 import { UserMethods } from "@/components/embedded-wallet/wallet/UserMethods";
 import { WalletMethods } from "@/components/embedded-wallet/wallet/WalletMethods";
+import BtcMethods from "@/components/embedded-wallet/wallet/multichain/BtcMethods";
+import CosmosMethods from "@/components/embedded-wallet/wallet/multichain/CosmosMethods";
+import { HederaSignMethods } from "@/components/embedded-wallet/wallet/multichain/HederaSignMethods";
+import IconMethods from "@/components/embedded-wallet/wallet/multichain/IconMethods";
+import KadenaMethods from "@/components/embedded-wallet/wallet/multichain/KadenaMethods";
+import NearMethods from "@/components/embedded-wallet/wallet/multichain/NearMethods";
+import PolkadotMethods from "@/components/embedded-wallet/wallet/multichain/PolkadotMethods";
+import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/multichain/SolanaSignMethods";
+import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 
+const componentsByNetwork = {
+  hedera: HederaSignMethods,
+  solana: SolanaSignMethods,
+  // algorand: AlgorandMethods,
+  // avalancheX: AvalancheMethods,
+  bitcoin: BtcMethods,
+  cosmos: CosmosMethods,
+  icon: IconMethods,
+  kadena: KadenaMethods,
+  near: NearMethods,
+  polkadot: PolkadotMethods,
+
+  default: SignMethods,
+};
 export default function WalletPage() {
   const { selectedNetwork } = useEmbeddedWallet();
+  const SignMethodsByNetwork =
+    componentsByNetwork[selectedNetwork as keyof typeof componentsByNetwork] ??
+    componentsByNetwork.default;
 
   return (
     <div className="relative min-h-screen">
@@ -36,13 +59,7 @@ export default function WalletPage() {
 
           {/* Right Side - Signing Methods */}
           <div className="w-full lg:w-2/3 flex flex-col gap-8">
-            {selectedNetwork === "hedera" ? (
-              <HederaSignMethods />
-            ) : selectedNetwork === "solana" ? (
-              <SolanaSignMethods />
-            ) : (
-              <SignMethods />
-            )}
+            <SignMethodsByNetwork key={selectedNetwork} />
 
             <UserMethods />
             <WalletMethods />
