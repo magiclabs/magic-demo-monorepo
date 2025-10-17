@@ -35,12 +35,7 @@ export function UserInfo() {
   };
 
   return (
-    <Card
-      icon={IconProfile}
-      title={name}
-      subtitle={email}
-      className="w-full max-w-2xl"
-    >
+    <Card icon={IconProfile} title={name} subtitle={email} className="mb-10">
       <div className="flex flex-col gap-6">
         <Dropdown
           options={networks}

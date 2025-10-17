@@ -16,7 +16,7 @@ export const Header = () => {
   const isApiWalletRoute = pathname?.startsWith("/api-wallet");
 
   return (
-    <div className="px-10 py-6 flex items-center justify-between">
+    <div className="px-10 py-6 flex flex-col lg:flex-row items-center justify-between gap-6">
       <div
         style={{
           background:
@@ -34,10 +34,10 @@ export const Header = () => {
         <Image src={logoMagic} alt="Magic" width={199} height={40} />
       </a>
 
-      <div className="flex items-center gap-4 z-10">
+      <div className="flex flex-col lg:flex-row items-center gap-4 z-10">
         {isApiWalletRoute && (
           <Link href="/embedded-wallet" className="flex-shrink-0">
-            <Button variant="secondary" onClick={() => {}} glow>
+            <Button variant="secondary" onClick={() => {}} fullWidth glow>
               <div className="flex items-center gap-2">
                 <Image
                   src={iconEmbedded}
@@ -68,9 +68,9 @@ export const Header = () => {
         <a
           href="https://github.com/magiclabs/magic-demo-monorepo"
           target="_blank"
-          className="flex-shrink-0"
+          className="flex-shrink-0 w-full lg:w-auto"
         >
-          <Button variant="secondary" onClick={() => {}} glow>
+          <Button variant="secondary" onClick={() => {}} fullWidth glow>
             <div className="flex items-center gap-2">
               <Image src={logoGithub} alt="GitHub" width={24} height={24} />
               View GitHub
@@ -80,9 +80,9 @@ export const Header = () => {
         <a
           href="https://docs.magic.link/"
           target="_blank"
-          className="flex-shrink-0"
+          className="flex-shrink-0 w-full lg:w-auto"
         >
-          <Button variant="primary" onClick={() => {}} glow>
+          <Button variant="primary" onClick={() => {}} fullWidth glow>
             <div className="flex items-center gap-2">
               <Image src={iconDoc} alt="Magic Docs" width={24} height={24} />
               View Magic Docs

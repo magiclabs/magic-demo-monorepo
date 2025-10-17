@@ -26,7 +26,7 @@ export default function ApiWalletPage() {
         <PageHeader product="Express API Wallet" title="Connected" />
 
         {/* Main Content */}
-        <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl  mt-8">
+        <div className="flex flex-col lg:flex-row items-start gap-8 w-full max-w-7xl mt-8">
           {/* Left Side - Wallet Profile */}
           <div className="flex flex-col gap-8 w-full lg:w-1/3">
             <UserInfo />
