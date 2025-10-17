@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 interface DropdownOption {
   value: string;
   label: string;
-  color?: string;
 }
 
 interface DropdownProps {
@@ -58,14 +57,9 @@ export const Dropdown = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isLoading}
-        className="flex items-center justify-between w-full p-3 bg-black/30 rounded-xl border border-white/10 text-white hover:bg-black/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        className="flex items-center justify-between w-full p-4 bg-background rounded-xl border border-slate-4 text-white text-lg hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
         <div className="flex items-center gap-2">
-          {selectedOption?.color && (
-            <div
-              className={`w-3 h-3 ${selectedOption.color} rounded-full`}
-            ></div>
-          )}
           <span>
             {isLoading ? "Loading..." : selectedOption?.label || placeholder}
           </span>
@@ -92,16 +86,13 @@ export const Dropdown = ({
       </button>
 
       {isOpen && !isLoading && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-black/90 border border-white/10 rounded-xl p-1 shadow-lg backdrop-blur-sm z-10">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-background border border-[#474747] rounded-xl p-1 shadow-lg backdrop-blur-sm z-10">
           {options.map((option) => (
             <button
               key={option.value}
               onClick={() => handleSelect(option.value)}
-              className="flex items-center gap-2 w-full p-3 text-white hover:bg-white/10 rounded-lg cursor-pointer transition-colors"
+              className="flex items-center gap-2 w-full p-3 text-white text-lg hover:bg-white/5 rounded-lg cursor-pointer transition-colors"
             >
-              {option.color && (
-                <div className={`w-3 h-3 ${option.color} rounded-full`}></div>
-              )}
               <span>{option.label}</span>
             </button>
           ))}

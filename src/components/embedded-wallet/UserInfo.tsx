@@ -17,11 +17,11 @@ export function UserInfo() {
   } = useEmbeddedWallet();
 
   const networks = [
-    { value: "polygon", label: "Polygon", color: "bg-purple-500" },
-    { value: "ethereum", label: "Ethereum", color: "bg-blue-500" },
-    { value: "optimism", label: "Optimism", color: "bg-red-500" },
-    { value: "hedera", label: "Hedera", color: "bg-green-500" },
-    { value: "solana", label: "Solana", color: "bg-orange-500" },
+    { value: "polygon", label: "Polygon" },
+    { value: "ethereum", label: "Ethereum" },
+    { value: "optimism", label: "Optimism" },
+    { value: "hedera", label: "Hedera" },
+    { value: "solana", label: "Solana" },
   ];
 
   return (

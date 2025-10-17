@@ -19,8 +19,8 @@ export function UserInfo() {
   const { name, email } = userInfo || {};
 
   const networks = [
-    { value: "ethereum", label: "Ethereum", color: "bg-blue-500" },
-    { value: "solana", label: "Solana", color: "bg-orange-500" },
+    { value: "ethereum", label: "Ethereum" },
+    { value: "solana", label: "Solana" },
   ];
 
   // Handle network change
