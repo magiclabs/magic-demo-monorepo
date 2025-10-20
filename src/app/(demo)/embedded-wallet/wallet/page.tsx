@@ -35,7 +35,7 @@ export default function WalletPage() {
             )}
 
             <UserMethods />
-            <WalletMethods />
+            {/* <WalletMethods /> */}
           </div>
         </div>
       </div>
