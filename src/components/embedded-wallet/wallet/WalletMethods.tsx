@@ -3,13 +3,6 @@ import { MagicService } from "@/lib/embedded-wallet/get-magic";
 
 const tabs = [
   {
-    value: "connect-with-ui",
-    label: "Connect With UI",
-    functionName: "magic.wallet.connectWithUI()",
-    payload: null,
-    handler: () => MagicService.magic.wallet.connectWithUI(),
-  },
-  {
     value: "show-ui",
     label: "Show UI",
     functionName: "magic.wallet.showUI()",
