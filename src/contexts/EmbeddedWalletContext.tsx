@@ -86,14 +86,20 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   // Check if user is already authenticated on component mount
   useEffect(() => {
-    const savedNetwork = localStorage.getItem("magic_selectedNetwork");
+    const savedNetwork = localStorage.getItem(
+      "magic_selectedNetwork"
+    ) as Network | null;
     if (
       savedNetwork &&
-      ["polygon", "ethereum", "optimism", "hedera", "solana"].includes(
-        savedNetwork
-      )
+      [
+        Network.POLYGON,
+        Network.ETHEREUM,
+        Network.OPTIMISM,
+        Network.HEDERA,
+        Network.SOLANA,
+      ].includes(savedNetwork)
     ) {
-      setSelectedNetwork(savedNetwork as Network);
+      setSelectedNetwork(savedNetwork);
     }
     const checkAuthStatus = async () => {
       try {
