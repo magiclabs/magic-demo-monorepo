@@ -1,6 +1,6 @@
 "use client";
 
-import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
+import { Network, useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { Dropdown } from "@/components/Dropdown";
 import { WalletAddress } from "@/components/WalletAddress";
 import { Card } from "../Card";
@@ -30,7 +30,7 @@ export function UserInfo() {
         <Dropdown
           options={networks}
           selectedValue={selectedNetwork}
-          onSelect={handleNetworkChange}
+          onSelect={(network) => handleNetworkChange(network as Network)}
         />
 
         <WalletAddress address={publicAddress} />
