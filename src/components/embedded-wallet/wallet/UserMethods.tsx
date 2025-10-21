@@ -1,15 +1,10 @@
 import { MethodsCard } from "@/components/MethodsCard";
-import { LogMethod, LogType, useConsole } from "@/contexts/ConsoleContext";
-import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
+import { Network, useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
-import { MagicUserMetadata } from "magic-sdk";
-import { useRouter } from "next/navigation";
 
 export function UserMethods() {
-  const router = useRouter();
-  const { logToConsole } = useConsole();
   const { selectedNetwork } = useEmbeddedWallet();
-  const evmNetworks = ["polygon", "ethereum", "optimism"];
+  const evmNetworks = [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM];
   const showEvmMethods = evmNetworks.includes(selectedNetwork);
   const capitalNetworkName =
     selectedNetwork[0].toUpperCase() + selectedNetwork.slice(1);
