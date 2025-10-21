@@ -39,7 +39,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userInfo, setUserInfo] = useState<any | null>(null);
-
   const { logToConsole } = useConsole();
   const router = useRouter();
 
