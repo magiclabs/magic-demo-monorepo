@@ -35,7 +35,10 @@ export default function WalletPage() {
             )}
 
             <UserMethods />
-            {/* <WalletMethods /> */}
+
+            {["polygon", "ethereum", "optimism"].includes(selectedNetwork) && (
+              <WalletMethods />
+            )}
           </div>
         </div>
       </div>
