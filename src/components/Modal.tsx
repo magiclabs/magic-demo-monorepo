@@ -9,7 +9,11 @@ interface ModalProps {
   message: string;
   retries?: number;
   maxRetries?: number;
-  errorMessage?: string;
+  inputValue: string;
+  setInputValue: (value: string) => void;
+  errorMessage: string | undefined;
+  setErrorMessage: (value: string | undefined) => void;
+  isLoading?: boolean;
   onSubmit?: (value: string) => void;
   onCancel?: () => void;
   onClose?: () => void;
@@ -82,21 +86,16 @@ export const Modal = ({
   type,
   title,
   message,
+  inputValue,
+  setInputValue,
   errorMessage,
+  setErrorMessage,
+  isLoading,
   onSubmit,
   onCancel,
   onClose,
 }: ModalProps) => {
-  const [inputValue, setInputValue] = React.useState("");
-  const [localErrorMessage, setLocalErrorMessage] = React.useState<
-    string | undefined
-  >(errorMessage);
   const inputRef = React.useRef<HTMLInputElement>(null);
-
-  // Update local error message when prop changes
-  React.useEffect(() => {
-    setLocalErrorMessage(errorMessage);
-  }, [errorMessage]);
 
   React.useEffect(() => {
     if (isOpen && (type === "otp" || type === "mfa" || type === "recovery")) {
@@ -110,16 +109,14 @@ export const Modal = ({
   const handleInputChange = (value: string) => {
     setInputValue(value);
     // Clear error message when user starts typing
-    if (localErrorMessage) {
-      setLocalErrorMessage(undefined);
+    if (errorMessage) {
+      setErrorMessage(undefined);
     }
   };
 
   const handleSubmit = () => {
     if (onSubmit) {
       onSubmit(inputValue);
-      setInputValue("");
-      setLocalErrorMessage(undefined);
     }
   };
 
@@ -128,7 +125,7 @@ export const Modal = ({
       onCancel();
     }
     setInputValue("");
-    setLocalErrorMessage(undefined);
+    setErrorMessage(undefined);
   };
 
   const handleClose = () => {
@@ -136,7 +133,7 @@ export const Modal = ({
       onClose();
     }
     setInputValue("");
-    setLocalErrorMessage(undefined);
+    setErrorMessage(undefined);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -195,7 +192,7 @@ export const Modal = ({
             onChange={handleInputChange}
             onKeyDown={handleKeyPress}
             inputRef={inputRef}
-            errorMessage={localErrorMessage}
+            errorMessage={errorMessage}
           />
         )}
 
@@ -218,9 +215,9 @@ export const Modal = ({
                 onClick={handleSubmit}
                 variant="primary"
                 fullWidth
-                disabled={!inputValue}
+                disabled={!inputValue || isLoading}
               >
-                Submit
+                {isLoading ? "Submitting..." : "Submit"}
               </Button>
             </>
           )}

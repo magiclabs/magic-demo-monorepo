@@ -21,6 +21,11 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
     modalState,
     handleWhitelabelEmailOTPLogin: whitelabelLogin,
     closeModal,
+    inputValue,
+    setInputValue,
+    errorMessage,
+    setErrorMessage,
+    isLoading: isLoadingModal,
   } = useEmailOTPModal();
 
   // Load persisted email on component mount
@@ -153,7 +158,11 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
         message={modalState.message}
         retries={modalState.retries}
         maxRetries={modalState.maxRetries}
-        errorMessage={modalState.errorMessage}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+        isLoading={isLoadingModal}
         onSubmit={modalState.onSubmit}
         onCancel={modalState.onCancel}
         onClose={closeModal}
