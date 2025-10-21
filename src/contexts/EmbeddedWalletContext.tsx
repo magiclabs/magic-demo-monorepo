@@ -48,7 +48,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     if (!userInfo?.wallets) return null;
 
     // EVM networks (polygon, ethereum, optimism) all use the ethereum wallet
-    if (["polygon", "ethereum", "optimism"].includes(selectedNetwork)) {
+    if (
+      [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM].includes(
+        selectedNetwork
+      )
+    ) {
       return userInfo.wallets.ethereum?.publicAddress || null;
     }
 
