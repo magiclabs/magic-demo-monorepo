@@ -73,34 +73,34 @@ export function UserMethods() {
       payload: null,
       handler: () => MagicService.magic.user.showSettings(),
     },
-    {
-      value: "recover-account",
-      label: "Recover Account",
-      functionName: "magic.user.recoverAccount()",
-      payload: null,
-      handler: () =>
-        MagicService.magic.user.getInfo().then((user: MagicUserMetadata) =>
-          MagicService.magic.user
-            .logout()
-            .then(() =>
-              MagicService.magic.user.recoverAccount({ email: user.email })
-            )
-            .catch((error: unknown) => {
-              logToConsole(
-                LogType.ERROR,
-                LogMethod.MAGIC_USER_RECOVER_ACCOUNT,
-                "Error recovering account",
-                error
-              );
-              logToConsole(
-                LogType.INFO,
-                LogMethod.MAGIC_USER_RECOVER_ACCOUNT,
-                "Redirecting to auth page"
-              );
-              router.push("/embedded-wallet");
-            })
-        ),
-    },
+    // {
+    //   value: "recover-account",
+    //   label: "Recover Account",
+    //   functionName: "magic.user.recoverAccount()",
+    //   payload: null,
+    //   handler: () =>
+    //     MagicService.magic.user.getInfo().then((user: MagicUserMetadata) =>
+    //       MagicService.magic.user
+    //         .logout()
+    //         .then(() =>
+    //           MagicService.magic.user.recoverAccount({ email: user.email })
+    //         )
+    //         .catch((error: unknown) => {
+    //           logToConsole(
+    //             LogType.ERROR,
+    //             LogMethod.MAGIC_USER_RECOVER_ACCOUNT,
+    //             "Error recovering account",
+    //             error
+    //           );
+    //           logToConsole(
+    //             LogType.INFO,
+    //             LogMethod.MAGIC_USER_RECOVER_ACCOUNT,
+    //             "Redirecting to auth page"
+    //           );
+    //           router.push("/embedded-wallet");
+    //         })
+    //     ),
+    // },
     revealPrivateKeyTab,
     {
       value: "enable-mfa",

@@ -13,12 +13,17 @@ interface ModalState {
   message: string;
   retries?: number;
   maxRetries?: number;
-  errorMessage?: string;
+  // errorMessage?: string;
   onSubmit?: (value: string) => void;
   onCancel?: () => void;
 }
 
 export function useEmailOTPModal() {
+  const [inputValue, setInputValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
+  const [isLoading, setIsLoading] = useState(false);
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     type: "otp",
@@ -33,6 +38,7 @@ export function useEmailOTPModal() {
   }, []);
 
   const closeModal = useCallback(() => {
+    setIsLoading(false);
     setModalState((prev) => ({ ...prev, isOpen: false }));
   }, []);
 
@@ -83,6 +89,7 @@ export function useEmailOTPModal() {
             retries: retries,
             maxRetries: 2,
             onSubmit: (otp) => {
+              setIsLoading(true);
               handle.emit(
                 LoginWithEmailOTPEventEmit.VerifyEmailOtp,
                 otp as never
@@ -95,15 +102,22 @@ export function useEmailOTPModal() {
         });
 
         handle.on(LoginWithEmailOTPEventOnReceived.InvalidEmailOtp, () => {
+          setIsLoading(false);
+
           if (!retries) {
             handle.emit(LoginWithEmailOTPEventEmit.Cancel);
           } else {
             // Update the existing modal with error message instead of opening a new one
+            setInputValue("");
+            setErrorMessage(
+              `Invalid code, please enter OTP again. Retries left: ${retries}`
+            );
+
             setModalState((prev) => ({
               ...prev,
-              errorMessage: `Invalid code, please enter OTP again. Retries left: ${retries}`,
               retries: retries,
               onSubmit: (otp: string) => {
+                setIsLoading(true);
                 retries--;
                 handle.emit(
                   LoginWithEmailOTPEventEmit.VerifyEmailOtp,
@@ -117,6 +131,9 @@ export function useEmailOTPModal() {
         // MFA
         let retriesMFA = 2;
         handle.on(LoginWithEmailOTPEventOnReceived.MfaSentHandle, () => {
+          setInputValue("");
+          setIsLoading(false);
+
           openModal({
             type: "mfa",
             title: "Enter MFA Code",
@@ -124,6 +141,7 @@ export function useEmailOTPModal() {
             retries: retriesMFA,
             maxRetries: 2,
             onSubmit: (mfa) => {
+              setIsLoading(true);
               handle.emit(
                 LoginWithEmailOTPEventEmit.VerifyMFACode,
                 mfa as never
@@ -136,15 +154,21 @@ export function useEmailOTPModal() {
         });
 
         handle.on(LoginWithEmailOTPEventOnReceived.InvalidMfaOtp, () => {
+          setIsLoading(false);
+          setInputValue("");
+
           if (!retriesMFA) {
             handle.emit(LoginWithEmailOTPEventEmit.LostDevice);
           } else {
+            setErrorMessage(
+              `Invalid MFA code, please enter MFA code again. Retries left: ${retriesMFA}`
+            );
             // Update the existing modal with error message instead of opening a new one
             setModalState((prev) => ({
               ...prev,
-              errorMessage: `Invalid MFA code, please enter MFA code again. Retries left: ${retriesMFA}`,
               retries: retriesMFA,
               onSubmit: (mfa: string) => {
+                setIsLoading(true);
                 retriesMFA--;
                 handle.emit(
                   LoginWithEmailOTPEventEmit.VerifyMFACode,
@@ -160,6 +184,9 @@ export function useEmailOTPModal() {
         handle.on(
           LoginWithEmailOTPEventOnReceived.RecoveryCodeSentHandle,
           () => {
+            setInputValue("");
+            setIsLoading(false);
+
             openModal({
               type: "recovery",
               title: "Enter Recovery Code",
@@ -167,6 +194,7 @@ export function useEmailOTPModal() {
               retries: retriesRecoveryMFA,
               maxRetries: 2,
               onSubmit: (recovery) => {
+                setIsLoading(true);
                 handle.emit(
                   LoginWithEmailOTPEventEmit.VerifyRecoveryCode,
                   recovery as string
@@ -180,15 +208,22 @@ export function useEmailOTPModal() {
         );
 
         handle.on(LoginWithEmailOTPEventOnReceived.InvalidRecoveryCode, () => {
+          setInputValue("");
+          setIsLoading(false);
+
           if (!retriesRecoveryMFA) {
             handle.emit(LoginWithEmailOTPEventEmit.Cancel);
           } else {
+            setErrorMessage(
+              `Invalid recovery code, please enter recovery code again. Retries left: ${retriesRecoveryMFA}`
+            );
             // Update the existing modal with error message instead of opening a new one
             setModalState((prev) => ({
               ...prev,
-              errorMessage: `Invalid recovery code, please enter recovery code again. Retries left: ${retriesRecoveryMFA}`,
               retries: retriesRecoveryMFA,
               onSubmit: (recovery: string) => {
+                setIsLoading(true);
+
                 retriesRecoveryMFA--;
                 handle.emit(
                   LoginWithEmailOTPEventEmit.VerifyRecoveryCode,
@@ -201,6 +236,8 @@ export function useEmailOTPModal() {
 
         handle.on("error", (error: unknown) => {
           const errorMsg = `Error: ${error}`;
+          setIsLoading(false);
+
           openModal({
             type: "error",
             title: "Authentication Error",
@@ -212,6 +249,7 @@ export function useEmailOTPModal() {
         });
 
         handle.on("done", () => {
+          setIsLoading(false);
           openModal({
             type: "success",
             title: "Login Complete!",
@@ -259,6 +297,11 @@ export function useEmailOTPModal() {
 
   return {
     modalState,
+    inputValue,
+    setInputValue,
+    errorMessage,
+    setErrorMessage,
+    isLoading,
     handleWhitelabelEmailOTPLogin,
     closeModal,
   };
