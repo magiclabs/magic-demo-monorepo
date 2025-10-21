@@ -8,6 +8,7 @@ import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { UserMethods } from "@/components/embedded-wallet/wallet/UserMethods";
 import { WalletMethods } from "@/components/embedded-wallet/wallet/WalletMethods";
 import { PageHeader } from "@/components/PageHeader";
+import { Network } from "@/contexts/EmbeddedWalletContext";
 
 export default function WalletPage() {
   const { selectedNetwork } = useEmbeddedWallet();
@@ -26,9 +27,9 @@ export default function WalletPage() {
 
           {/* Right Side - Signing Methods */}
           <div className="w-full lg:w-2/3 flex flex-col gap-18">
-            {selectedNetwork === "hedera" ? (
+            {selectedNetwork === Network.HEDERA ? (
               <HederaSignMethods />
-            ) : selectedNetwork === "solana" ? (
+            ) : selectedNetwork === Network.SOLANA ? (
               <SolanaSignMethods />
             ) : (
               <SignMethods />
@@ -36,9 +37,9 @@ export default function WalletPage() {
 
             <UserMethods />
 
-            {["polygon", "ethereum", "optimism"].includes(selectedNetwork) && (
-              <WalletMethods />
-            )}
+            {[Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM].includes(
+              selectedNetwork
+            ) && <WalletMethods />}
           </div>
         </div>
       </div>
