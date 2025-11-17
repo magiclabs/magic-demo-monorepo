@@ -7,6 +7,7 @@ import { UserInfo } from "@/components/api-wallet/UserInfo";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PageHeader } from "@/components/PageHeader";
+import UserMethods from "@/components/api-wallet/UserMethods";
 
 export default function ApiWalletPage() {
   const { selectedNetwork, isAuthenticated, isLoading } = useApiWallet();
@@ -33,7 +34,7 @@ export default function ApiWalletPage() {
           </div>
 
           {/* Right Side - Signing Methods */}
-          <div className="w-full lg:w-2/3">
+          <div className="w-full lg:w-2/3 flex flex-col gap-18">
             {/* Show Solana methods if Solana network is selected */}
             {selectedNetwork === "solana" ? (
               <SolanaSignMethods />
@@ -41,6 +42,8 @@ export default function ApiWalletPage() {
               /* Default to EVM methods for Ethereum and other EVM networks */
               <EVMSignMethods />
             )}
+
+            <UserMethods />
           </div>
         </div>
       </div>
