@@ -14,6 +14,7 @@
     "@magic-ext/oauth2": "^13.0.0",
     "@magic-ext/solana": "^28.0.0",
     "@metamask/eth-sig-util": "^8.2.0",
+    "@next/third-parties": "^16.0.3",
     "@radix-ui/react-tabs": "^1.1.13",
     "@solana/web3.js": "^1.98.4",
     "@types/prismjs": "^1.26.5",

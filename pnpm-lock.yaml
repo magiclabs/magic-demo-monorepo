@@ -23,6 +23,9 @@ importers:
       '@metamask/eth-sig-util':
         specifier: ^8.2.0
         version: 8.2.0
+      '@next/third-parties':
+        specifier: ^16.0.3
+        version: 16.0.3(next@15.5.2(@babel/core@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-tabs':
         specifier: ^1.1.13
         version: 1.1.13(@types/react-dom@19.1.9(@types/react@19.1.12))(@types/react@19.1.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -698,6 +701,12 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
+
+  '@next/third-parties@16.0.3':
+    resolution: {integrity: sha512-QjTRQ4ydXguFkpMCUMl5oSslxmh8mAtmnzc9DEtLkZcGmAuQcZg2M3lswMn62sdID+F06crS3IQ58X3sjjBLVA==}
+    peerDependencies:
+      next: ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0-beta.0
+      react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
 
   '@noble/curves@1.2.0':
     resolution: {integrity: sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==}
@@ -3557,6 +3566,9 @@ packages:
   text-encoding-utf-8@1.0.2:
     resolution: {integrity: sha512-8bw4MY9WjdsD2aMtO0OzOCY3pXGYNx2d2FfHRVUKkiCPDWjKuOlhLVASS+pD7VkLTVjW268LYJHwsnPFlBpbAg==}
 
+  third-party-capital@1.0.20:
+    resolution: {integrity: sha512-oB7yIimd8SuGptespDAZnNkzIz+NWaJCu2RMsbs4Wmp9zSDUM8Nhi3s2OOcqYuv3mN4hitXc8DVx+LyUmbUDiA==}
+
   thread-stream@3.1.0:
     resolution: {integrity: sha512-OqyPZ9u96VohAyMfJykzmivOrY2wfMSf3C5TtFJVgN+Hm6aj+voFhlK+kZEIv2FBh1X6Xp3DlnCOfEQ3B2J86A==}
 
@@ -4525,6 +4537,12 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@15.5.2':
     optional: true
+
+  '@next/third-parties@16.0.3(next@15.5.2(@babel/core@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      next: 15.5.2(@babel/core@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+      third-party-capital: 1.0.20
 
   '@noble/curves@1.2.0':
     dependencies:
@@ -7821,6 +7839,8 @@ snapshots:
       minimatch: 3.1.2
 
   text-encoding-utf-8@1.0.2: {}
+
+  third-party-capital@1.0.20: {}
 
   thread-stream@3.1.0:
     dependencies:
