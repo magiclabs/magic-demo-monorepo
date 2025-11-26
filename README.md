@@ -7,7 +7,7 @@ Add the following environment variables to your `.env.local` file:
 ```env
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
-OIDC_PROVIDER_ID=your-magic-provider-id
+NEXT_PUBLIC_OIDC_PROVIDER_ID=your-magic-provider-id
 MAGIC_API_KEY=your-magic-secret-key
 NEXTAUTH_SECRET=your-next-auth-secret
 ```

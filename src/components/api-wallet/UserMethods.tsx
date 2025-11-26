@@ -1,11 +1,11 @@
 import { useApiWallet } from "@/contexts/ApiWalletContext";
 import MagicApiWalletSDK from "@magiclabs/magic-api-wallets";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { MethodsCard } from "../MethodsCard";
+import { WalletType } from "node_modules/@magiclabs/magic-api-wallets/dist/types/api-wallets-types";
 
 export default function UserMethods() {
   const { selectedNetwork, session } = useApiWallet();
+  const oidcProviderId = process.env.NEXT_PUBLIC_OIDC_PROVIDER_ID ?? "";
 
   const tabs = [
     {
@@ -14,7 +14,12 @@ export default function UserMethods() {
       functionName:
         "magic.wallet.exportPrivateKey({ walletType, bearerToken })",
       payload: null,
-      handler: () => revealPrivateKey("ETH", session?.idToken),
+      handler: () =>
+        revealPrivateKey(
+          networkToWalletType(selectedNetwork ?? "ETH"),
+          session?.idToken,
+          oidcProviderId
+        ),
     },
   ];
 
@@ -28,11 +33,54 @@ export default function UserMethods() {
   );
 }
 
-async function revealPrivateKey(walletType: string, bearerToken?: string) {
-  if (!bearerToken) return;
+async function revealPrivateKey(
+  walletType: WalletType,
+  bearerToken?: string,
+  oidcProviderId?: string
+) {
+  if (!bearerToken || !oidcProviderId) return;
   const magic = new MagicApiWalletSDK("pk_live_A8F1C027AB2D1143", {
-    endpoint: "http://localhost:3024",
+    endpoint: "https://embedded-wallet-k04wrf742-magiclabs.vercel.app/",
   });
 
-  await magic.wallet.exportPrivateKey({ walletType, bearerToken });
+  await magic.wallet.exportPrivateKey({
+    walletType,
+    bearerToken,
+    oidcProviderId,
+  });
+}
+
+const NETWORK_TO_TYPE: Record<string, WalletType> = {
+  ethereum: "ETH",
+  eth: "ETH",
+  bitcoin: "BITCOIN",
+  btc: "BITCOIN",
+  flow: "FLOW",
+  icon: "ICON",
+  harmony: "HARMONY",
+  solana: "SOLANA",
+  sol: "SOLANA",
+  zilliqa: "ZILLIQA",
+  zil: "ZILLIQA",
+  taquito: "TAQUITO",
+  algod: "ALGOD",
+  polkadot: "POLKADOT",
+  dot: "POLKADOT",
+  tezos: "TEZOS",
+  avax: "AVAX",
+  avalanche: "AVAX",
+  ed: "ED",
+  conflux: "CONFLUX",
+  terra: "TERRA",
+  hedera: "HEDERA",
+  near: "NEAR",
+  cosmos: "COSMOS",
+  aptos: "APTOS",
+  sui: "SUI",
+  kadena: "KADENA",
+};
+
+export function networkToWalletType(network?: string): WalletType {
+  if (!network) return "ETH";
+  return NETWORK_TO_TYPE[network.toLowerCase()];
 }
