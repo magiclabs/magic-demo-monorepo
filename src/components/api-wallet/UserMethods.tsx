@@ -1,7 +1,6 @@
 import { useApiWallet } from "@/contexts/ApiWalletContext";
-import MagicApiWalletSDK from "@magiclabs/magic-api-wallets";
+import MagicApiWalletSDK, { WalletType } from "@magic-sdk/api-wallets";
 import { MethodsCard } from "../MethodsCard";
-import { WalletType } from "node_modules/@magiclabs/magic-api-wallets/dist/types/api-wallets-types";
 
 export default function UserMethods() {
   const { selectedNetwork, session } = useApiWallet();
@@ -39,9 +38,7 @@ async function revealPrivateKey(
   oidcProviderId?: string
 ) {
   if (!bearerToken || !oidcProviderId) return;
-  const magic = new MagicApiWalletSDK("pk_live_A8F1C027AB2D1143", {
-    endpoint: "https://embedded-wallet-k04wrf742-magiclabs.vercel.app/",
-  });
+  const magic = new MagicApiWalletSDK("pk_live_BAF12F1CC6EBF5BE");
 
   await magic.wallet.exportPrivateKey({
     walletType,
@@ -55,29 +52,8 @@ const NETWORK_TO_TYPE: Record<string, WalletType> = {
   eth: "ETH",
   bitcoin: "BITCOIN",
   btc: "BITCOIN",
-  flow: "FLOW",
-  icon: "ICON",
-  harmony: "HARMONY",
   solana: "SOLANA",
   sol: "SOLANA",
-  zilliqa: "ZILLIQA",
-  zil: "ZILLIQA",
-  taquito: "TAQUITO",
-  algod: "ALGOD",
-  polkadot: "POLKADOT",
-  dot: "POLKADOT",
-  tezos: "TEZOS",
-  avax: "AVAX",
-  avalanche: "AVAX",
-  ed: "ED",
-  conflux: "CONFLUX",
-  terra: "TERRA",
-  hedera: "HEDERA",
-  near: "NEAR",
-  cosmos: "COSMOS",
-  aptos: "APTOS",
-  sui: "SUI",
-  kadena: "KADENA",
 };
 
 export function networkToWalletType(network?: string): WalletType {

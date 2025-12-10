@@ -20,6 +20,9 @@ importers:
       '@magic-ext/solana':
         specifier: ^28.0.0
         version: 28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))
+      '@magic-sdk/api-wallets':
+        specifier: ^0.0.1
+        version: 0.0.1
       '@metamask/eth-sig-util':
         specifier: ^8.2.0
         version: 8.2.0
@@ -617,6 +620,10 @@ packages:
     resolution: {integrity: sha512-mB4uAK3XRMCiHdWZHK+3FS92DoWF7L9KrCUGeqsmL0vBwLxc8lEeWBPDAsK1Hwl/cwRUsFkCsISs+uaYx66mNw==}
     peerDependencies:
       '@solana/web3.js': ^1.87.2
+
+  '@magic-sdk/api-wallets@0.0.1':
+    resolution: {integrity: sha512-wkxiiFqSo2IICDRD27mICogEAukOm5/mUFEQamJMyOXh2mtZmGQH0HFw2LjvyQ7ag8zcGtq1zw96b37BqIfafQ==}
+    engines: {node: '>=20', pnpm: '>=9'}
 
   '@magic-sdk/provider@31.0.0':
     resolution: {integrity: sha512-R786TotIlleZiyMaIRtfMviSu3KloRQ/kVualOaXCQTObzq7ucH55rJJAnt7HXyDQwLQLkbcNxkR2OljHqJeYQ==}
@@ -4443,6 +4450,8 @@ snapshots:
   '@magic-ext/solana@28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
+
+  '@magic-sdk/api-wallets@0.0.1': {}
 
   '@magic-sdk/provider@31.0.0(localforage@1.10.0)':
     dependencies:
