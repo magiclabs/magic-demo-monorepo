@@ -38,7 +38,7 @@ async function revealPrivateKey(
   oidcProviderId?: string
 ) {
   if (!bearerToken || !oidcProviderId) return;
-  const magic = new MagicApiWalletSDK("pk_live_BAF12F1CC6EBF5BE");
+  const magic = new MagicApiWalletSDK(process.env.NEXT_PUBLIC_MAGIC_API_WALLET_KEY);
 
   await magic.wallet.exportPrivateKey({
     walletType,
