@@ -22,7 +22,7 @@ export class MagicService {
 
   public static get magic(): any {
     if (!this._magic) {
-      this._magic = new Magic('pk_live_493172A4D3AFF148', {
+      this._magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_EMBEDDED_WALLET_KEY ?? "", {
         extensions: [
           new OAuthExtension(),
           new SolanaExtension({
