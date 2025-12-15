@@ -1,5 +1,5 @@
 import { useApiWallet } from "@/contexts/ApiWalletContext";
-import MagicApiWalletSDK, { WalletType } from "@magic-sdk/api-wallets";
+import MagicApiWalletSDK, { WalletType } from "@magic-sdk/server-wallets";
 import { MethodsCard } from "../MethodsCard";
 
 export default function UserMethods() {

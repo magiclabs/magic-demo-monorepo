@@ -20,7 +20,7 @@ importers:
       '@magic-ext/solana':
         specifier: ^28.0.0
         version: 28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))
-      '@magic-sdk/api-wallets':
+      '@magic-sdk/server-wallets':
         specifier: ^0.1.0
         version: 0.1.0
       '@metamask/eth-sig-util':
@@ -639,14 +639,14 @@ packages:
     peerDependencies:
       '@solana/web3.js': ^1.87.2
 
-  '@magic-sdk/api-wallets@0.1.0':
-    resolution: {integrity: sha512-brrd+jkVuAQhNzamWiEAdIRcjN2KEIu4UmUz/bfRrZ6PxfObg2TdGBPyBkUbFWtypxS0fkr7xUXmYzQ9vP+xyw==}
-    engines: {node: '>=20', pnpm: '>=9'}
-
   '@magic-sdk/provider@31.0.0':
     resolution: {integrity: sha512-R786TotIlleZiyMaIRtfMviSu3KloRQ/kVualOaXCQTObzq7ucH55rJJAnt7HXyDQwLQLkbcNxkR2OljHqJeYQ==}
     peerDependencies:
       localforage: ^1.7.4
+
+  '@magic-sdk/server-wallets@0.1.0':
+    resolution: {integrity: sha512-FlCjHUPYf7uPHn/Q0juDvS2OIZz35zQX0owNGgvMIH42plwebPEXw1Vl0h4uBdSGJWRXX7GklnghvY7B+eTUiQ==}
+    engines: {node: '>=20', pnpm: '>=9'}
 
   '@magic-sdk/types@25.0.0':
     resolution: {integrity: sha512-KTIO98+R2CvJfY9LDD549Cx1EswzNRpTSTL5G4KjP71wOI0dVfq/dTRV+kWzUohzBBH5w5v0gmEy6YB82WRl/A==}
@@ -4480,13 +4480,13 @@ snapshots:
     dependencies:
       '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
 
-  '@magic-sdk/api-wallets@0.1.0': {}
-
   '@magic-sdk/provider@31.0.0(localforage@1.10.0)':
     dependencies:
       '@magic-sdk/types': 25.0.0
       eventemitter3: 4.0.7
       localforage: 1.10.0
+
+  '@magic-sdk/server-wallets@0.1.0': {}
 
   '@magic-sdk/types@25.0.0': {}
 
