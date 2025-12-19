@@ -24,7 +24,7 @@ export async function express<T = any>(
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jwt}`,
-      "X-Magic-Secret-Key": process.env.MAGIC_API_KEY ?? "",
+      "X-Magic-Secret-Key": process.env.SERVER_WALLET_SECRET_KEY ?? "",
       "X-OIDC-Provider-ID": process.env.NEXT_PUBLIC_OIDC_PROVIDER_ID ?? "",
       "X-Magic-Chain": obj.chain,
       "X-Magic-Referrer": "https://demo.magic.link",

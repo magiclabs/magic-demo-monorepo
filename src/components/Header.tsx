@@ -21,7 +21,8 @@ export const Header = () => {
 
   const isEmbeddedWalletRoute =
     isHydrated && pathname?.startsWith("/embedded-wallet");
-  const isApiWalletRoute = isHydrated && pathname?.startsWith("/api-wallet");
+  const isServerWalletRoute =
+    isHydrated && pathname?.startsWith("/server-wallet");
 
   // Dynamic docs configuration based on pathname
   const getDocsConfig = () => {
@@ -31,10 +32,10 @@ export const Header = () => {
         url: "https://docs.magic.link/embedded-wallets/introduction",
       };
     }
-    if (isApiWalletRoute) {
+    if (isServerWalletRoute) {
       return {
-        text: "View Express Docs",
-        url: "https://docs.magic.link/api-wallets/express-api/overview",
+        text: "View Server Wallet Docs",
+        url: "https://docs.magic.link/server-wallets/express-api/overview",
       };
     }
     // Default Magic docs
@@ -66,7 +67,7 @@ export const Header = () => {
       </a>
 
       <div className="flex flex-col md:flex-row items-center gap-4 z-10">
-        {isApiWalletRoute && (
+        {isServerWalletRoute && (
           <Link
             href="/embedded-wallet"
             className="flex-shrink-0 w-full md:w-auto"
@@ -85,16 +86,19 @@ export const Header = () => {
           </Link>
         )}
         {isEmbeddedWalletRoute && (
-          <Link href="/api-wallet" className="flex-shrink-0 w-full md:w-auto">
+          <Link
+            href="/server-wallet"
+            className="flex-shrink-0 w-full md:w-auto"
+          >
             <Button variant="secondary" onClick={() => {}} fullWidth glow>
               <div className="flex items-center gap-2">
                 <Image
                   src={iconExpress}
-                  alt="Express API Wallet"
+                  alt="Server Wallet"
                   width={24}
                   height={24}
                 />
-                Try API Wallet
+                Try Server Wallet
               </div>
             </Button>
           </Link>

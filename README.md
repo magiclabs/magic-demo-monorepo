@@ -8,11 +8,13 @@ Add the following environment variables to your `.env.local` file:
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 NEXT_PUBLIC_OIDC_PROVIDER_ID=your-magic-provider-id
-MAGIC_API_KEY=your-magic-secret-key
 NEXTAUTH_SECRET=your-next-auth-secret
+NEXT_PUBLIC_MAGIC_EMBEDDED_WALLET_KEY=your-embedded-wallet-publishable-api-key
+NEXT_PUBLIC_MAGIC_SERVER_WALLET_KEY=your-server-wallet-publishable-api-key
+SERVER_WALLET_SECRET_KEY=your-magic-server-wallet-secret-key
 ```
 
-Replace the values with your credentials from Google and GitHub developer consoles.
+Replace the values with your credentials from your Google and Magic developer dashboards.
 
 ## Getting Started
 

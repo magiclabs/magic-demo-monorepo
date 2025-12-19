@@ -1,12 +1,19 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { walletService } from "@/lib/api-wallet/wallet";
+import { walletService } from "@/lib/server-wallet/wallet";
 import { useConsole, LogType, LogMethod } from "./ConsoleContext";
 
-interface ApiWalletContextType {
+interface ServerWalletContextType {
   publicAddress: string | null;
   selectedNetwork: string;
   isAuthenticated: boolean;
@@ -17,14 +24,19 @@ interface ApiWalletContextType {
   handleLogout: () => Promise<void>;
 }
 
-const ApiWalletContext = createContext<ApiWalletContextType | undefined>(undefined);
+const ServerWalletContext = createContext<ServerWalletContextType | undefined>(
+  undefined
+);
 
-export function ApiWalletProvider({ children }: { children: ReactNode }) {
-  const [wallet, setWallet] = useState<{ address: string | null; network: string }>({
+export function ServerWalletProvider({ children }: { children: ReactNode }) {
+  const [wallet, setWallet] = useState<{
+    address: string | null;
+    network: string;
+  }>({
     address: null,
     network: (() => {
       if (typeof window !== "undefined") {
-        return localStorage.getItem("api-wallet-network") || "ethereum";
+        return localStorage.getItem("server-wallet-network") || "ethereum";
       }
       return "ethereum";
     })(),
@@ -32,7 +44,7 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userInfo, setUserInfo] = useState<any | null>(null);
-  
+
   const { logToConsole } = useConsole();
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -59,21 +71,20 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
       setIsAuthenticated(false);
       setIsLoading(false);
       setWallet((prev) => ({ ...prev, address: null }));
-      router.push('/api-wallet');
+      router.push("/server-wallet");
     }
   }, [status, router]);
 
   // Reusable function to create/fetch wallet address
   const createOrFetchWallet = useCallback(async () => {
     if (!isAuthenticated) return null;
-    
+
     try {
-      setIsLoading(true);      
+      setIsLoading(true);
       const address = await walletService.getOrCreateWallet(wallet.network);
       setWallet((prev) => ({ ...prev, address }));
       return address;
     } catch (error: any) {
-      
       // Only sign out if it's an auth-related error
       if (error.requiresReauth) {
         console.log("Auth error detected, signing out...");
@@ -88,39 +99,55 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
   // Load wallet address when authenticated
   useEffect(() => {
     if (isAuthenticated && !wallet.address) {
-        createOrFetchWallet();
+      createOrFetchWallet();
     }
   }, [isAuthenticated, wallet.address, createOrFetchWallet]);
 
-  const handleNetworkChange = useCallback(async (network: string) => {
-    if (network === wallet.network) return;
-    
-    try {      
-      // Update network first, then create wallet for the new network;
-      localStorage.setItem("api-wallet-network", network);
-      
-      // Create new wallet for the selected network using reusable function
-      const newAddress = await walletService.getOrCreateWallet(network);
-      setWallet((prev) => ({ ...prev, network, address: newAddress }));
-    } catch (error: any) {
-      console.error(`Failed to create wallet for network: ${network}`, error);
-    }
-  }, [wallet.network]);
+  const handleNetworkChange = useCallback(
+    async (network: string) => {
+      if (network === wallet.network) return;
+
+      try {
+        // Update network first, then create wallet for the new network;
+        localStorage.setItem("server-wallet-network", network);
+
+        // Create new wallet for the selected network using reusable function
+        const newAddress = await walletService.getOrCreateWallet(network);
+        setWallet((prev) => ({ ...prev, network, address: newAddress }));
+      } catch (error: any) {
+        console.error(`Failed to create wallet for network: ${network}`, error);
+      }
+    },
+    [wallet.network]
+  );
 
   const handleLogout = useCallback(async () => {
     try {
-      logToConsole(LogType.INFO, LogMethod.NEXTAUTH_SIGNOUT, 'Logging out user...');
-      await signOut({ callbackUrl: '/api-wallet' });
+      logToConsole(
+        LogType.INFO,
+        LogMethod.NEXTAUTH_SIGNOUT,
+        "Logging out user..."
+      );
+      await signOut({ callbackUrl: "/server-wallet" });
       setWallet((prev) => ({ ...prev, address: null }));
       setIsAuthenticated(false);
-      logToConsole(LogType.SUCCESS, LogMethod.NEXTAUTH_SIGNOUT, 'User logged out successfully');
+      logToConsole(
+        LogType.SUCCESS,
+        LogMethod.NEXTAUTH_SIGNOUT,
+        "User logged out successfully"
+      );
     } catch (error) {
-      logToConsole(LogType.ERROR, LogMethod.NEXTAUTH_SIGNOUT, 'Logout error', error);
+      logToConsole(
+        LogType.ERROR,
+        LogMethod.NEXTAUTH_SIGNOUT,
+        "Logout error",
+        error
+      );
       console.error("Logout error:", error);
     }
   }, [logToConsole]);
 
-  const value: ApiWalletContextType = {
+  const value: ServerWalletContextType = {
     publicAddress: wallet.address,
     selectedNetwork: wallet.network,
     isAuthenticated,
@@ -132,16 +159,18 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ApiWalletContext.Provider value={value}>
+    <ServerWalletContext.Provider value={value}>
       {children}
-    </ApiWalletContext.Provider>
+    </ServerWalletContext.Provider>
   );
 }
 
-export function useApiWallet() {
-  const context = useContext(ApiWalletContext);
+export function useServerWallet() {
+  const context = useContext(ServerWalletContext);
   if (context === undefined) {
-    throw new Error('useApiWallet must be used within an ApiWalletProvider');
+    throw new Error(
+      "useServerWallet must be used within an ServerWalletProvider"
+    );
   }
   return context;
 }

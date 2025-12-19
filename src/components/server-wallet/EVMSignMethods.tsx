@@ -1,8 +1,8 @@
-import { ethereumService } from "../../lib/api-wallet/ethereum";
+import { ethereumService } from "../../lib/server-wallet/ethereum";
 import { parseEther } from "ethers";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
-import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { useServerWallet } from "@/contexts/ServerWalletContext";
 import {
   PERSONAL_SIGN_PAYLOAD,
   SIGN_TYPED_DATA_V1_PAYLOAD,
@@ -11,8 +11,8 @@ import {
 } from "../../const/sign-typed-data-payloads";
 
 export function EVMSignMethods() {
-  const { publicAddress, selectedNetwork } = useApiWallet();
-  
+  const { publicAddress, selectedNetwork } = useServerWallet();
+
   if (!publicAddress || selectedNetwork !== "ethereum") {
     return null;
   }
@@ -26,7 +26,9 @@ export function EVMSignMethods() {
 
   const handlePersonalSign = async (): Promise<string> => {
     try {
-      const signingResponse = await ethereumService.personalSign(PERSONAL_SIGN_PAYLOAD);
+      const signingResponse = await ethereumService.personalSign(
+        PERSONAL_SIGN_PAYLOAD
+      );
       return JSON.stringify(signingResponse, null, 2);
     } catch (error) {
       console.error(error);
@@ -36,7 +38,9 @@ export function EVMSignMethods() {
 
   const handleSignTypedDataV1 = async (): Promise<string> => {
     try {
-      const response = await ethereumService.signTypedDataV1(SIGN_TYPED_DATA_V1_PAYLOAD);
+      const response = await ethereumService.signTypedDataV1(
+        SIGN_TYPED_DATA_V1_PAYLOAD
+      );
       return JSON.stringify(response, null, 2);
     } catch (error) {
       console.error(error);
@@ -46,7 +50,9 @@ export function EVMSignMethods() {
 
   const handleSignTypedDataV3 = async (): Promise<string> => {
     try {
-      const response = await ethereumService.signTypedDataV3(SIGN_TYPED_DATA_V3_PAYLOAD);
+      const response = await ethereumService.signTypedDataV3(
+        SIGN_TYPED_DATA_V3_PAYLOAD
+      );
       return JSON.stringify(response, null, 2);
     } catch (error) {
       console.error(error);
@@ -56,7 +62,9 @@ export function EVMSignMethods() {
 
   const handleSignTypedDataV4 = async (): Promise<string> => {
     try {
-      const response = await ethereumService.signTypedDataV4(SIGN_TYPED_DATA_V4_PAYLOAD);
+      const response = await ethereumService.signTypedDataV4(
+        SIGN_TYPED_DATA_V4_PAYLOAD
+      );
       return JSON.stringify(response, null, 2);
     } catch (error) {
       console.error(error);
@@ -66,7 +74,9 @@ export function EVMSignMethods() {
 
   const handleSignTransaction = async (): Promise<string> => {
     try {
-      const result = await ethereumService.signTransaction(signTransactionPayload);
+      const result = await ethereumService.signTransaction(
+        signTransactionPayload
+      );
       return JSON.stringify(result, null, 2);
     } catch (error) {
       console.error(error);
@@ -115,7 +125,7 @@ export function EVMSignMethods() {
   return (
     <SigningMethodsLayout
       title="EVM Signing Methods"
-      description="Test various EVM cryptographic signing operations with TEE API"
+      description="Test various EVM cryptographic signing operations with Server Wallet"
       defaultTab="personal"
       tabs={tabs}
     >

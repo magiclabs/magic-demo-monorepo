@@ -1,4 +1,4 @@
-import { express } from "@/lib/api-wallet/express";
+import { express } from "@/lib/server-wallet/express";
 import { TeeEndpoint } from "@/types/tee-types";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";

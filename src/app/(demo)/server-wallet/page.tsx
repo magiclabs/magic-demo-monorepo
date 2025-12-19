@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { Button } from "@/components/Button";
 import { signIn } from "next-auth/react";
@@ -12,11 +12,11 @@ import { PageHeader } from "@/components/PageHeader";
 
 export default function Home() {
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useApiWallet();
+  const { isAuthenticated, isLoading } = useServerWallet();
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/api-wallet/wallet");
+      router.push("/server-wallet/wallet");
     }
   }, [isAuthenticated, router]);
 
@@ -33,9 +33,9 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center gap-20 sm:pt-12">
       <PageHeader
-        product="Express API Wallet"
+        product="Server Wallet"
         title="Get Started"
-        description="Connect your account to access your secure TEE wallet."
+        description="Connect your account to access your secure TEE wallet via our Express API."
       />
 
       <Button onClick={() => signIn("google", { redirect: false })}>
