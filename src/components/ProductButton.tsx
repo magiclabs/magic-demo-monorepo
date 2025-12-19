@@ -18,8 +18,8 @@ const productMap = {
     highlightColor: "#7D51FF",
   },
   express: {
-    href: "/api-wallet",
-    label: "Express API Wallet",
+    href: "/server-wallet",
+    label: "Server Wallet",
     icon: iconExpress,
     highlightColor: "#90F0D3",
   },

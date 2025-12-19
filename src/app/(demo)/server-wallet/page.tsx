@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/api-wallet/wallet");
+      router.push("/server-wallet/wallet");
     }
   }, [isAuthenticated, router]);
 
@@ -33,9 +33,9 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center gap-20 sm:pt-12">
       <PageHeader
-        product="Express API Wallet"
+        product="Server Wallet"
         title="Get Started"
-        description="Connect your account to access your secure TEE wallet."
+        description="Connect your account to access your secure TEE wallet via our Express API."
       />
 
       <Button onClick={() => signIn("google", { redirect: false })}>

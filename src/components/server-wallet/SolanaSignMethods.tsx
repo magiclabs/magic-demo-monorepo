@@ -1,10 +1,14 @@
-import { solanaService } from "../../lib/api-wallet/solana";
+import { solanaService } from "../../lib/server-wallet/solana";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
 import { useApiWallet } from "@/contexts/ApiWalletContext";
-import { Transaction, PublicKey, SystemProgram, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { TEE_BASE } from "@/lib/api-wallet/express";
-
+import {
+  Transaction,
+  PublicKey,
+  SystemProgram,
+  LAMPORTS_PER_SOL,
+} from "@solana/web3.js";
+import { TEE_BASE } from "@/lib/server-wallet/express";
 
 export function SolanaSignMethods() {
   const { publicAddress, selectedNetwork } = useApiWallet();
@@ -14,10 +18,10 @@ export function SolanaSignMethods() {
   }
 
   const userPubkey = new PublicKey(publicAddress);
-  
+
   // Create shared payload objects
-  const messagePayload = "Hello Solana World!"
-  
+  const messagePayload = "Hello Solana World!";
+
   const txPayload = {
     fromPubkey: publicAddress,
     toPubkey: publicAddress,
@@ -28,7 +32,7 @@ export function SolanaSignMethods() {
   const handleSignSimpleMessage = async (): Promise<string> => {
     try {
       const result = await solanaService.solanaSignMessage(messagePayload);
-      
+
       return JSON.stringify(result, null, 2);
     } catch (error) {
       console.error("Failed to sign simple message:", error);
@@ -51,8 +55,10 @@ export function SolanaSignMethods() {
 
       // Serialize the transaction message
       const messageBytes = transaction.serializeMessage();
-      const { signature } = await solanaService.solanaSignTransaction(messageBytes);
-      
+      const { signature } = await solanaService.solanaSignTransaction(
+        messageBytes
+      );
+
       // Return the signature and transaction info
       const result = {
         signature,
@@ -61,8 +67,8 @@ export function SolanaSignMethods() {
           from: userPubkey.toString(),
           to: userPubkey.toString(),
           amount: "0.001 SOL",
-          messageBytes: Buffer.from(messageBytes).toString('base64'),
-        }
+          messageBytes: Buffer.from(messageBytes).toString("base64"),
+        },
       };
       return JSON.stringify(result, null, 2);
     } catch (error) {

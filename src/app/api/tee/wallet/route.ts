@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { TeeEndpoint } from "@/types/tee-types";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { express } from "@/lib/api-wallet/express";
+import { express } from "@/lib/server-wallet/express";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
