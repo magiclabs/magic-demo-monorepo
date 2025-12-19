@@ -11,7 +11,7 @@ export default function Home() {
         <p className="text-muted-foreground text-xl max-w-2xl text-center">
           Over 7 years of proven reliability and performance. Spin up wallets,
           trigger onchain actions, and stay compliant—all with one powerful,
-          production-ready API or White-label Embedded Wallets.
+          production-ready Server Wallet or Embedded Wallet.
         </p>
       </div>
 

@@ -125,7 +125,7 @@ export function EVMSignMethods() {
   return (
     <SigningMethodsLayout
       title="EVM Signing Methods"
-      description="Test various EVM cryptographic signing operations with TEE API"
+      description="Test various EVM cryptographic signing operations with Server Wallet"
       defaultTab="personal"
       tabs={tabs}
     >

@@ -34,7 +34,7 @@ export const Header = () => {
     }
     if (isServerWalletRoute) {
       return {
-        text: "View Express Docs",
+        text: "View Server Wallet Docs",
         url: "https://docs.magic.link/server-wallets/express-api/overview",
       };
     }
