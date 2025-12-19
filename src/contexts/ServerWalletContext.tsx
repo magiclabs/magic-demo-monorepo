@@ -13,7 +13,7 @@ import { useSession, signOut } from "next-auth/react";
 import { walletService } from "@/lib/server-wallet/wallet";
 import { useConsole, LogType, LogMethod } from "./ConsoleContext";
 
-interface ApiWalletContextType {
+interface ServerWalletContextType {
   publicAddress: string | null;
   selectedNetwork: string;
   isAuthenticated: boolean;
@@ -24,11 +24,11 @@ interface ApiWalletContextType {
   handleLogout: () => Promise<void>;
 }
 
-const ApiWalletContext = createContext<ApiWalletContextType | undefined>(
+const ServerWalletContext = createContext<ServerWalletContextType | undefined>(
   undefined
 );
 
-export function ApiWalletProvider({ children }: { children: ReactNode }) {
+export function ServerWalletProvider({ children }: { children: ReactNode }) {
   const [wallet, setWallet] = useState<{
     address: string | null;
     network: string;
@@ -147,7 +147,7 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
     }
   }, [logToConsole]);
 
-  const value: ApiWalletContextType = {
+  const value: ServerWalletContextType = {
     publicAddress: wallet.address,
     selectedNetwork: wallet.network,
     isAuthenticated,
@@ -159,16 +159,18 @@ export function ApiWalletProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ApiWalletContext.Provider value={value}>
+    <ServerWalletContext.Provider value={value}>
       {children}
-    </ApiWalletContext.Provider>
+    </ServerWalletContext.Provider>
   );
 }
 
-export function useApiWallet() {
-  const context = useContext(ApiWalletContext);
+export function useServerWallet() {
+  const context = useContext(ServerWalletContext);
   if (context === undefined) {
-    throw new Error("useApiWallet must be used within an ApiWalletProvider");
+    throw new Error(
+      "useServerWallet must be used within an ServerWalletProvider"
+    );
   }
   return context;
 }

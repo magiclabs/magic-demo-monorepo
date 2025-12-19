@@ -3,14 +3,13 @@
 import { SolanaSignMethods } from "@/components/server-wallet/SolanaSignMethods";
 import { EVMSignMethods } from "@/components/server-wallet/EVMSignMethods";
 import { UserInfo } from "@/components/server-wallet/UserInfo";
-
-import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PageHeader } from "@/components/PageHeader";
 import UserMethods from "@/components/server-wallet/UserMethods";
 
-export default function ApiWalletPage() {
-  const { selectedNetwork, isAuthenticated, isLoading } = useApiWallet();
+export default function ServerWalletPage() {
+  const { selectedNetwork, isAuthenticated, isLoading } = useServerWallet();
 
   if (isLoading) {
     return <LoadingScreen message="Checking authentication..." />;

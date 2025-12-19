@@ -1,7 +1,7 @@
 "use client";
 
 import SessionProviderComponent from "../../../providers/SessionProvider";
-import { ApiWalletProvider } from "@/contexts/ApiWalletContext";
+import { ServerWalletProvider } from "@/contexts/ServerWalletContext";
 
 export default function Layout({
   children,
@@ -10,7 +10,7 @@ export default function Layout({
 }>) {
   return (
     <SessionProviderComponent>
-      <ApiWalletProvider>{children}</ApiWalletProvider>
+      <ServerWalletProvider>{children}</ServerWalletProvider>
     </SessionProviderComponent>
   );
 }

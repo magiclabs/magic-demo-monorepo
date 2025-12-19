@@ -2,7 +2,7 @@ import { ethereumService } from "../../lib/server-wallet/ethereum";
 import { parseEther } from "ethers";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
-import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { useServerWallet } from "@/contexts/ServerWalletContext";
 import {
   PERSONAL_SIGN_PAYLOAD,
   SIGN_TYPED_DATA_V1_PAYLOAD,
@@ -11,7 +11,7 @@ import {
 } from "../../const/sign-typed-data-payloads";
 
 export function EVMSignMethods() {
-  const { publicAddress, selectedNetwork } = useApiWallet();
+  const { publicAddress, selectedNetwork } = useServerWallet();
 
   if (!publicAddress || selectedNetwork !== "ethereum") {
     return null;

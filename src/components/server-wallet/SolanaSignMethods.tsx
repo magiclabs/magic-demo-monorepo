@@ -1,7 +1,7 @@
 import { solanaService } from "../../lib/server-wallet/solana";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { SigningMethodsLayout } from "@/components/SigningMethodsLayout";
-import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { useServerWallet } from "@/contexts/ServerWalletContext";
 import {
   Transaction,
   PublicKey,
@@ -11,7 +11,7 @@ import {
 import { TEE_BASE } from "@/lib/server-wallet/express";
 
 export function SolanaSignMethods() {
-  const { publicAddress, selectedNetwork } = useApiWallet();
+  const { publicAddress, selectedNetwork } = useServerWallet();
 
   if (!publicAddress || selectedNetwork !== "solana") {
     return null;

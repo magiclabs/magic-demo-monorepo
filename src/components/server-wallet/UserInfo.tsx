@@ -1,6 +1,6 @@
 "use client";
 
-import { useApiWallet } from "@/contexts/ApiWalletContext";
+import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { Card } from "@/components/Card";
 import { Dropdown } from "@/components/Dropdown";
 import { WalletAddress } from "@/components/WalletAddress";
@@ -15,7 +15,7 @@ export function UserInfo() {
     isLoading,
     handleNetworkChange,
     handleLogout,
-  } = useApiWallet();
+  } = useServerWallet();
   const { name, email } = userInfo || {};
 
   const networks = [
