@@ -21,6 +21,7 @@ export function UserInfo() {
   const networks = [
     { value: "ethereum", label: "Ethereum" },
     { value: "solana", label: "Solana" },
+    { value: "bitcoin", label: "Bitcoin" },
   ];
 
   // Handle network change

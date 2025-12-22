@@ -7,6 +7,8 @@ import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PageHeader } from "@/components/PageHeader";
 import UserMethods from "@/components/server-wallet/UserMethods";
+import { BTCSignMethods } from "@/components/server-wallet/BTCSignMethods";
+
 
 export default function ServerWalletPage() {
   const { selectedNetwork, isAuthenticated, isLoading } = useServerWallet();
@@ -19,7 +21,6 @@ export default function ServerWalletPage() {
   if (!isAuthenticated) {
     return null;
   }
-
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-0 sm:pt-12 pb-20 gap-2 sm:gap-16 sm:p-20">
@@ -34,11 +35,11 @@ export default function ServerWalletPage() {
 
           {/* Right Side - Signing Methods */}
           <div className="w-full lg:w-2/3 flex flex-col gap-18">
-            {/* Show Solana methods if Solana network is selected */}
             {selectedNetwork === "solana" ? (
               <SolanaSignMethods />
+            ) : selectedNetwork === "bitcoin" ? (
+              <BTCSignMethods />
             ) : (
-              /* Default to EVM methods for Ethereum and other EVM networks */
               <EVMSignMethods />
             )}
 
