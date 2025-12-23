@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@magic-ext/evm": "1.0.0",
+    "tempo.ts": "0.10.2",
     "@magic-ext/hedera": "^2.0.0",
     "@magic-ext/oauth2": "^13.0.0",
     "@magic-ext/solana": "^28.0.0",

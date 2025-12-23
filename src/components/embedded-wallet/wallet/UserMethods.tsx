@@ -4,7 +4,7 @@ import { MagicService } from "@/lib/embedded-wallet/get-magic";
 
 export function UserMethods() {
   const { selectedNetwork } = useEmbeddedWallet();
-  const evmNetworks = [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM];
+  const evmNetworks = [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM, Network.TEMPO];
   const showEvmMethods = evmNetworks.includes(selectedNetwork);
   const capitalNetworkName =
     selectedNetwork[0].toUpperCase() + selectedNetwork.slice(1);

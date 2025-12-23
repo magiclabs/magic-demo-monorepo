@@ -71,6 +71,9 @@ importers:
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
+      tempo.ts:
+        specifier: 0.10.2
+        version: 0.10.2(@remix-run/headers@0.17.2)(@remix-run/route-pattern@0.15.3)(@remix-run/session@0.4.1)(typescript@5.9.2)(viem@2.43.3(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10))
       viem:
         specifier: ^2.43.3
         version: 2.43.3(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)
@@ -1018,6 +1021,22 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  '@remix-run/fetch-router@0.12.0':
+    resolution: {integrity: sha512-BDG/VepZg2ZJ7wav3HDrB9ZJLpzZONHi9ItOkFMcKsrbm5g7jjrxW5Vdijbbebz12pbJQu6VKTwLVXp/LgFusA==}
+    peerDependencies:
+      '@remix-run/headers': ^0.17.2
+      '@remix-run/route-pattern': ^0.15.3
+      '@remix-run/session': ^0.4.0
+
+  '@remix-run/headers@0.17.2':
+    resolution: {integrity: sha512-IfHVCftsRKfk7kIQUxP9WDCe0OXj9X0lDRfFxk3CPcXJenBUEsYEPeBoW/YCZlKhdRWZjQlrofdk63lMSJmy8w==}
+
+  '@remix-run/route-pattern@0.15.3':
+    resolution: {integrity: sha512-7s4Oy9q6Oz9Vfwg0iZscpmYVASNG9fLqbCa+YY0+SWKksDpvCRiW46xp3S3zEvT7zEP7G55FKA+JdrqqK2AOXw==}
+
+  '@remix-run/session@0.4.1':
+    resolution: {integrity: sha512-Bm6aKYgutb/raHZ3laloz8g/Qu7f3CeK3o4gUVDMxtEiAdWCzJamwHoTpGOc5+g1Kuy7z85v4M6nGrF06MFDSg==}
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -2347,6 +2366,9 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
+  idb-keyval@6.2.2:
+    resolution: {integrity: sha512-yjD9nARJ/jb1g+CvD0tlhUHOrJ9Sy0P8T9MF3YaLlHnSRpwPfpTX0XIvpmw3gAJUmEu3FiICLBDPXVwyEvrleg==}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -3081,6 +3103,14 @@ packages:
       typescript:
         optional: true
 
+  ox@0.9.17:
+    resolution: {integrity: sha512-rKAnhzhRU3Xh3hiko+i1ZxywZ55eWQzeS/Q4HRKLx2PqfHOolisZHErSsJVipGlmQKHW5qwOED/GighEw9dbLg==}
+    peerDependencies:
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
     engines: {node: '>=6'}
@@ -3608,6 +3638,29 @@ packages:
   tar@7.4.3:
     resolution: {integrity: sha512-5S7Va8hKfV7W5U6g3aYxXmlPoZVAwUMy9AOKyF2fVuZa2UD3qZjg578OrLRt8PcNN1PleVaL/5/yYATNL0ICUw==}
     engines: {node: '>=18'}
+
+  tempo.ts@0.10.2:
+    resolution: {integrity: sha512-04PdJOg920CBEBVRJxCdlDQsFriRDw5CQPl87h2/lPFLsEwfjeo+TIY99xyCVEp7hsG7BTV8hf+SosFRuRCb3w==}
+    peerDependencies:
+      '@tanstack/query-core': '>=5.0.0'
+      '@tanstack/react-query': '>=5.0.0'
+      '@wagmi/core': '>=2.18'
+      prool: ^0
+      viem: '>=2.41.2'
+      wagmi: '>=2.19'
+    peerDependenciesMeta:
+      '@tanstack/query-core':
+        optional: true
+      '@tanstack/react-query':
+        optional: true
+      '@wagmi/core':
+        optional: true
+      prool:
+        optional: true
+      viem:
+        optional: true
+      wagmi:
+        optional: true
 
   terser@5.44.1:
     resolution: {integrity: sha512-t/R3R/n0MSwnnazuPpPNVO60LX0SKL45pyl9YlvxIdkH0Of7D5qM2EVe+yASRIlY5pZ73nclYJfNANGWPwFDZw==}
@@ -4889,6 +4942,18 @@ snapshots:
       react-native: 0.81.1(@babel/core@7.28.5)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)
     optionalDependencies:
       '@types/react': 19.1.12
+
+  '@remix-run/fetch-router@0.12.0(@remix-run/headers@0.17.2)(@remix-run/route-pattern@0.15.3)(@remix-run/session@0.4.1)':
+    dependencies:
+      '@remix-run/headers': 0.17.2
+      '@remix-run/route-pattern': 0.15.3
+      '@remix-run/session': 0.4.1
+
+  '@remix-run/headers@0.17.2': {}
+
+  '@remix-run/route-pattern@0.15.3': {}
+
+  '@remix-run/session@0.4.1': {}
 
   '@rtsao/scc@1.1.0': {}
 
@@ -6425,6 +6490,8 @@ snapshots:
       safer-buffer: 2.1.2
     optional: true
 
+  idb-keyval@6.2.2: {}
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -7285,6 +7352,21 @@ snapshots:
     transitivePeerDependencies:
       - zod
 
+  ox@0.9.17(typescript@5.9.2):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.1
+      '@noble/ciphers': 1.3.0
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.2)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.9.2
+    transitivePeerDependencies:
+      - zod
+
   p-limit@2.3.0:
     dependencies:
       p-try: 2.2.0
@@ -7948,6 +8030,20 @@ snapshots:
       minizlib: 3.0.2
       mkdirp: 3.0.1
       yallist: 5.0.0
+
+  tempo.ts@0.10.2(@remix-run/headers@0.17.2)(@remix-run/route-pattern@0.15.3)(@remix-run/session@0.4.1)(typescript@5.9.2)(viem@2.43.3(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)):
+    dependencies:
+      '@remix-run/fetch-router': 0.12.0(@remix-run/headers@0.17.2)(@remix-run/route-pattern@0.15.3)(@remix-run/session@0.4.1)
+      idb-keyval: 6.2.2
+      ox: 0.9.17(typescript@5.9.2)
+    optionalDependencies:
+      viem: 2.43.3(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)
+    transitivePeerDependencies:
+      - '@remix-run/headers'
+      - '@remix-run/route-pattern'
+      - '@remix-run/session'
+      - typescript
+      - zod
 
   terser@5.44.1:
     dependencies:
