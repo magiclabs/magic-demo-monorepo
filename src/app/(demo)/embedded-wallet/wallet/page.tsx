@@ -4,6 +4,7 @@ import { UserInfo } from "@/components/embedded-wallet/UserInfo";
 import { SignMethods } from "@/components/embedded-wallet/wallet/SignMethods";
 import { HederaSignMethods } from "@/components/embedded-wallet/wallet/HederaSignMethods";
 import { SolanaSignMethods } from "@/components/embedded-wallet/wallet/SolanaSignMethods";
+import { TempoSignMethods } from "@/components/embedded-wallet/wallet/TempoSignMethods";
 import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { UserMethods } from "@/components/embedded-wallet/wallet/UserMethods";
 import { WalletMethods } from "@/components/embedded-wallet/wallet/WalletMethods";
@@ -31,6 +32,8 @@ export default function WalletPage() {
               <HederaSignMethods />
             ) : selectedNetwork === Network.SOLANA ? (
               <SolanaSignMethods />
+            ) : selectedNetwork === Network.TEMPO ? (
+              <TempoSignMethods />
             ) : (
               <SignMethods />
             )}

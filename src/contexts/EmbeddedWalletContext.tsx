@@ -17,6 +17,7 @@ export enum Network {
   OPTIMISM = "optimism",
   HEDERA = "hedera",
   SOLANA = "solana",
+  TEMPO = "tempo",
 }
 
 interface WalletContextType {
@@ -48,7 +49,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
     // EVM networks (polygon, ethereum, optimism) all use the ethereum wallet
     if (
-      [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM].includes(
+      [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM, Network.TEMPO].includes(
         selectedNetwork
       )
     ) {
@@ -100,6 +101,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         Network.OPTIMISM,
         Network.HEDERA,
         Network.SOLANA,
+        Network.TEMPO,
       ].includes(savedNetwork)
     ) {
       setSelectedNetwork(savedNetwork);

@@ -11,6 +11,11 @@ const customPolygonOptions = {
   default: true, // Set as default network
 };
 
+const customTempoOptions = {
+  rpcUrl: "https://rpc.testnet.tempo.xyz",
+  chainId: 42429,
+};
+
 const customOptimismOptions = {
   rpcUrl: "https://mainnet.optimism.io",
   chainId: 10,
@@ -31,7 +36,7 @@ export class MagicService {
           new HederaExtension({
             network: 'mainnet',
           }),
-          new EVMExtension([customPolygonOptions, customOptimismOptions]),
+          new EVMExtension([customPolygonOptions, customOptimismOptions, customTempoOptions]),
         ],
       });
     }

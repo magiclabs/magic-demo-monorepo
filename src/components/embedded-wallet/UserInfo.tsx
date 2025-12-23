@@ -22,6 +22,7 @@ export function UserInfo() {
     { value: "optimism", label: "Optimism" },
     { value: "hedera", label: "Hedera" },
     { value: "solana", label: "Solana" },
+    { value: "tempo", label: "Tempo" },
   ];
 
   return (
