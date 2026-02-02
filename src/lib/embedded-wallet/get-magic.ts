@@ -4,6 +4,7 @@ import { SolanaExtension } from "@magic-ext/solana";
 import { HederaExtension } from "@magic-ext/hedera";
 import { EVMExtension } from "@magic-ext/evm";
 import { ethers } from "ethers";
+import { MagicWidgetExtension } from "@magic-ext/magic-widget";
 
 const customPolygonOptions = {
   rpcUrl: "https://polygon-rpc.com/", // Polygon RPC URL
@@ -22,18 +23,22 @@ export class MagicService {
 
   public static get magic(): any {
     if (!this._magic) {
-      this._magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_EMBEDDED_WALLET_KEY ?? "", {
-        extensions: [
-          new OAuthExtension(),
-          new SolanaExtension({
-            rpcUrl: "https://api.devnet.solana.com"
-          }),
-          new HederaExtension({
-            network: 'mainnet',
-          }),
-          new EVMExtension([customPolygonOptions, customOptimismOptions]),
-        ],
-      });
+      this._magic = new Magic(
+        process.env.NEXT_PUBLIC_MAGIC_EMBEDDED_WALLET_KEY ?? "",
+        {
+          extensions: [
+            new OAuthExtension(),
+            new SolanaExtension({
+              rpcUrl: "https://api.devnet.solana.com",
+            }),
+            new HederaExtension({
+              network: "mainnet",
+            }),
+            new EVMExtension([customPolygonOptions, customOptimismOptions]),
+            new MagicWidgetExtension(),
+          ],
+        },
+      );
     }
     return this._magic;
   }
@@ -42,7 +47,7 @@ export class MagicService {
     if (!this._provider) {
       this._provider = new ethers.BrowserProvider(
         // cast as any if necessary; Magic's rpcProvider type is slightly different
-        MagicService.magic.rpcProvider as any
+        MagicService.magic.rpcProvider as any,
       );
     }
     return this._provider;
