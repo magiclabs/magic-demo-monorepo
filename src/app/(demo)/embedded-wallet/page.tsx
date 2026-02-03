@@ -29,6 +29,10 @@ export default function Home() {
     return null;
   }
 
+  const handleSuccess = () => {
+    router.push("/embedded-wallet/wallet");
+  };
+
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 flex flex-col items-center min-h-screen p-8 pt-0 sm:pt-12 pb-20 gap-10 sm:gap-16 sm:p-10 sm:pr-4 lg:p-20">
@@ -58,6 +62,7 @@ export default function Home() {
             ThirdPartyWallets.RABBY,
             ThirdPartyWallets.WALLETCONNECT,
           ]}
+          onSuccess={handleSuccess}
         />
       </div>
     </div>

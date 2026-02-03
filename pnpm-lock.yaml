@@ -21,8 +21,8 @@ importers:
         specifier: ^28.0.0
         version: 28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@magic-ext/wallet-kit':
-        specifier: ^0.2.0
-        version: 0.2.0(ff086d07d95487e8947881a52da8448e)
+        specifier: ^0.2.1
+        version: 0.2.1(ff086d07d95487e8947881a52da8448e)
       '@magic-sdk/server-wallets':
         specifier: ^0.1.0
         version: 0.1.0
@@ -51,8 +51,8 @@ importers:
         specifier: ^6.15.0
         version: 6.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       magic-sdk:
-        specifier: ^31.0.0
-        version: 31.0.0
+        specifier: ^33.3.1
+        version: 33.3.1
       next:
         specifier: 15.5.9
         version: 15.5.9(@babel/core@7.28.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -864,16 +864,16 @@ packages:
     peerDependencies:
       '@solana/web3.js': ^1.87.2
 
-  '@magic-ext/wallet-kit@0.2.0':
-    resolution: {integrity: sha512-FnN5tNFaYNc/6gQ6+8Q3XtER7FLuy7KBxREZDqRVGovbZ2uHVKiLT9EbyN1UL/BxhgDyX1JLqBgC2VYkMZhaZg==}
+  '@magic-ext/wallet-kit@0.2.1':
+    resolution: {integrity: sha512-0tXY3bMbU6wyQVIFzLymXpVVWA4Uo62vAK45tq5/pjzbXD62WCOCYv49rN6FPLFH5Y2eXAKG3skCCq0DMQGNQQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
       viem: ^2.0.0
 
-  '@magic-sdk/provider@31.0.0':
-    resolution: {integrity: sha512-R786TotIlleZiyMaIRtfMviSu3KloRQ/kVualOaXCQTObzq7ucH55rJJAnt7HXyDQwLQLkbcNxkR2OljHqJeYQ==}
+  '@magic-sdk/provider@33.3.1':
+    resolution: {integrity: sha512-jx54RUhSxh+cQuHw5PXDV0B09hn6qmFtEHaev02snarqbR/9+iGx/G8fPG2eSGygFBOJrDx9GNgany+HpFgfmQ==}
     peerDependencies:
       localforage: ^1.7.4
 
@@ -881,8 +881,8 @@ packages:
     resolution: {integrity: sha512-FlCjHUPYf7uPHn/Q0juDvS2OIZz35zQX0owNGgvMIH42plwebPEXw1Vl0h4uBdSGJWRXX7GklnghvY7B+eTUiQ==}
     engines: {node: '>=20', pnpm: '>=9'}
 
-  '@magic-sdk/types@25.0.0':
-    resolution: {integrity: sha512-KTIO98+R2CvJfY9LDD549Cx1EswzNRpTSTL5G4KjP71wOI0dVfq/dTRV+kWzUohzBBH5w5v0gmEy6YB82WRl/A==}
+  '@magic-sdk/types@27.3.0':
+    resolution: {integrity: sha512-f+RcJVfyBTdySoMTQse153rBT4utzymxX4IXYMFV7N3z6ImnTseh50bVv5cQTf+NFR/bMwcWCQH9GMFuLGxTaQ==}
 
   '@magiclabs/ui-components@1.49.2':
     resolution: {integrity: sha512-hggFwQ4C8isfycwRN3xzu0133CZ5CsKaMCZ9J+yHPeEaSH+V24kN7UzA5XWExFykRBEiuEbOmAIP/5D4detZAA==}
@@ -4877,8 +4877,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  magic-sdk@31.0.0:
-    resolution: {integrity: sha512-BIv2IA2279emzQ6/znCa1jaiiNb25i+1i5CrV2BVNKRSZPvdol2sbJ7cY97Ikt9kiqd7nsUUH3pZc8e9WdOP6A==}
+  magic-sdk@33.3.1:
+    resolution: {integrity: sha512-l71r9QEgv1IDQLGU/dGkSqAsvpcGav0gGr/dUxyiARqd0PQVoBvCm3sCb0CaWeIG1JMUTTbX1KsPiAAP4hkcqw==}
 
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
@@ -7553,7 +7553,7 @@ snapshots:
     dependencies:
       '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
 
-  '@magic-ext/wallet-kit@0.2.0(ff086d07d95487e8947881a52da8448e)':
+  '@magic-ext/wallet-kit@0.2.1(ff086d07d95487e8947881a52da8448e)':
     dependencies:
       '@magiclabs/ui-components': 1.49.2(@pandacss/dev@0.35.0(typescript@5.9.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@reown/appkit': 1.8.17(@types/react@19.1.12)(bufferutil@4.0.9)(encoding@0.1.13)(react@19.1.0)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@19.1.0))(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -7610,15 +7610,15 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@magic-sdk/provider@31.0.0(localforage@1.10.0)':
+  '@magic-sdk/provider@33.3.1(localforage@1.10.0)':
     dependencies:
-      '@magic-sdk/types': 25.0.0
+      '@magic-sdk/types': 27.3.0
       eventemitter3: 4.0.7
       localforage: 1.10.0
 
   '@magic-sdk/server-wallets@0.1.0': {}
 
-  '@magic-sdk/types@25.0.0': {}
+  '@magic-sdk/types@27.3.0': {}
 
   '@magiclabs/ui-components@1.49.2(@pandacss/dev@0.35.0(typescript@5.9.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -14198,10 +14198,10 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  magic-sdk@31.0.0:
+  magic-sdk@33.3.1:
     dependencies:
-      '@magic-sdk/provider': 31.0.0(localforage@1.10.0)
-      '@magic-sdk/types': 25.0.0
+      '@magic-sdk/provider': 33.3.1(localforage@1.10.0)
+      '@magic-sdk/types': 27.3.0
       localforage: 1.10.0
 
   magic-string@0.30.19:
