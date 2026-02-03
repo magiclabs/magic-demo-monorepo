@@ -50,14 +50,24 @@ export function MethodsCard({ title, description, defaultTab, tabs }: Props) {
           <div className="w-full min-[741px]:w-1/3">
             <TabsList className="flex gap-2 bg-transparent flex-col">
               {tabs.map((tab) => (
-                <TabsTrigger
-                  key={tab.value}
-                  className={`${TabsClasses.trigger} ${tab.disabled ? "opacity-40 cursor-not-allowed hover:bg-slate-1" : ""}`}
-                  value={tab.value}
-                  disabled={tab.disabled}
-                >
-                  {tab.label}
-                </TabsTrigger>
+                <div key={tab.value} className="relative group/tab w-full">
+                  <TabsTrigger
+                    className={`${TabsClasses.trigger} ${
+                      tab.disabled
+                        ? "opacity-40 cursor-not-allowed hover:bg-slate-1"
+                        : ""
+                    }`}
+                    value={tab.value}
+                    disabled={tab.disabled}
+                  >
+                    {tab.label}
+                  </TabsTrigger>
+                  {tab.disabled && (
+                    <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-3 py-1.5 bg-slate-3 border border-slate-4 text-sm text-secondary rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover/tab:opacity-100 transition-opacity duration-150 z-10">
+                      Method unavailable for external wallets
+                    </div>
+                  )}
+                </div>
               ))}
             </TabsList>
           </div>
