@@ -4,7 +4,7 @@ import { SolanaExtension } from "@magic-ext/solana";
 import { HederaExtension } from "@magic-ext/hedera";
 import { EVMExtension } from "@magic-ext/evm";
 import { ethers } from "ethers";
-import { MagicWidgetExtension } from "@magic-ext/magic-widget";
+import { WalletKitExtension } from "@magic-ext/wallet-kit";
 
 const customPolygonOptions = {
   rpcUrl: "https://polygon-rpc.com/", // Polygon RPC URL
@@ -35,9 +35,9 @@ export class MagicService {
               network: "mainnet",
             }),
             new EVMExtension([customPolygonOptions, customOptimismOptions]),
-            new MagicWidgetExtension(),
+            new WalletKitExtension(),
           ],
-        },
+        }
       );
     }
     return this._magic;
@@ -47,7 +47,7 @@ export class MagicService {
     if (!this._provider) {
       this._provider = new ethers.BrowserProvider(
         // cast as any if necessary; Magic's rpcProvider type is slightly different
-        MagicService.magic.rpcProvider as any,
+        MagicService.magic.rpcProvider as any
       );
     }
     return this._provider;

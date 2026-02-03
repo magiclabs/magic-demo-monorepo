@@ -6,6 +6,7 @@ import { OAuthAuth } from "@/components/embedded-wallet/auth/OAuthAuth";
 import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PageHeader } from "@/components/PageHeader";
+import { MagicWidget, ThirdPartyWallets } from "@magic-ext/wallet-kit";
 
 export default function Home() {
   const { isAuthenticated, isLoading, fetchAllNetworkAddresses } =
@@ -48,6 +49,16 @@ export default function Home() {
           {/* OAuth Authentication */}
           <OAuthAuth />
         </div>
+
+        <MagicWidget
+          wallets={[
+            ThirdPartyWallets.METAMASK,
+            ThirdPartyWallets.COINBASE,
+            ThirdPartyWallets.PHANTOM,
+            ThirdPartyWallets.RABBY,
+            ThirdPartyWallets.WALLETCONNECT,
+          ]}
+        />
       </div>
     </div>
   );

@@ -14,15 +14,15 @@ importers:
       '@magic-ext/hedera':
         specifier: ^2.0.0
         version: 2.0.0(@hashgraph/sdk@2.72.0(bn.js@5.2.2)(react-native@0.81.1(@babel/core@7.28.5)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))
-      '@magic-ext/magic-widget':
-        specifier: ^0.2.1
-        version: 0.2.1(ff086d07d95487e8947881a52da8448e)
       '@magic-ext/oauth2':
         specifier: ^13.0.0
         version: 13.0.0
       '@magic-ext/solana':
         specifier: ^28.0.0
         version: 28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))
+      '@magic-ext/wallet-kit':
+        specifier: ^0.2.0
+        version: 0.2.0(ff086d07d95487e8947881a52da8448e)
       '@magic-sdk/server-wallets':
         specifier: ^0.1.0
         version: 0.1.0
@@ -856,14 +856,6 @@ packages:
     peerDependencies:
       '@hashgraph/sdk': ^2.31.0
 
-  '@magic-ext/magic-widget@0.2.1':
-    resolution: {integrity: sha512-DjZft9bQu72DnXrirQA3e5i4FFKOsg+AIuc3PNs+Q1KzCe4CuKISUIRdZhlzUmzVv4yJH7Pg0UiGIHMLxxcDZw==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.0.0
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-      viem: ^2.0.0
-
   '@magic-ext/oauth2@13.0.0':
     resolution: {integrity: sha512-RI+bWqz7lq9Nj00CxaCiPIIY71KD35iYzQ6R3VFJrx5yT0IxfDuKpw0jMwjwC+i9+vbTqg2h5DcxZOgItA/cHg==}
 
@@ -871,6 +863,14 @@ packages:
     resolution: {integrity: sha512-mB4uAK3XRMCiHdWZHK+3FS92DoWF7L9KrCUGeqsmL0vBwLxc8lEeWBPDAsK1Hwl/cwRUsFkCsISs+uaYx66mNw==}
     peerDependencies:
       '@solana/web3.js': ^1.87.2
+
+  '@magic-ext/wallet-kit@0.2.0':
+    resolution: {integrity: sha512-FnN5tNFaYNc/6gQ6+8Q3XtER7FLuy7KBxREZDqRVGovbZ2uHVKiLT9EbyN1UL/BxhgDyX1JLqBgC2VYkMZhaZg==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.0.0
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+      viem: ^2.0.0
 
   '@magic-sdk/provider@31.0.0':
     resolution: {integrity: sha512-R786TotIlleZiyMaIRtfMviSu3KloRQ/kVualOaXCQTObzq7ucH55rJJAnt7HXyDQwLQLkbcNxkR2OljHqJeYQ==}
@@ -4184,7 +4184,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
@@ -7545,7 +7545,15 @@ snapshots:
     dependencies:
       '@hashgraph/sdk': 2.72.0(bn.js@5.2.2)(react-native@0.81.1(@babel/core@7.28.5)(@types/react@19.1.12)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))
 
-  '@magic-ext/magic-widget@0.2.1(ff086d07d95487e8947881a52da8448e)':
+  '@magic-ext/oauth2@13.0.0':
+    dependencies:
+      crypto-js: 4.2.0
+
+  '@magic-ext/solana@28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))':
+    dependencies:
+      '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
+
+  '@magic-ext/wallet-kit@0.2.0(ff086d07d95487e8947881a52da8448e)':
     dependencies:
       '@magiclabs/ui-components': 1.49.2(@pandacss/dev@0.35.0(typescript@5.9.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@reown/appkit': 1.8.17(@types/react@19.1.12)(bufferutil@4.0.9)(encoding@0.1.13)(react@19.1.0)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@19.1.0))(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -7601,14 +7609,6 @@ snapshots:
       - use-sync-external-store
       - utf-8-validate
       - zod
-
-  '@magic-ext/oauth2@13.0.0':
-    dependencies:
-      crypto-js: 4.2.0
-
-  '@magic-ext/solana@28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))':
-    dependencies:
-      '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
 
   '@magic-sdk/provider@31.0.0(localforage@1.10.0)':
     dependencies:
