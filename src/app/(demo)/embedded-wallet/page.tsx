@@ -6,7 +6,11 @@ import { OAuthAuth } from "@/components/embedded-wallet/auth/OAuthAuth";
 import { useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PageHeader } from "@/components/PageHeader";
-import { MagicWidget, ThirdPartyWallets } from "@magic-ext/wallet-kit";
+import {
+  LoginResult,
+  MagicWidget,
+  ThirdPartyWallets,
+} from "@magic-ext/wallet-kit";
 
 export default function Home() {
   const { isAuthenticated, isLoading, fetchAllNetworkAddresses } =
@@ -29,7 +33,8 @@ export default function Home() {
     return null;
   }
 
-  const handleSuccess = () => {
+  const handleSuccess = (response: LoginResult) => {
+    localStorage.setItem("magic_widget_login_method", response.method);
     router.push("/embedded-wallet/wallet");
   };
 
@@ -62,7 +67,7 @@ export default function Home() {
             ThirdPartyWallets.RABBY,
             ThirdPartyWallets.WALLETCONNECT,
           ]}
-          onSuccess={handleSuccess}
+          onSuccess={(response) => handleSuccess(response)}
         />
       </div>
     </div>

@@ -6,6 +6,11 @@ export function UserMethods() {
   const { selectedNetwork } = useEmbeddedWallet();
   const evmNetworks = [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM];
   const showEvmMethods = evmNetworks.includes(selectedNetwork);
+  const loginMethod =
+    typeof window !== "undefined"
+      ? localStorage.getItem("magic_widget_login_method")
+      : null;
+  const isWalletLogin = loginMethod === "wallet";
   const capitalNetworkName =
     selectedNetwork[0].toUpperCase() + selectedNetwork.slice(1);
 
@@ -16,6 +21,7 @@ export function UserMethods() {
         functionName: "magic.user.revealEVMPrivateKey()",
         payload: null,
         handler: () => MagicService.magic.user.revealEVMPrivateKey(),
+        disabled: isWalletLogin,
       }
     : {
         value: "reveal-private-key",
@@ -23,6 +29,7 @@ export function UserMethods() {
         functionName: `magic.${selectedNetwork}.revealPrivateKey()`,
         payload: null,
         handler: () => MagicService.magic[selectedNetwork].revealPrivateKey(),
+        disabled: isWalletLogin,
       };
 
   const tabs = [
@@ -53,6 +60,7 @@ export function UserMethods() {
       functionName: "magic.user.getIdToken()",
       payload: null,
       handler: () => MagicService.magic.user.getIdToken(),
+      disabled: isWalletLogin,
     },
     {
       value: "generate-id-token",
@@ -60,6 +68,7 @@ export function UserMethods() {
       functionName: "magic.user.generateIdToken()",
       payload: null,
       handler: () => MagicService.magic.user.generateIdToken(),
+      disabled: isWalletLogin,
     },
     {
       value: "show-settings",
@@ -67,6 +76,7 @@ export function UserMethods() {
       functionName: "magic.user.showSettings()",
       payload: null,
       handler: () => MagicService.magic.user.showSettings(),
+      disabled: isWalletLogin,
     },
     // {
     //   value: "recover-account",
@@ -103,6 +113,7 @@ export function UserMethods() {
       functionName: "magic.user.enableMFA({showUI: true})",
       payload: null,
       handler: () => MagicService.magic.user.enableMFA({ showUI: true }),
+      disabled: isWalletLogin,
     },
     {
       value: "disable-mfa",
@@ -110,6 +121,7 @@ export function UserMethods() {
       functionName: "magic.user.disableMFA({showUI: true})",
       payload: null,
       handler: () => MagicService.magic.user.disableMFA({ showUI: true }),
+      disabled: isWalletLogin,
     },
   ];
 

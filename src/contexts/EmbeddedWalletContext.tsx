@@ -167,6 +167,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const res = await MagicService.magic.user.logout();
       if (res) {
         setIsAuthenticated(false);
+        localStorage.removeItem("magic_widget_login_method");
         logToConsole(
           LogType.SUCCESS,
           LogMethod.MAGIC_USER_LOGOUT,

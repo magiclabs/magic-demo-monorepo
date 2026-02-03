@@ -20,6 +20,7 @@ interface TabItem {
   functionName?: string;
   payload?: unknown;
   handler?: () => Promise<any>;
+  disabled?: boolean;
 }
 
 const TabsClasses = {
@@ -51,8 +52,9 @@ export function MethodsCard({ title, description, defaultTab, tabs }: Props) {
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
-                  className={TabsClasses.trigger}
+                  className={`${TabsClasses.trigger} ${tab.disabled ? "opacity-40 cursor-not-allowed hover:bg-slate-1" : ""}`}
                   value={tab.value}
+                  disabled={tab.disabled}
                 >
                   {tab.label}
                 </TabsTrigger>
