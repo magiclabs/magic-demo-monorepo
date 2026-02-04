@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 
 export function UserMethods() {
   const { selectedNetwork } = useEmbeddedWallet();
-  const evmNetworks = [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM];
-  const showEvmMethods = evmNetworks.includes(selectedNetwork);
   const [isWalletLogin, setIsWalletLogin] = useState(false);
 
   useEffect(() => {
@@ -14,6 +12,8 @@ export function UserMethods() {
       localStorage.getItem("magic_widget_login_method") === "wallet"
     );
   }, []);
+  const evmNetworks = [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM];
+  const showEvmMethods = evmNetworks.includes(selectedNetwork);
   const capitalNetworkName =
     selectedNetwork[0].toUpperCase() + selectedNetwork.slice(1);
 
