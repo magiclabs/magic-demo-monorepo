@@ -48,17 +48,6 @@ export default function Home() {
           description="Connect your account using Magic's embedded wallet authentication"
         />
 
-        {/* Main Content */}
-        <div className="flex flex-col [@media(min-width:820px)]:flex-row items-center gap-10 lg:gap-20 w-full max-w-[820px]">
-          {/* Email OTP Authentication */}
-          <EmailOTPAuth onSuccess={fetchAllNetworkAddresses} />
-
-          <div className="h-px [@media(min-width:820px)]:h-64 w-full [@media(min-width:820px)]:w-px bg-slate-3 flex-shrink-0" />
-
-          {/* OAuth Authentication */}
-          <OAuthAuth />
-        </div>
-
         <MagicWidget
           wallets={[
             ThirdPartyWallets.METAMASK,
@@ -69,6 +58,17 @@ export default function Home() {
           ]}
           onSuccess={(response) => handleSuccess(response)}
         />
+
+        {/* Main Content */}
+        <div className="flex flex-col [@media(min-width:820px)]:flex-row items-center gap-10 lg:gap-20 w-full max-w-[820px]">
+          {/* Email OTP Authentication */}
+          <EmailOTPAuth onSuccess={fetchAllNetworkAddresses} />
+
+          <div className="h-px [@media(min-width:820px)]:h-64 w-full [@media(min-width:820px)]:w-px bg-slate-3 flex-shrink-0" />
+
+          {/* OAuth Authentication */}
+          <OAuthAuth />
+        </div>
       </div>
     </div>
   );

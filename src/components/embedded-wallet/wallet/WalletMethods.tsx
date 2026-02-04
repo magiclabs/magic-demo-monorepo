@@ -1,12 +1,15 @@
 import { MethodsCard } from "@/components/MethodsCard";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
+import { useEffect, useState } from "react";
 
 export function WalletMethods() {
-  const loginMethod =
-    typeof window !== "undefined"
-      ? localStorage.getItem("magic_widget_login_method")
-      : null;
-  const isWalletLogin = loginMethod === "wallet";
+  const [isWalletLogin, setIsWalletLogin] = useState(false);
+
+  useEffect(() => {
+    setIsWalletLogin(
+      localStorage.getItem("magic_widget_login_method") === "wallet"
+    );
+  }, []);
 
   const tabs = [
     {

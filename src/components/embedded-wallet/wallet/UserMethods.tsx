@@ -1,16 +1,19 @@
 import { MethodsCard } from "@/components/MethodsCard";
 import { Network, useEmbeddedWallet } from "@/contexts/EmbeddedWalletContext";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
+import { useEffect, useState } from "react";
 
 export function UserMethods() {
   const { selectedNetwork } = useEmbeddedWallet();
   const evmNetworks = [Network.POLYGON, Network.ETHEREUM, Network.OPTIMISM];
   const showEvmMethods = evmNetworks.includes(selectedNetwork);
-  const loginMethod =
-    typeof window !== "undefined"
-      ? localStorage.getItem("magic_widget_login_method")
-      : null;
-  const isWalletLogin = loginMethod === "wallet";
+  const [isWalletLogin, setIsWalletLogin] = useState(false);
+
+  useEffect(() => {
+    setIsWalletLogin(
+      localStorage.getItem("magic_widget_login_method") === "wallet"
+    );
+  }, []);
   const capitalNetworkName =
     selectedNetwork[0].toUpperCase() + selectedNetwork.slice(1);
 
