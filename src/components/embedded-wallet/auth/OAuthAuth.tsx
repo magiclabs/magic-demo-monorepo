@@ -122,28 +122,30 @@ export function OAuthAuth({ onSuccess }: OAuthAuthProps) {
   };
 
   return (
-    <div className="w-full space-y-4">
-      <h3 className="text-sm font-semibold text-secondary">OAuth</h3>
+    <div className="w-full flex flex-col items-center gap-5 max-w-[328px]">
+      <h3 className="text-2xl font-bold my-6">OAuth Login</h3>
 
-      <Button
-        onClick={handleRedirectLoginClicked}
-        variant="secondary"
-        fullWidth
-        className="flex items-center justify-between gap-2"
-      >
-        Login with Redirect
-        <Image src={iconRedirect} alt="Redirect" width={24} height={24} />
-      </Button>
+      <div className="w-full flex flex-col gap-4">
+        <Button
+          onClick={handleRedirectLoginClicked}
+          variant="secondary"
+          fullWidth
+          className="flex items-center justify-between gap-2"
+        >
+          Login with Redirect
+          <Image src={iconRedirect} alt="Redirect" width={24} height={24} />
+        </Button>
 
-      <Button
-        onClick={handlePopupLoginClicked}
-        variant="secondary"
-        fullWidth
-        className="flex items-center justify-between gap-2"
-      >
-        Login with Popup
-        <Image src={iconPopup} alt="Popup" width={24} height={24} />
-      </Button>
+        <Button
+          onClick={handlePopupLoginClicked}
+          variant="secondary"
+          fullWidth
+          className="flex items-center justify-between gap-2"
+        >
+          Login with Popup
+          <Image src={iconPopup} alt="Popup" width={24} height={24} />
+        </Button>
+      </div>
 
       <OAuthProvidersModal
         modalState={modalState}

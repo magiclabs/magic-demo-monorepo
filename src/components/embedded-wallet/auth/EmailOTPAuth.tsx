@@ -106,11 +106,9 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
   };
 
   return (
-    <div className="w-full space-y-4">
-      <h3 className="text-sm font-semibold text-secondary">
-        Email OTP Authentication
-      </h3>
-      <div className="w-full">
+    <div className="w-full flex flex-col items-center gap-5 max-w-[328px]">
+      <h3 className="text-2xl font-bold my-6">Email OTP Login</h3>
+      <div className="w-full flex flex-col gap-2">
         <input
           type="email"
           placeholder="Enter your email address"
@@ -119,35 +117,35 @@ export function EmailOTPAuth({ onSuccess }: EmailOTPAuthProps) {
           className="w-full p-4 text-lg rounded-xl border bg-background border-slate-4 focus:ring-2 focus:ring-white/70 focus:border-transparent outline-none transition-all duration-200 text-foreground placeholder-muted-foreground"
           disabled={isLoading}
         />
-      </div>
 
-      {/* Email OTP Buttons - Horizontal Layout */}
-      <div className="flex flex-col sm:flex-row gap-4 w-full">
-        {/* Regular Email OTP */}
-        <Button
-          onClick={handleEmailOTPLogin}
-          variant="secondary"
-          fullWidth
-          className="flex flex-col gap-2"
-        >
-          <span>Regular OTP</span>
-          <span className="font-jetbrains font-normal text-sm text-secondary">
-            showUI: true
-          </span>
-        </Button>
+        {/* Email OTP Buttons - Horizontal Layout */}
+        <div className="flex flex-col sm:flex-row gap-4 w-full my-2">
+          {/* Regular Email OTP */}
+          <Button
+            onClick={handleEmailOTPLogin}
+            variant="secondary"
+            fullWidth
+            className="flex flex-col gap-2"
+          >
+            <span>Regular OTP</span>
+            <span className="font-jetbrains font-normal text-sm text-secondary">
+              showUI: true
+            </span>
+          </Button>
 
-        {/* Whitelabel Email OTP */}
-        <Button
-          onClick={handleWhitelabelEmailOTPLogin}
-          variant="secondary"
-          fullWidth
-          className="flex flex-col gap-2"
-        >
-          <span>Whitelabel OTP</span>
-          <span className="font-jetbrains font-normal text-sm text-secondary">
-            showUI: false
-          </span>
-        </Button>
+          {/* Whitelabel Email OTP */}
+          <Button
+            onClick={handleWhitelabelEmailOTPLogin}
+            variant="secondary"
+            fullWidth
+            className="flex flex-col gap-2"
+          >
+            <span>Whitelabel OTP</span>
+            <span className="font-jetbrains font-normal text-sm text-secondary">
+              showUI: false
+            </span>
+          </Button>
+        </div>
       </div>
 
       {/* Modal */}
