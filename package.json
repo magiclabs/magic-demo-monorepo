@@ -11,7 +11,7 @@
   "dependencies": {
     "@magic-ext/evm": "1.0.0",
     "@magic-ext/hedera": "^2.0.0",
-    "@magic-ext/wallet-kit": "^0.2.1",
+    "@magic-ext/wallet-kit": "^0.2.2",
     "@magic-ext/oauth2": "^13.0.0",
     "@magic-ext/solana": "^28.0.0",
     "@magic-sdk/server-wallets": "^0.1.0",
@@ -23,7 +23,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "clsx": "^2.1.1",
     "ethers": "^6.15.0",
-    "magic-sdk": "^33.3.1",
+    "magic-sdk": "^33.3.2",
     "next": "15.5.9",
     "next-auth": "^4.24.11",
     "prismjs": "^1.30.0",
