@@ -48,7 +48,7 @@ export default function Home() {
           description="Connect your account using Magic's embedded wallet authentication"
         />
 
-        <div className="flex flex-col [@media(min-width:1070px)]:flex-row justify-center items-center gap-20 w-full">
+        <div className="flex flex-col [@media(min-width:1070px)]:flex-row justify-center items-center [@media(min-width:1070px)]:items-start gap-20 w-full">
           <div className="flex flex-col items-center gap-5">
             <h3 className="text-2xl font-bold my-6">Wallet Kit</h3>
             <MagicWidget
