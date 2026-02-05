@@ -4,6 +4,7 @@ import { SolanaExtension } from "@magic-ext/solana";
 import { HederaExtension } from "@magic-ext/hedera";
 import { EVMExtension } from "@magic-ext/evm";
 import { ethers } from "ethers";
+import { WalletKitExtension } from "@magic-ext/wallet-kit";
 
 const customPolygonOptions = {
   rpcUrl: "https://polygon-rpc.com/", // Polygon RPC URL
@@ -22,18 +23,22 @@ export class MagicService {
 
   public static get magic(): any {
     if (!this._magic) {
-      this._magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_EMBEDDED_WALLET_KEY ?? "", {
-        extensions: [
-          new OAuthExtension(),
-          new SolanaExtension({
-            rpcUrl: "https://api.devnet.solana.com"
-          }),
-          new HederaExtension({
-            network: 'mainnet',
-          }),
-          new EVMExtension([customPolygonOptions, customOptimismOptions]),
-        ],
-      });
+      this._magic = new Magic(
+        process.env.NEXT_PUBLIC_MAGIC_EMBEDDED_WALLET_KEY ?? "",
+        {
+          extensions: [
+            new OAuthExtension(),
+            new SolanaExtension({
+              rpcUrl: "https://api.devnet.solana.com",
+            }),
+            new HederaExtension({
+              network: "mainnet",
+            }),
+            new EVMExtension([customPolygonOptions, customOptimismOptions]),
+            new WalletKitExtension(),
+          ],
+        }
+      );
     }
     return this._magic;
   }

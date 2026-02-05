@@ -6,6 +6,7 @@ import { WalletAddress } from "@/components/WalletAddress";
 import { Card } from "../Card";
 import IconProfile from "public/icons/icon-profile.svg";
 import { Button } from "../Button";
+import { useEffect, useState } from "react";
 
 export function UserInfo() {
   const {
@@ -16,13 +17,27 @@ export function UserInfo() {
     handleLogout,
   } = useEmbeddedWallet();
 
-  const networks = [
+  const [isWalletLogin, setIsWalletLogin] = useState(false);
+
+  useEffect(() => {
+    setIsWalletLogin(
+      localStorage.getItem("magic_widget_login_method") === "wallet"
+    );
+  }, []);
+
+  const allNetworks = [
     { value: "ethereum", label: "Ethereum" },
     { value: "polygon", label: "Polygon" },
     { value: "optimism", label: "Optimism" },
     { value: "hedera", label: "Hedera" },
     { value: "solana", label: "Solana" },
   ];
+
+  const networks = isWalletLogin
+    ? allNetworks.filter((n) =>
+        ["ethereum", "polygon", "optimism"].includes(n.value)
+      )
+    : allNetworks;
 
   return (
     <Card icon={IconProfile} title={userInfo?.email} className="mb-10">
