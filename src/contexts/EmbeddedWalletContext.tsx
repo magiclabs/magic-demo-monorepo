@@ -28,6 +28,7 @@ interface WalletContextType {
   handleNetworkChange: (network: Network) => void;
   handleLogout: () => Promise<void>;
   fetchAllNetworkAddresses: () => Promise<void>;
+  checkAuthStatus: () => Promise<void>;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
@@ -87,6 +88,43 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const checkAuthStatus = async () => {
+    try {
+      setIsLoading(true);
+      logToConsole(
+        LogType.INFO,
+        LogMethod.MAGIC_USER_IS_LOGGED_IN,
+        "Checking authentication status..."
+      );
+      const isLoggedIn = await MagicService.magic.user.isLoggedIn();
+      if (isLoggedIn) {
+        setIsAuthenticated(true);
+        await fetchAllNetworkAddresses();
+      } else {
+        setIsAuthenticated(false);
+        logToConsole(
+          LogType.INFO,
+          LogMethod.MAGIC_USER_IS_LOGGED_IN,
+          "User is not authenticated, redirecting to embedded-wallet page"
+        );
+        router.push("/embedded-wallet");
+      }
+    } catch (error: unknown) {
+      const err = error as Error;
+      setIsAuthenticated(false);
+      logToConsole(
+        LogType.ERROR,
+        LogMethod.MAGIC_USER_IS_LOGGED_IN,
+        "Error checking auth status",
+        err.message
+      );
+      console.error("Error checking auth status:", error);
+      router.push("/embedded-wallet");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Check if user is already authenticated on component mount
   useEffect(() => {
     const savedNetwork = localStorage.getItem(
@@ -104,42 +142,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     ) {
       setSelectedNetwork(savedNetwork);
     }
-    const checkAuthStatus = async () => {
-      try {
-        setIsLoading(true);
-        logToConsole(
-          LogType.INFO,
-          LogMethod.MAGIC_USER_IS_LOGGED_IN,
-          "Checking authentication status..."
-        );
-        const isLoggedIn = await MagicService.magic.user.isLoggedIn();
-        if (isLoggedIn) {
-          setIsAuthenticated(true);
-          await fetchAllNetworkAddresses();
-        } else {
-          setIsAuthenticated(false);
-          logToConsole(
-            LogType.INFO,
-            LogMethod.MAGIC_USER_IS_LOGGED_IN,
-            "User is not authenticated, redirecting to embedded-wallet page"
-          );
-          router.push("/embedded-wallet");
-        }
-      } catch (error: unknown) {
-        const err = error as Error;
-        setIsAuthenticated(false);
-        logToConsole(
-          LogType.ERROR,
-          LogMethod.MAGIC_USER_IS_LOGGED_IN,
-          "Error checking auth status",
-          err.message
-        );
-        console.error("Error checking auth status:", error);
-        router.push("/embedded-wallet");
-      } finally {
-        setIsLoading(false);
-      }
-    };
     checkAuthStatus();
   }, []);
 
@@ -167,6 +169,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const res = await MagicService.magic.user.logout();
       if (res) {
         setIsAuthenticated(false);
+        setUserInfo(null);
         localStorage.removeItem("magic_widget_login_method");
         logToConsole(
           LogType.SUCCESS,
@@ -195,6 +198,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     handleNetworkChange,
     handleLogout,
     fetchAllNetworkAddresses,
+    checkAuthStatus,
   };
 
   return (

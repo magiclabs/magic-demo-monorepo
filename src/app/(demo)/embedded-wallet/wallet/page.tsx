@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { UserInfo } from "@/components/embedded-wallet/UserInfo";
 import { SignMethods } from "@/components/embedded-wallet/wallet/SignMethods";
 import { HederaSignMethods } from "@/components/embedded-wallet/wallet/HederaSignMethods";
@@ -11,7 +12,13 @@ import { PageHeader } from "@/components/PageHeader";
 import { Network } from "@/contexts/EmbeddedWalletContext";
 
 export default function WalletPage() {
-  const { selectedNetwork } = useEmbeddedWallet();
+  const { selectedNetwork, userInfo, checkAuthStatus } = useEmbeddedWallet();
+
+  useEffect(() => {
+    if (!userInfo) {
+      checkAuthStatus();
+    }
+  }, []);
 
   return (
     <div className="relative min-h-screen">
