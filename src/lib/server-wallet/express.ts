@@ -18,7 +18,11 @@ export async function express<T = any>(
   jwt: string,
   init?: RequestInit
 ): Promise<T> {
-  const obj = JSON.parse(init?.body as string) as { chain: string };
+  let chain = "ETH";
+  try {
+    const obj = JSON.parse(init?.body as string) as { chain?: string };
+    if (obj.chain) chain = obj.chain;
+  } catch {}
   const response = await fetch(TEE_BASE + path, {
     ...init,
     headers: {
@@ -26,7 +30,7 @@ export async function express<T = any>(
       Authorization: `Bearer ${jwt}`,
       "X-Magic-Secret-Key": process.env.SERVER_WALLET_SECRET_KEY ?? "",
       "X-OIDC-Provider-ID": process.env.NEXT_PUBLIC_OIDC_PROVIDER_ID ?? "",
-      "X-Magic-Chain": obj.chain,
+      "X-Magic-Chain": chain,
       "X-Magic-Referrer": "https://demo.magic.link",
       ...(init?.headers || {}),
     },

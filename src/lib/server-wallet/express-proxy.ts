@@ -105,8 +105,19 @@ export async function getOrCreateWallet(
   chain: string
 ): Promise<WalletResponse> {
     const body = { chain };
-  return await expressProxy<WalletResponse>(TeeProxyEndpoint.WALLET, { 
+  return await expressProxy<WalletResponse>(TeeProxyEndpoint.WALLET, {
     method: "POST",
     body: JSON.stringify(body),
+  });
+}
+
+export interface SmartWalletResponse {
+  txHash: string;
+}
+
+export async function sendSmartWalletTransaction(): Promise<SmartWalletResponse> {
+  return await expressProxy<SmartWalletResponse>(TeeProxyEndpoint.SMART_WALLET, {
+    method: "POST",
+    body: JSON.stringify({}),
   });
 }

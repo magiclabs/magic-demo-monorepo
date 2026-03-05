@@ -2,12 +2,15 @@ export enum TeeEndpoint {
   WALLET = "/v1/wallet",
   SIGN_DATA = "/v1/wallet/sign/data",
   SIGN_MESSAGE = "/v1/wallet/sign/message",
+  SIGN_EIP7702 = "/v1/wallet/sign/eip7702",
 }
 
 export enum TeeProxyEndpoint {
   WALLET = "/api/tee/wallet",
   SIGN_DATA = "/api/tee/wallet/sign/data",
   SIGN_MESSAGE = "/api/tee/wallet/sign/message",
+  SIGN_EIP7702 = "/api/tee/wallet/sign/eip7702",
+  SMART_WALLET = "/api/tee/wallet/smart-wallet",
 }
 
 export interface Wallet {

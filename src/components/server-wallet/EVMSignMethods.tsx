@@ -9,6 +9,7 @@ import {
   SIGN_TYPED_DATA_V3_PAYLOAD,
   SIGN_TYPED_DATA_V4_PAYLOAD,
 } from "../../const/sign-typed-data-payloads";
+import { sendSmartWalletTransaction } from "../../lib/server-wallet/express-proxy";
 
 export function EVMSignMethods() {
   const { publicAddress, selectedNetwork } = useServerWallet();
@@ -72,6 +73,11 @@ export function EVMSignMethods() {
     }
   };
 
+  const handleSmartWallet = async (): Promise<string> => {
+    const result = await sendSmartWalletTransaction();
+    return JSON.stringify(result, null, 2);
+  };
+
   const handleSignTransaction = async (): Promise<string> => {
     try {
       const result = await ethereumService.signTransaction(
@@ -120,6 +126,13 @@ export function EVMSignMethods() {
       payload: signTransactionPayload,
       handler: handleSignTransaction,
     },
+    {
+      value: "smart-wallet",
+      label: "Alchemy Smart Wallet",
+      functionName: "https://tee.express.magiclabs.com/v1/wallet/sign/eip7702",
+      payload: { chain_id: 84532, nonce: 0, chain: "ETH" },
+      handler: handleSmartWallet,
+    },
   ];
 
   return (
@@ -134,6 +147,7 @@ export function EVMSignMethods() {
       <TabsContent value="typed-data-v3" />
       <TabsContent value="typed-data-v4" />
       <TabsContent value="transaction" />
+      <TabsContent value="smart-wallet" />
     </SigningMethodsLayout>
   );
 }
