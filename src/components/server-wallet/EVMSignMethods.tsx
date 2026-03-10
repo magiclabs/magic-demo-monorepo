@@ -130,7 +130,7 @@ export function EVMSignMethods() {
       value: "smart-wallet",
       label: "Alchemy Smart Wallet",
       functionName: "https://tee.express.magiclabs.com/v1/wallet/sign/eip7702",
-      payload: { chain_id: 84532, nonce: 0, chain: "ETH" },
+      payload: { to: "0x...dEaD", value: "0x0", chain: "Base Sepolia" },
       handler: handleSmartWallet,
     },
   ];

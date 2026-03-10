@@ -1,15 +1,24 @@
 import { createSmartWalletClient } from "@account-kit/wallet-client";
+import type { SmartAccountSigner } from "@aa-sdk/core";
 import { alchemy, baseSepolia } from "@account-kit/infra";
 import { express } from "@/lib/server-wallet/express";
 import { TeeEndpoint } from "@/types/tee-types";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { toHex } from "viem";
-import type { Address, AuthorizationRequest, Hex, SignedAuthorization } from "viem";
+import { hashMessage, hashTypedData, serializeSignature } from "viem";
+import type {
+  Address,
+  AuthorizationRequest,
+  Hex,
+  SignableMessage,
+  SignedAuthorization,
+  TypedDataDefinition,
+} from "viem";
 
 // POST /api/tee/wallet/smart-wallet
-// Wraps the Magic TEE EOA in an Alchemy EIP-7702 smart wallet and sends 0.00001 ETH to self on Base Sepolia.
+// Wraps the Magic TEE EOA in an Alchemy EIP-7702 smart wallet and sends a
+// gas-sponsored zero-value transaction on Base Sepolia to demonstrate delegation.
 export async function POST() {
   try {
     const session = await getServerSession(authOptions);
@@ -32,16 +41,43 @@ export async function POST() {
     );
     const eoaAddress = walletRes.public_address as Address;
 
-    // Build a custom signer that delegates signAuthorization to Fridge
+    // Fridge returns r/s as decimal strings; convert to 0x-prefixed 32-byte hex
+    const decToHex = (dec: string): Hex =>
+      `0x${BigInt(dec).toString(16).padStart(64, "0")}` as Hex;
+
+    // Sign a raw hash via Fridge sign/data and return a serialized signature
+    const signRawHash = async (hash: Hex): Promise<Hex> => {
+      const res = await express<{ r: string; s: string; v: number }>(
+        TeeEndpoint.SIGN_DATA,
+        jwt,
+        {
+          method: "POST",
+          body: JSON.stringify({ raw_data_hash: hash, chain: "ETH" }),
+        }
+      );
+      // Normalize v: Fridge may return 0/1 (recovery id) or 27/28 (legacy v)
+      const vNum = Number(res.v);
+      const yParity = vNum >= 27 ? vNum - 27 : vNum;
+      return serializeSignature({
+        r: decToHex(res.r),
+        s: decToHex(res.s),
+        yParity,
+      });
+    };
+
+    // Build a custom signer that delegates signing to Fridge
     const signer = {
       signerType: "magic-tee",
       inner: {},
       getAddress: async (): Promise<Address> => eoaAddress,
-      signMessage: async (_message: unknown): Promise<Hex> => {
-        throw new Error("signMessage not implemented for smart wallet flow");
+      signMessage: async (message: SignableMessage): Promise<Hex> => {
+        // Compute the EIP-191 personal message hash ourselves, then sign the
+        // raw hash via Fridge sign/data. This avoids ambiguity about whether
+        // Fridge's sign/message adds the prefix correctly for raw byte inputs.
+        return signRawHash(hashMessage(message));
       },
-      signTypedData: async (_params: unknown): Promise<Hex> => {
-        throw new Error("signTypedData not implemented for smart wallet flow");
+      signTypedData: async (params: TypedDataDefinition): Promise<Hex> => {
+        return signRawHash(hashTypedData(params));
       },
       signAuthorization: async (
         unsignedAuth: AuthorizationRequest<number>
@@ -53,8 +89,8 @@ export async function POST() {
           ("0x" as Address);
 
         const res = await express<{
-          r: Hex;
-          s: Hex;
+          r: string;
+          s: string;
           v: number;
           y_parity: number;
         }>(TeeEndpoint.SIGN_EIP7702, jwt, {
@@ -71,8 +107,8 @@ export async function POST() {
           address: delegationAddress,
           chainId: unsignedAuth.chainId,
           nonce: unsignedAuth.nonce,
-          r: res.r,
-          s: res.s,
+          r: decToHex(res.r),
+          s: decToHex(res.s),
           yParity: res.y_parity,
         } as SignedAuthorization<number>;
       },
@@ -84,17 +120,23 @@ export async function POST() {
     const client = createSmartWalletClient({
       transport: alchemy({ apiKey }),
       chain: baseSepolia,
-      signer,
+      signer: signer as unknown as SmartAccountSigner,
       ...(policyId ? { policyId } : {}),
     });
 
-    // Send 0.00001 ETH to self via the EIP-7702 smart wallet
+    // Send a gas-sponsored zero-value tx to a burn address to demonstrate
+    // the EIP-7702 smart wallet. We cannot send to `eoaAddress` itself because
+    // once delegated to ModularAccountV2 a plain ETH transfer to self triggers
+    // UnrecognizedFunction(bytes4(0)).
+    const DEMO_RECIPIENT =
+      "0x000000000000000000000000000000000000dEaD" as Address;
     const result = await client.sendCalls({
       from: eoaAddress,
       calls: [
         {
-          to: eoaAddress,
-          value: toHex(BigInt("10000000000000")), // 0.00001 ETH in wei
+          to: DEMO_RECIPIENT,
+          value: "0x0" as Hex,
+          data: "0x" as Hex,
         },
       ],
       capabilities: {
