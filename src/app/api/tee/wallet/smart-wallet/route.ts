@@ -17,9 +17,10 @@ import type {
 } from "viem";
 
 // POST /api/tee/wallet/smart-wallet
-// Wraps the Magic TEE EOA in an Alchemy EIP-7702 smart wallet and sends a
-// gas-sponsored zero-value transaction on Base Sepolia to demonstrate delegation.
-export async function POST() {
+// Wraps the Magic TEE EOA in an Alchemy EIP-7702 smart wallet and sends
+// gas-sponsored transactions on Base Sepolia to demonstrate delegation.
+// Accepts { mode: "single" | "batch" } in the request body.
+export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.idToken) {
@@ -29,6 +30,8 @@ export async function POST() {
       );
     }
     const jwt = session.idToken;
+    const body = await req.json().catch(() => ({}));
+    const mode = body.mode === "batch" ? "batch" : "single";
 
     // Fetch EOA address from Fridge
     const walletRes = await express<{ public_address: string }>(
@@ -124,21 +127,22 @@ export async function POST() {
       ...(policyId ? { policyId } : {}),
     });
 
-    // Send a gas-sponsored zero-value tx to a burn address to demonstrate
-    // the EIP-7702 smart wallet. We cannot send to `eoaAddress` itself because
-    // once delegated to ModularAccountV2 a plain ETH transfer to self triggers
-    // UnrecognizedFunction(bytes4(0)).
-    const DEMO_RECIPIENT =
-      "0x000000000000000000000000000000000000dEaD" as Address;
+    // Cannot send to eoaAddress itself — once delegated to ModularAccountV2,
+    // a plain ETH transfer to self triggers UnrecognizedFunction(bytes4(0)).
+    const BURN = "0x000000000000000000000000000000000000dEaD" as Address;
+    const ZERO = "0x0000000000000000000000000000000000000000" as Address;
+
+    const calls =
+      mode === "batch"
+        ? [
+            { to: BURN, value: "0x0" as Hex, data: "0x" as Hex },
+            { to: ZERO, value: "0x0" as Hex, data: "0x" as Hex },
+          ]
+        : [{ to: BURN, value: "0x0" as Hex, data: "0x" as Hex }];
+
     const result = await client.sendCalls({
       from: eoaAddress,
-      calls: [
-        {
-          to: DEMO_RECIPIENT,
-          value: "0x0" as Hex,
-          data: "0x" as Hex,
-        },
-      ],
+      calls,
       capabilities: {
         eip7702Auth: true,
       },
@@ -148,7 +152,13 @@ export async function POST() {
     const txHash =
       statusResult.receipts?.[0]?.transactionHash ?? result.id;
 
-    return NextResponse.json({ txHash });
+    return NextResponse.json({
+      txHash,
+      mode,
+      callCount: calls.length,
+      chain: "Base Sepolia",
+      sponsored: true,
+    });
   } catch (error) {
     console.error("POST smart-wallet error:", error);
     const message =

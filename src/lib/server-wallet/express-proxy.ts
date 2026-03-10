@@ -113,11 +113,17 @@ export async function getOrCreateWallet(
 
 export interface SmartWalletResponse {
   txHash: string;
+  mode: string;
+  callCount: number;
+  chain: string;
+  sponsored: boolean;
 }
 
-export async function sendSmartWalletTransaction(): Promise<SmartWalletResponse> {
+export async function sendSmartWalletTransaction(
+  mode: "single" | "batch" = "single"
+): Promise<SmartWalletResponse> {
   return await expressProxy<SmartWalletResponse>(TeeProxyEndpoint.SMART_WALLET, {
     method: "POST",
-    body: JSON.stringify({}),
+    body: JSON.stringify({ mode }),
   });
 }
