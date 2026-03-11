@@ -9,7 +9,6 @@ import {
   SIGN_TYPED_DATA_V3_PAYLOAD,
   SIGN_TYPED_DATA_V4_PAYLOAD,
 } from "../../const/sign-typed-data-payloads";
-
 export function EVMSignMethods() {
   const { publicAddress, selectedNetwork } = useServerWallet();
 

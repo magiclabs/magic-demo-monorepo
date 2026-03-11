@@ -2,6 +2,7 @@
 
 import { SolanaSignMethods } from "@/components/server-wallet/SolanaSignMethods";
 import { EVMSignMethods } from "@/components/server-wallet/EVMSignMethods";
+import { AlchemySmartWallet } from "@/components/server-wallet/AlchemySmartWallet";
 import { UserInfo } from "@/components/server-wallet/UserInfo";
 import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
@@ -39,7 +40,10 @@ export default function ServerWalletPage() {
               <SolanaSignMethods />
             ) : (
               /* Default to EVM methods for Ethereum and other EVM networks */
-              <EVMSignMethods />
+              <>
+                <EVMSignMethods />
+                <AlchemySmartWallet />
+              </>
             )}
 
             <UserMethods />

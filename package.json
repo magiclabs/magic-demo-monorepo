@@ -9,11 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aa-sdk/core": "^4.84.1",
+    "@account-kit/infra": "^4.84.1",
+    "@account-kit/wallet-client": "^4.84.1",
     "@magic-ext/evm": "1.0.0",
     "@magic-ext/hedera": "^2.0.0",
-    "@magic-ext/wallet-kit": "^0.2.3",
     "@magic-ext/oauth2": "^13.0.0",
     "@magic-ext/solana": "^28.0.0",
+    "@magic-ext/wallet-kit": "^0.2.3",
     "@magic-sdk/server-wallets": "^0.1.0",
     "@metamask/eth-sig-util": "^8.2.0",
     "@next/third-parties": "^16.0.3",
@@ -30,7 +33,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-syntax-highlighter": "^15.6.6",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "viem": "^2.47.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
