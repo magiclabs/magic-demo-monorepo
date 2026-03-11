@@ -51,8 +51,8 @@ export function AlchemySmartWallet() {
 
   return (
     <MethodsCard
-      title="Alchemy Smart Wallet"
-      description="EIP-7702 smart wallet with gas sponsorship and call batching on Base Sepolia"
+      title="Smart Wallet Methods"
+      description="Send gas-sponsored transactions via Alchemy EIP-7702 smart wallets on Base Sepolia"
       defaultTab="send-transaction"
       tabs={tabs}
     />
