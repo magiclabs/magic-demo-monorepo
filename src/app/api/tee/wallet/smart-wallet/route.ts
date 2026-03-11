@@ -149,8 +149,7 @@ export async function POST(req: Request) {
     });
 
     const statusResult = await client.waitForCallsStatus({ id: result.id });
-    const txHash =
-      statusResult.receipts?.[0]?.transactionHash ?? result.id;
+    const txHash = statusResult.receipts?.[0]?.transactionHash ?? result.id;
 
     return NextResponse.json({
       txHash,

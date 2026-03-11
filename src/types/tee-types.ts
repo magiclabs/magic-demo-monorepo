@@ -9,7 +9,6 @@ export enum TeeProxyEndpoint {
   WALLET = "/api/tee/wallet",
   SIGN_DATA = "/api/tee/wallet/sign/data",
   SIGN_MESSAGE = "/api/tee/wallet/sign/message",
-  SIGN_EIP7702 = "/api/tee/wallet/sign/eip7702",
   SMART_WALLET = "/api/tee/wallet/smart-wallet",
 }
 
