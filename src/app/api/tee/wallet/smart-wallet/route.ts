@@ -156,8 +156,8 @@ export async function POST(req: Request) {
       txHash,
       mode,
       callCount: calls.length,
-      chain: "Base Sepolia",
-      sponsored: true,
+      chain: baseSepolia.name,
+      sponsored: !!policyId,
     });
   } catch (error) {
     console.error("POST smart-wallet error:", error);

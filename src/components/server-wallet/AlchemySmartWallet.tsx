@@ -25,10 +25,11 @@ export function AlchemySmartWallet() {
       label: "Send Transaction",
       functionName: "wallet_sendPreparedCalls (EIP-7702)",
       payload: {
-        chain: "Base Sepolia",
-        to: "0x...dEaD",
-        value: "0x0",
-        sponsored: true,
+        from: publicAddress,
+        calls: [
+          { to: "0x000000000000000000000000000000000000dEaD", value: "0x0", data: "0x" },
+        ],
+        capabilities: { eip7702Auth: true },
       },
       handler: handleSendTransaction,
     },
@@ -37,12 +38,12 @@ export function AlchemySmartWallet() {
       label: "Batch Calls",
       functionName: "wallet_sendPreparedCalls (EIP-7702, batched)",
       payload: {
-        chain: "Base Sepolia",
+        from: publicAddress,
         calls: [
-          { to: "0x...dEaD", value: "0x0" },
-          { to: "0x...0000", value: "0x0" },
+          { to: "0x000000000000000000000000000000000000dEaD", value: "0x0", data: "0x" },
+          { to: "0x0000000000000000000000000000000000000000", value: "0x0", data: "0x" },
         ],
-        sponsored: true,
+        capabilities: { eip7702Auth: true },
       },
       handler: handleBatchCalls,
     },
