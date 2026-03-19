@@ -4,6 +4,7 @@ import { SolanaSignMethods } from "@/components/server-wallet/SolanaSignMethods"
 import { EVMSignMethods } from "@/components/server-wallet/EVMSignMethods";
 import { AlchemySmartWallet } from "@/components/server-wallet/AlchemySmartWallet";
 import { MorphoYield } from "@/components/server-wallet/MorphoYield";
+import { SendUSDC } from "@/components/server-wallet/SendUSDC";
 import { UserInfo } from "@/components/server-wallet/UserInfo";
 import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
@@ -45,6 +46,7 @@ export default function ServerWalletPage() {
                 <EVMSignMethods />
                 <AlchemySmartWallet />
                 <MorphoYield />
+                <SendUSDC />
               </>
             )}
 

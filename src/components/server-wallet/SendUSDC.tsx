@@ -7,16 +7,17 @@ import IconGlobeCard from "public/icons/icon-globe-card.svg";
 import Image from "next/image";
 import IconWand from "public/icons/icon-wand.svg";
 
-interface MorphoPosition {
+interface Balance {
   address: string;
   ethBalance: string;
   usdcBalance: string;
-  vaultShares: string;
-  vaultValue: string;
 }
 
-async function morphoApi(action: string, extra: Record<string, string> = {}) {
-  const res = await fetch("/api/tee/wallet/morpho", {
+async function sendUsdcApi(
+  action: string,
+  extra: Record<string, string> = {}
+) {
+  const res = await fetch("/api/tee/wallet/send-usdc", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ action, ...extra }),
@@ -27,21 +28,22 @@ async function morphoApi(action: string, extra: Record<string, string> = {}) {
   return data;
 }
 
-export function MorphoYield() {
+export function SendUSDC() {
   const { publicAddress, selectedNetwork } = useServerWallet();
-  const [position, setPosition] = useState<MorphoPosition | null>(null);
-  const [depositAmount, setDepositAmount] = useState("1");
+  const [balance, setBalance] = useState<Balance | null>(null);
+  const [recipient, setRecipient] = useState("");
+  const [amount, setAmount] = useState("1");
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchPosition = async () => {
+  const fetchBalance = async () => {
     setIsLoading(true);
     setError(null);
     setResult(null);
     try {
-      const data = await morphoApi("position");
-      setPosition(data);
+      const data = await sendUsdcApi("balance");
+      setBalance(data);
       setResult(data);
     } catch (err) {
       setError(err as Error);
@@ -50,10 +52,9 @@ export function MorphoYield() {
     }
   };
 
-  // Auto-fetch position on mount
   useEffect(() => {
     if (publicAddress && selectedNetwork === "ethereum") {
-      fetchPosition();
+      fetchBalance();
     }
   }, [publicAddress, selectedNetwork]);
 
@@ -61,34 +62,17 @@ export function MorphoYield() {
     return null;
   }
 
-  const handleDeposit = async () => {
-    setIsLoading(true);
-    setError(null);
-    setResult(null);
-    try {
-      const data = await morphoApi("deposit", { amount: depositAmount });
-      setResult(data);
-      // Refresh position after deposit
-      const pos = await morphoApi("position");
-      setPosition(pos);
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleSweep = async () => {
     setIsLoading(true);
     setError(null);
     setResult(null);
     try {
-      const data = await morphoApi("sweep", {
+      const data = await sendUsdcApi("sweep", {
         destination: "0xbA0fd524a657359D321Edac2421325aa318A1583",
       });
       setResult(data);
-      const pos = await morphoApi("position");
-      setPosition(pos);
+      const bal = await sendUsdcApi("balance");
+      setBalance(bal);
     } catch (err) {
       setError(err as Error);
     } finally {
@@ -96,16 +80,16 @@ export function MorphoYield() {
     }
   };
 
-  const handleWithdraw = async () => {
+  const handleSend = async () => {
+    if (!recipient || !amount) return;
     setIsLoading(true);
     setError(null);
     setResult(null);
     try {
-      const data = await morphoApi("withdraw");
+      const data = await sendUsdcApi("send", { to: recipient, amount });
       setResult(data);
-      // Refresh position after withdraw
-      const pos = await morphoApi("position");
-      setPosition(pos);
+      const bal = await sendUsdcApi("balance");
+      setBalance(bal);
     } catch (err) {
       setError(err as Error);
     } finally {
@@ -116,32 +100,24 @@ export function MorphoYield() {
   return (
     <Card
       icon={IconGlobeCard}
-      title="Morpho Yield"
-      subtitle="Deposit USDC into Morpho Vaults on Base to earn yield"
+      title="Send USDC"
+      subtitle="Send USDC on Base via Server Wallet"
     >
       <div className="flex flex-col gap-6">
-        {/* Position Display */}
-        {position && (
+        {/* Balance Display */}
+        {balance && (
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-secondary tracking-wide">
-              Vault Position
+              Balances
             </label>
             <div className="p-4 rounded-lg bg-slate-1 border border-slate-4">
               <div className="flex justify-between text-sm text-primary mb-1">
                 <span>ETH Balance</span>
-                <span className="font-mono">{position.ethBalance}</span>
+                <span className="font-mono">{balance.ethBalance}</span>
               </div>
-              <div className="flex justify-between text-sm text-primary mb-1">
+              <div className="flex justify-between text-sm text-primary">
                 <span>USDC Balance</span>
-                <span className="font-mono">{position.usdcBalance}</span>
-              </div>
-              <div className="flex justify-between text-sm text-primary mb-1">
-                <span>Vault Value</span>
-                <span className="font-mono">{position.vaultValue} USDC</span>
-              </div>
-              <div className="flex justify-between text-xs text-secondary">
-                <span>Shares</span>
-                <span className="font-mono">{position.vaultShares}</span>
+                <span className="font-mono">{balance.usdcBalance}</span>
               </div>
             </div>
           </div>
@@ -149,47 +125,40 @@ export function MorphoYield() {
 
         {/* Actions */}
         <div className="flex flex-col gap-3">
-          <Button onClick={fetchPosition} fullWidth disabled={isLoading}>
+          <Button onClick={fetchBalance} fullWidth disabled={isLoading}>
             <div className="flex items-center justify-between">
-              {isLoading && !position ? "Loading..." : "Refresh Balances"}
+              {isLoading && !balance ? "Loading..." : "Refresh Balances"}
               <Image src={IconWand} alt="Wand" width={22} height={22} />
             </div>
           </Button>
+
+          <input
+            type="text"
+            placeholder="Recipient address (0x...)"
+            value={recipient}
+            onChange={(e) => setRecipient(e.target.value)}
+            className="rounded-lg px-4 py-3 text-sm bg-slate-1 border border-slate-4 text-primary font-mono"
+          />
 
           <div className="flex gap-2">
             <input
               type="text"
               placeholder="USDC amount"
-              value={depositAmount}
-              onChange={(e) => setDepositAmount(e.target.value)}
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
               className="flex-1 rounded-lg px-4 py-3 text-sm bg-slate-1 border border-slate-4 text-primary font-mono"
             />
             <Button
-              onClick={handleDeposit}
-              disabled={isLoading || !depositAmount}
+              onClick={handleSend}
+              disabled={isLoading || !recipient || !amount}
             >
               <div className="flex items-center gap-2">
-                {isLoading ? "..." : "Deposit"}
+                {isLoading ? "..." : "Send"}
               </div>
             </Button>
           </div>
 
-          <Button
-            onClick={handleWithdraw}
-            fullWidth
-            disabled={isLoading || position?.vaultShares === "0"}
-          >
-            <div className="flex items-center justify-between">
-              {isLoading ? "..." : "Withdraw All"}
-              <Image src={IconWand} alt="Wand" width={22} height={22} />
-            </div>
-          </Button>
-
-          <Button
-            onClick={handleSweep}
-            fullWidth
-            disabled={isLoading}
-          >
+          <Button onClick={handleSweep} fullWidth disabled={isLoading}>
             <div className="flex items-center justify-between">
               {isLoading ? "..." : "Sweep ETH + USDC"}
               <Image src={IconWand} alt="Wand" width={22} height={22} />
