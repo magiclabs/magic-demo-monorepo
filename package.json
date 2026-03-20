@@ -21,6 +21,7 @@
     "@metamask/eth-sig-util": "^8.2.0",
     "@next/third-parties": "^16.0.3",
     "@radix-ui/react-tabs": "^1.1.13",
+    "@solana/spl-token": "^0.4.14",
     "@solana/web3.js": "^1.98.4",
     "@types/prismjs": "^1.26.5",
     "@types/react-syntax-highlighter": "^15.5.13",
