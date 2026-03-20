@@ -35,7 +35,7 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [selectedNetwork, setSelectedNetwork] = useState<Network>(
-    Network.ETHEREUM
+    Network.POLYGON
   );
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -141,6 +141,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       ].includes(savedNetwork)
     ) {
       setSelectedNetwork(savedNetwork);
+      // Switch provider to the saved network
+      MagicService.switchChain(savedNetwork).catch(() => {});
     }
     checkAuthStatus();
   }, []);
@@ -150,6 +152,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
     // Persist network selection to localStorage
     localStorage.setItem("magic_selectedNetwork", network);
+
+    // Switch the Magic provider to the selected EVM chain
+    MagicService.switchChain(network).catch((err) => {
+      console.error("Failed to switch chain:", err);
+    });
 
     // Log the network change
     logToConsole(

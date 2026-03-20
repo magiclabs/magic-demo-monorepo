@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 import { WalletKitExtension } from "@magic-ext/wallet-kit";
 
 const customPolygonOptions = {
-  rpcUrl: "https://polygon-rpc.com/", // Polygon RPC URL
+  rpcUrl: "https://polygon.drpc.org", // Polygon RPC URL
   chainId: 137, // Polygon chain id
   default: true, // Set as default network
 };
@@ -17,9 +17,14 @@ const customOptimismOptions = {
   chainId: 10,
 };
 
+const CHAIN_IDS: Record<string, number> = {
+  ethereum: 1,
+  polygon: 137,
+  optimism: 10,
+};
+
 export class MagicService {
   private static _magic: any = null;
-  private static _provider: ethers.BrowserProvider | null = null;
 
   public static get magic(): any {
     if (!this._magic) {
@@ -37,19 +42,19 @@ export class MagicService {
             new EVMExtension([customPolygonOptions, customOptimismOptions]),
             new WalletKitExtension(),
           ],
-        }
+        },
       );
     }
     return this._magic;
   }
 
   public static get provider(): ethers.BrowserProvider {
-    if (!this._provider) {
-      this._provider = new ethers.BrowserProvider(
-        // cast as any if necessary; Magic's rpcProvider type is slightly different
-        MagicService.magic.rpcProvider as any
-      );
-    }
-    return this._provider;
+    return new ethers.BrowserProvider(MagicService.magic.rpcProvider as any);
+  }
+
+  static async switchChain(network: string) {
+    const chainId = CHAIN_IDS[network];
+    if (!chainId) return;
+    await MagicService.magic.evm.switchChain(chainId);
   }
 }
