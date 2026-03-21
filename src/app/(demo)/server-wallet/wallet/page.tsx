@@ -5,6 +5,8 @@ import { EVMSignMethods } from "@/components/server-wallet/EVMSignMethods";
 import { AlchemySmartWallet } from "@/components/server-wallet/AlchemySmartWallet";
 import { MorphoYield } from "@/components/server-wallet/MorphoYield";
 import { SendUSDC } from "@/components/server-wallet/SendUSDC";
+import { SendUSDCSolana } from "@/components/server-wallet/SendUSDCSolana";
+import { LiFiSwap } from "@/components/server-wallet/LiFiSwap";
 import { UserInfo } from "@/components/server-wallet/UserInfo";
 import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
@@ -39,7 +41,10 @@ export default function ServerWalletPage() {
           <div className="w-full lg:w-2/3 flex flex-col gap-18">
             {/* Show Solana methods if Solana network is selected */}
             {selectedNetwork === "solana" ? (
-              <SolanaSignMethods />
+              <>
+                <SolanaSignMethods />
+                <SendUSDCSolana />
+              </>
             ) : (
               /* Default to EVM methods for Ethereum and other EVM networks */
               <>
@@ -47,6 +52,7 @@ export default function ServerWalletPage() {
                 <AlchemySmartWallet />
                 <MorphoYield />
                 <SendUSDC />
+                <LiFiSwap />
               </>
             )}
 
