@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@aa-sdk/core": "^4.84.1",
+    "@aave/client": "^0.9.2",
     "@account-kit/infra": "^4.84.1",
     "@account-kit/wallet-client": "^4.84.1",
     "@magic-ext/evm": "1.0.0",
