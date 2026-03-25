@@ -12,6 +12,7 @@ import { SendUSDC } from "@/components/embedded-wallet/wallet/SendUSDC";
 import { SendUSDCSolana } from "@/components/embedded-wallet/wallet/SendUSDCSolana";
 import { LiFiSwap } from "@/components/embedded-wallet/wallet/LiFiSwap";
 import { AaveYield } from "@/components/embedded-wallet/wallet/AaveYield";
+import { X402Payment } from "@/components/embedded-wallet/wallet/X402Payment";
 import { PageHeader } from "@/components/PageHeader";
 import { Network } from "@/contexts/EmbeddedWalletContext";
 
@@ -58,6 +59,7 @@ export default function WalletPage() {
                 <SendUSDC />
                 <LiFiSwap />
                 <AaveYield />
+                <X402Payment />
                 <WalletMethods />
               </>
             )}

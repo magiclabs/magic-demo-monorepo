@@ -8,6 +8,7 @@ import { SendUSDC } from "@/components/server-wallet/SendUSDC";
 import { SendUSDCSolana } from "@/components/server-wallet/SendUSDCSolana";
 import { LiFiSwap } from "@/components/server-wallet/LiFiSwap";
 import { AaveYield } from "@/components/server-wallet/AaveYield";
+import { X402Payment } from "@/components/server-wallet/X402Payment";
 import { UserInfo } from "@/components/server-wallet/UserInfo";
 import { useServerWallet } from "@/contexts/ServerWalletContext";
 import { LoadingScreen } from "@/components/LoadingScreen";
@@ -55,6 +56,7 @@ export default function ServerWalletPage() {
                 <SendUSDC />
                 <LiFiSwap />
                 <AaveYield />
+                <X402Payment />
               </>
             )}
 
