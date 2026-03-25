@@ -4,9 +4,8 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { toAccount } from "viem/accounts";
-import { hashTypedData, hashMessage, recoverAddress, createPublicClient, http, parseAbi, type Address, type Hex } from "viem";
-import { baseSepolia } from "viem/chains";
-import { JsonRpcProvider, Contract, formatUnits, formatEther, Signature } from "ethers";
+import { hashTypedData, hashMessage, serializeSignature, type Address, type Hex } from "viem";
+import { JsonRpcProvider, Contract, formatUnits, formatEther } from "ethers";
 import { x402Client } from "@x402/core/client";
 import { wrapFetchWithPayment } from "@x402/fetch";
 import { ExactEvmScheme } from "@x402/evm/exact/client";
@@ -20,10 +19,6 @@ const sepoliaUsdc = new Contract(
   sepoliaProvider
 );
 
-// secp256k1 curve order and half (for signature normalization)
-const SECP256K1_N = BigInt("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141");
-const SECP256K1_HALF_N = SECP256K1_N / 2n;
-
 async function signHashViaTee(jwt: string, hash: Hex): Promise<Hex> {
   const { r, s, v } = await express<{ r: string; s: string; v: string }>(
     TeeEndpoint.SIGN_DATA,
@@ -36,26 +31,7 @@ async function signHashViaTee(jwt: string, hash: Hex): Promise<Hex> {
       }),
     }
   );
-  // Use ethers Signature to normalize r/s/v (same as transaction signing)
-  const ethSig = Signature.from({ r, s, v });
-  let rHex = ethSig.r.slice(2);
-  let sHex = ethSig.s.slice(2);
-  let vNum = ethSig.v;
-
-  // Normalize s to lower half of secp256k1 curve.
-  // Circle's USDC (FiatTokenV2) requires low-s signatures and reverts with
-  // "ECRecover: invalid signature 's' value" if s > N/2.
-  const sBigInt = BigInt(ethSig.s);
-  if (sBigInt > SECP256K1_HALF_N) {
-    const normalizedS = SECP256K1_N - sBigInt;
-    sHex = normalizedS.toString(16).padStart(64, "0");
-    vNum = vNum === 27 ? 28 : 27;
-    console.log("[x402] Normalized high-s signature");
-  }
-
-  const sig = `0x${rHex}${sHex}${vNum.toString(16).padStart(2, "0")}` as Hex;
-  console.log("[x402] Sig length:", sig.length, "v:", vNum);
-  return sig;
+  return serializeSignature({ r: r as Hex, s: s as Hex, yParity: Number(v) - 27 });
 }
 
 export async function POST(req: Request) {
@@ -71,7 +47,6 @@ export async function POST(req: Request) {
 
     const body = await req.json().catch(() => ({}));
     const { action, url } = body;
-    console.log("[x402] Action:", action);
 
     // Get wallet address
     const { public_address: eoaAddress } = await express<{
@@ -80,7 +55,6 @@ export async function POST(req: Request) {
       method: "POST",
       body: JSON.stringify({ chain: "ETH" }),
     });
-    console.log("[x402] EOA:", eoaAddress);
 
     if (action === "info") {
       return NextResponse.json({ address: eoaAddress });
@@ -106,11 +80,7 @@ export async function POST(req: Request) {
         );
       }
 
-      // Capture signed data for diagnostics
-      let lastSignedMessage: any = null;
-      let lastSignature: Hex | null = null;
-
-      // Create TEE-backed account
+      // Create TEE-backed account for x402 signing
       const teeAccount = toAccount({
         address: eoaAddress as Address,
         signMessage: async ({ message }) => {
@@ -124,99 +94,25 @@ export async function POST(req: Request) {
           throw new Error("Use signAndSend for transactions");
         },
         signTypedData: async ({ domain, types, primaryType, message }) => {
-          console.log("[x402] signTypedData called, primaryType:", primaryType);
-          console.log("[x402] domain:", JSON.stringify(domain));
-          const msg = message as any;
-          console.log("[x402] message:", JSON.stringify({ from: msg.from, to: msg.to, value: String(msg.value) }));
-          console.log("[x402] from matches EOA:", String(msg.from).toLowerCase() === eoaAddress.toLowerCase());
           const hash = hashTypedData({
             domain: domain as any,
             types: types as any,
             primaryType: primaryType as string,
             message: message as any,
           });
-          console.log("[x402] EIP-712 hash:", hash);
-          const sig = await signHashViaTee(jwt, hash);
-          lastSignedMessage = message;
-          lastSignature = sig;
-          console.log("[x402] Signature:", sig.slice(0, 20) + "...");
-
-          // Verify: recover address from signature
-          try {
-            const recovered = await recoverAddress({ hash, signature: sig });
-            console.log("[x402] Recovered address:", recovered);
-            console.log("[x402] Expected address:", eoaAddress);
-            console.log("[x402] Match:", recovered.toLowerCase() === eoaAddress.toLowerCase());
-          } catch (e) {
-            console.log("[x402] Recovery failed:", (e as Error).message);
-          }
-
-          return sig;
+          return signHashViaTee(jwt, hash);
         },
       });
 
       // Set up x402 client
       const client = new x402Client();
       client.register("eip155:*", new ExactEvmScheme(teeAccount));
+
       const fetchWithPayment = wrapFetchWithPayment(fetch, client);
-
-      // First, do a plain fetch to see the 402 response headers
-      console.log("[x402] Testing plain fetch to:", url);
-      const testRes = await fetch(url, { method: "GET" });
-      console.log("[x402] Plain fetch status:", testRes.status);
-      const paymentHeader = testRes.headers.get("payment-required");
-      console.log("[x402] PAYMENT-REQUIRED header:", paymentHeader ? paymentHeader.slice(0, 100) + "..." : "MISSING");
-
-      console.log("[x402] Making paid request to:", url);
       const response = await fetchWithPayment(url, { method: "GET" });
-      console.log("[x402] Paid fetch status:", response.status);
 
       if (!response.ok) {
         const text = await response.text();
-        console.log("[x402] Response headers:", Object.fromEntries(response.headers.entries()));
-
-        // Diagnostic: manually simulate transferWithAuthorization to get revert reason
-        if (lastSignedMessage && lastSignature) {
-          try {
-            const viemClient = createPublicClient({ chain: baseSepolia, transport: http("https://sepolia.base.org") });
-            const msg = lastSignedMessage as any;
-            const { parseSignature } = await import("viem");
-            const parsedSig = parseSignature(lastSignature);
-            console.log("[x402] DIAGNOSTIC: simulating transferWithAuthorization on-chain");
-            console.log("[x402] args:", {
-              from: msg.from, to: msg.to,
-              value: String(msg.value),
-              validAfter: String(msg.validAfter),
-              validBefore: String(msg.validBefore),
-              nonce: msg.nonce,
-              v: parsedSig.v ?? parsedSig.yParity,
-              r: parsedSig.r,
-              s: parsedSig.s,
-            });
-            await viemClient.simulateContract({
-              address: BASE_SEPOLIA_USDC as Address,
-              abi: parseAbi([
-                "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
-              ]),
-              functionName: "transferWithAuthorization",
-              args: [
-                msg.from,
-                msg.to,
-                BigInt(String(msg.value)),
-                BigInt(String(msg.validAfter)),
-                BigInt(String(msg.validBefore)),
-                msg.nonce,
-                parsedSig.v ?? parsedSig.yParity ?? 27,
-                parsedSig.r,
-                parsedSig.s,
-              ],
-            });
-            console.log("[x402] DIAGNOSTIC: simulation PASSED (unexpected!)");
-          } catch (simErr: any) {
-            console.log("[x402] DIAGNOSTIC: simulation revert:", simErr.message?.slice(0, 500));
-          }
-        }
-
         throw new Error(`Request failed (${response.status}): ${text}`);
       }
 
@@ -236,7 +132,6 @@ export async function POST(req: Request) {
         );
       }
 
-      console.log("[x402] Making unpaid request to:", url);
       const response = await fetch(url, { method: "GET" });
       const contentType = response.headers.get("content-type") ?? "";
       const body = contentType.includes("json")
@@ -256,7 +151,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ error: "Invalid action" }, { status: 400 });
   } catch (error) {
-    console.error("[x402] Error:", error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }
