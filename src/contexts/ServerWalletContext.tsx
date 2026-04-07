@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { walletService } from "@/lib/server-wallet/wallet";
+import { AuthError } from "@/lib/server-wallet/express-proxy";
 import { useConsole, LogType, LogMethod } from "./ConsoleContext";
 
 interface ServerWalletContextType {
@@ -84,9 +85,8 @@ export function ServerWalletProvider({ children }: { children: ReactNode }) {
       const address = await walletService.getOrCreateWallet(wallet.network);
       setWallet((prev) => ({ ...prev, address }));
       return address;
-    } catch (error: any) {
-      // Only sign out if it's an auth-related error
-      if (error.requiresReauth) {
+    } catch (error) {
+      if (error instanceof AuthError) {
         console.log("Auth error detected, signing out...");
         await signOut();
       }

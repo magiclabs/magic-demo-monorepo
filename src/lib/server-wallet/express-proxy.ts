@@ -3,6 +3,8 @@ import { getSession } from "next-auth/react";
 
 const TEE_BASE = "https://tee.express.magiclabs.com";
 
+export class AuthError extends Error {}
+
 /**
  * TEE client that calls the TEE backend directly from the browser.
  * Uses the NextAuth session JWT for authorization and the public API key.
@@ -14,15 +16,11 @@ async function expressDirect<T = any>(
   const session = await getSession();
 
   if (!session?.idToken) {
-    const error = new Error("Authentication required");
-    (error as any).requiresReauth = true;
-    throw error;
+    throw new AuthError("Authentication required");
   }
 
   if (session.error === "RefreshAccessTokenError") {
-    const error = new Error("Token refresh failed. Please sign in again.");
-    (error as any).requiresReauth = true;
-    throw error;
+    throw new AuthError("Token refresh failed. Please sign in again.");
   }
 
   let chain = "ETH";
@@ -49,9 +47,7 @@ async function expressDirect<T = any>(
     const data = await response.json().catch(() => ({}));
 
     if (data.requiresReauth) {
-      const error = new Error(data.error || "Authentication required");
-      (error as any).requiresReauth = true;
-      throw error;
+      throw new AuthError(data.error || "Authentication required");
     }
 
     throw new Error(data.error || `HTTP error! status: ${response.status}`);
