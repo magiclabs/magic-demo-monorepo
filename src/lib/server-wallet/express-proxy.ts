@@ -9,7 +9,7 @@ export class AuthError extends Error {}
  * TEE client that calls the TEE backend directly from the browser.
  * Uses the NextAuth session JWT for authorization and the public API key.
  */
-async function expressDirect<T = any>(
+async function express<T = any>(
   path: TeeEndpoint,
   init?: RequestInit,
 ): Promise<T> {
@@ -91,10 +91,10 @@ export interface WalletResponse {
  */
 export async function signData(
   rawDataHash: string,
-  chain: string
+  chain: string,
 ): Promise<SignDataResponse> {
   const body: SignDataRequest = { raw_data_hash: rawDataHash, chain };
-  return await expressDirect<SignDataResponse>(TeeEndpoint.SIGN_DATA, {
+  return await express<SignDataResponse>(TeeEndpoint.SIGN_DATA, {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -105,10 +105,10 @@ export async function signData(
  */
 export async function signMessage(
   messageBase64: string,
-  chain: string
+  chain: string,
 ): Promise<SignMessageResponse> {
   const body: SignMessageRequest = { message_base64: messageBase64, chain };
-  return await expressDirect<SignMessageResponse>(TeeEndpoint.SIGN_MESSAGE, {
+  return await express<SignMessageResponse>(TeeEndpoint.SIGN_MESSAGE, {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -118,10 +118,10 @@ export async function signMessage(
  * Get or create a wallet with the TEE
  */
 export async function getOrCreateWallet(
-  chain: string
+  chain: string,
 ): Promise<WalletResponse> {
   const body = { chain };
-  return await expressDirect<WalletResponse>(TeeEndpoint.WALLET, {
+  return await express<WalletResponse>(TeeEndpoint.WALLET, {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -136,7 +136,7 @@ export interface SmartWalletResponse {
 }
 
 export async function sendSmartWalletTransaction(
-  mode: "single" | "batch" = "single"
+  mode: "single" | "batch" = "single",
 ): Promise<SmartWalletResponse> {
   // Smart wallet stays server-side (Alchemy SDK + secret keys)
   const response = await fetch("/api/tee/wallet/smart-wallet", {
