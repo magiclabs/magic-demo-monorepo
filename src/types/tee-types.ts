@@ -5,12 +5,6 @@ export enum TeeEndpoint {
   SIGN_EIP7702 = "/v1/wallet/sign/eip7702",
 }
 
-export enum TeeProxyEndpoint {
-  WALLET = "/api/tee/wallet",
-  SIGN_DATA = "/api/tee/wallet/sign/data",
-  SIGN_MESSAGE = "/api/tee/wallet/sign/message",
-  SMART_WALLET = "/api/tee/wallet/smart-wallet",
-}
 
 export interface Wallet {
   address: string;

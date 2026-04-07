@@ -1,31 +1,59 @@
-import { TeeProxyEndpoint } from "../../types/tee-types";
+import { TeeEndpoint } from "../../types/tee-types";
+import { getSession } from "next-auth/react";
+
+const TEE_BASE = "https://tee.express.magiclabs.com";
 
 /**
- * TEE client with integrated error handling and response management
- * @param path - The TEE endpoint path
- * @param jwt - JWT token for authentication
- * @param init - Optional fetch init options
- * @returns Parsed JSON data from the response
- * @throws Error if response is not ok or contains error information
+ * TEE client that calls the TEE backend directly from the browser.
+ * Uses the NextAuth session JWT for authorization and the public API key.
  */
-export async function expressProxy<T = any>(path: TeeProxyEndpoint, init?: RequestInit): Promise<T> {
-  const response = await fetch(path, {
+async function expressDirect<T = any>(
+  path: TeeEndpoint,
+  init?: RequestInit,
+): Promise<T> {
+  const session = await getSession();
+
+  if (!session?.idToken) {
+    const error = new Error("Authentication required");
+    (error as any).requiresReauth = true;
+    throw error;
+  }
+
+  if (session.error === "RefreshAccessTokenError") {
+    const error = new Error("Token refresh failed. Please sign in again.");
+    (error as any).requiresReauth = true;
+    throw error;
+  }
+
+  let chain = "ETH";
+  try {
+    const obj = JSON.parse(init?.body as string) as { chain?: string };
+    if (obj.chain) chain = obj.chain;
+  } catch {}
+
+  const response = await fetch(TEE_BASE + path, {
     ...init,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${session.idToken}`,
+      "X-Magic-API-Key": process.env.NEXT_PUBLIC_MAGIC_SERVER_WALLET_KEY ?? "",
+      "X-OIDC-Provider-ID": process.env.NEXT_PUBLIC_OIDC_PROVIDER_ID ?? "",
+      "X-Magic-Chain": chain,
+      "X-Magic-Referrer": "https://demo.magic.link",
+      ...(init?.headers || {}),
+    },
     cache: "no-store",
   });
 
-  // Handle response validation and JSON parsing
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
-    
-    // If the response indicates re-authentication is needed, throw a specific error
+
     if (data.requiresReauth) {
       const error = new Error(data.error || "Authentication required");
       (error as any).requiresReauth = true;
       throw error;
     }
-    
-    // For other errors, throw a generic error
+
     throw new Error(data.error || `HTTP error! status: ${response.status}`);
   }
 
@@ -64,16 +92,13 @@ export interface WalletResponse {
 
 /**
  * Sign data with the TEE wallet
- * @param rawDataHash - The hash of the data to sign
- * @param chain - Optional chain identifier (e.g., "SOL" for Solana)
- * @returns Signature components (r, s, v)
  */
 export async function signData(
   rawDataHash: string,
   chain: string
 ): Promise<SignDataResponse> {
   const body: SignDataRequest = { raw_data_hash: rawDataHash, chain };
-  return await expressProxy<SignDataResponse>(TeeProxyEndpoint.SIGN_DATA, {
+  return await expressDirect<SignDataResponse>(TeeEndpoint.SIGN_DATA, {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -81,16 +106,13 @@ export async function signData(
 
 /**
  * Sign a message with the TEE wallet
- * @param messageBase64 - The base64-encoded message to sign
- * @param chain - Optional chain identifier (e.g., "SOL" for Solana)
- * @returns Signature
  */
 export async function signMessage(
   messageBase64: string,
   chain: string
 ): Promise<SignMessageResponse> {
   const body: SignMessageRequest = { message_base64: messageBase64, chain };
-  return await expressProxy<SignMessageResponse>(TeeProxyEndpoint.SIGN_MESSAGE, {
+  return await expressDirect<SignMessageResponse>(TeeEndpoint.SIGN_MESSAGE, {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -98,14 +120,12 @@ export async function signMessage(
 
 /**
  * Get or create a wallet with the TEE
- * @param chain - Optional chain identifier (e.g., "SOL" for Solana)
- * @returns Wallet information including public address
  */
 export async function getOrCreateWallet(
   chain: string
 ): Promise<WalletResponse> {
-    const body = { chain };
-  return await expressProxy<WalletResponse>(TeeProxyEndpoint.WALLET, {
+  const body = { chain };
+  return await expressDirect<WalletResponse>(TeeEndpoint.WALLET, {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -122,8 +142,17 @@ export interface SmartWalletResponse {
 export async function sendSmartWalletTransaction(
   mode: "single" | "batch" = "single"
 ): Promise<SmartWalletResponse> {
-  return await expressProxy<SmartWalletResponse>(TeeProxyEndpoint.SMART_WALLET, {
+  // Smart wallet stays server-side (Alchemy SDK + secret keys)
+  const response = await fetch("/api/tee/wallet/smart-wallet", {
     method: "POST",
     body: JSON.stringify({ mode }),
+    cache: "no-store",
   });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.error || `HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
 }
