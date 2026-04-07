@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { walletService } from "@/lib/server-wallet/wallet";
+import { AuthError } from "@/lib/server-wallet/express-proxy";
 import { useConsole, LogType, LogMethod } from "./ConsoleContext";
 
 interface ServerWalletContextType {
@@ -25,7 +26,7 @@ interface ServerWalletContextType {
 }
 
 const ServerWalletContext = createContext<ServerWalletContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function ServerWalletProvider({ children }: { children: ReactNode }) {
@@ -84,9 +85,9 @@ export function ServerWalletProvider({ children }: { children: ReactNode }) {
       const address = await walletService.getOrCreateWallet(wallet.network);
       setWallet((prev) => ({ ...prev, address }));
       return address;
-    } catch (error: any) {
+    } catch (error) {
       // Only sign out if it's an auth-related error
-      if (error.requiresReauth) {
+      if (error instanceof AuthError) {
         console.log("Auth error detected, signing out...");
         await signOut();
       }
@@ -118,7 +119,7 @@ export function ServerWalletProvider({ children }: { children: ReactNode }) {
         console.error(`Failed to create wallet for network: ${network}`, error);
       }
     },
-    [wallet.network]
+    [wallet.network],
   );
 
   const handleLogout = useCallback(async () => {
@@ -126,7 +127,7 @@ export function ServerWalletProvider({ children }: { children: ReactNode }) {
       logToConsole(
         LogType.INFO,
         LogMethod.NEXTAUTH_SIGNOUT,
-        "Logging out user..."
+        "Logging out user...",
       );
       await signOut({ callbackUrl: "/server-wallet" });
       setWallet((prev) => ({ ...prev, address: null }));
@@ -134,14 +135,14 @@ export function ServerWalletProvider({ children }: { children: ReactNode }) {
       logToConsole(
         LogType.SUCCESS,
         LogMethod.NEXTAUTH_SIGNOUT,
-        "User logged out successfully"
+        "User logged out successfully",
       );
     } catch (error) {
       logToConsole(
         LogType.ERROR,
         LogMethod.NEXTAUTH_SIGNOUT,
         "Logout error",
-        error
+        error,
       );
       console.error("Logout error:", error);
     }
@@ -169,7 +170,7 @@ export function useServerWallet() {
   const context = useContext(ServerWalletContext);
   if (context === undefined) {
     throw new Error(
-      "useServerWallet must be used within an ServerWalletProvider"
+      "useServerWallet must be used within an ServerWalletProvider",
     );
   }
   return context;

@@ -1,7 +1,4 @@
-import {
-  TeeEndpoint as ExpressEndpoint,
-  TeeProxyEndpoint,
-} from "../../types/tee-types";
+import { TeeEndpoint as ExpressEndpoint } from "../../types/tee-types";
 
 export const TEE_BASE = "https://tee.express.magiclabs.com";
 
@@ -16,7 +13,7 @@ export const TEE_BASE = "https://tee.express.magiclabs.com";
 export async function express<T = any>(
   path: ExpressEndpoint,
   jwt: string,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<T> {
   let chain = "ETH";
   try {
@@ -28,7 +25,7 @@ export async function express<T = any>(
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jwt}`,
-      "X-Magic-Secret-Key": process.env.SERVER_WALLET_SECRET_KEY ?? "",
+      "X-Magic-API-Key": process.env.NEXT_PUBLIC_MAGIC_SERVER_WALLET_KEY ?? "",
       "X-OIDC-Provider-ID": process.env.NEXT_PUBLIC_OIDC_PROVIDER_ID ?? "",
       "X-Magic-Chain": chain,
       "X-Magic-Referrer": "https://demo.magic.link",
