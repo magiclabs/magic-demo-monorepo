@@ -5,6 +5,7 @@ import { HederaExtension } from "@magic-ext/hedera";
 import { EVMExtension } from "@magic-ext/evm";
 import { ethers } from "ethers";
 import { WalletKitExtension } from "@magic-ext/wallet-kit";
+import { WebAuthnExtension } from "@magic-ext/webauthn";
 
 const customPolygonOptions = {
   rpcUrl: "https://polygon.drpc.org", // Polygon RPC URL
@@ -41,6 +42,7 @@ export class MagicService {
             }),
             new EVMExtension([customPolygonOptions, customOptimismOptions]),
             new WalletKitExtension(),
+            new WebAuthnExtension(),
           ],
         },
       );

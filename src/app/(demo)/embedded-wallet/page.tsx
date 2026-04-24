@@ -11,6 +11,7 @@ import {
   MagicWidget,
   ThirdPartyWallets,
 } from "@magic-ext/wallet-kit";
+import { Passkey } from "@/components/embedded-wallet/auth/WebAuthn";
 
 export default function Home() {
   const { isAuthenticated, isLoading, fetchAllNetworkAddresses } =
@@ -73,6 +74,11 @@ export default function Home() {
 
             {/* OAuth Authentication */}
             <OAuthAuth />
+
+            <div className="h-px w-[90%] [@media(min-width:820px)]:w-400px sm:w-full [@media(min-width:820px)]:h-px bg-slate-3 flex-shrink-0" />
+
+            {/* Passkey Authentication */}
+            <Passkey />
           </div>
         </div>
       </div>
