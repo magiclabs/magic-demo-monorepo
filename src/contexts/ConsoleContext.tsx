@@ -3,23 +3,24 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 export enum LogType {
-  INFO = 'info',
-  SUCCESS = 'success',
-  ERROR = 'error',
-  WARNING = 'warning'
+  INFO = "info",
+  SUCCESS = "success",
+  ERROR = "error",
+  WARNING = "warning",
 }
 
 export enum LogMethod {
-  MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP = 'magic.auth.loginWithEmailOTP',
-  MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK = 'magic.auth.loginWithMagicLink',
-  MAGIC_OAUTH_LOGIN_WITH_POPUP = 'magic.oauth2.loginWithPopup',
-  MAGIC_OAUTH_LOGIN_WITH_REDIRECT = 'magic.oauth2.loginWithRedirect',
-  MAGIC_USER_IS_LOGGED_IN = 'magic.user.isLoggedIn',
-  MAGIC_USER_GET_INFO = 'magic.user.getInfo',
-  MAGIC_USER_LOGOUT = 'magic.user.logout',
-  MAGIC_USER_RECOVER_ACCOUNT = 'magic.user.recoverAccount',
-  TEE_GET_WALLET = 'tee.getWallet',
-  NEXTAUTH_SIGNOUT = 'nextauth.signOut'
+  MAGIC_AUTH_LOGIN_WITH_EMAIL_OTP = "magic.auth.loginWithEmailOTP",
+  MAGIC_AUTH_LOGIN_WITH_MAGIC_LINK = "magic.auth.loginWithMagicLink",
+  MAGIC_OAUTH_LOGIN_WITH_POPUP = "magic.oauth2.loginWithPopup",
+  MAGIC_OAUTH_LOGIN_WITH_REDIRECT = "magic.oauth2.loginWithRedirect",
+  MAGIC_USER_IS_LOGGED_IN = "magic.user.isLoggedIn",
+  MAGIC_USER_GET_INFO = "magic.user.getInfo",
+  MAGIC_USER_LOGOUT = "magic.user.logout",
+  MAGIC_USER_RECOVER_ACCOUNT = "magic.user.recoverAccount",
+  TEE_GET_WALLET = "tee.getWallet",
+  NEXTAUTH_SIGNOUT = "nextauth.signOut",
+  MAGIC_OAUTH_LOGIN_WITH_PASSKEY = "magic.webauthn.login",
 }
 
 interface ConsoleLog {
@@ -33,7 +34,12 @@ interface ConsoleLog {
 
 interface ConsoleContextType {
   consoleLogs: ConsoleLog[];
-  logToConsole: (type: LogType, method: LogMethod, message: string, data?: unknown) => void;
+  logToConsole: (
+    type: LogType,
+    method: LogMethod,
+    message: string,
+    data?: unknown,
+  ) => void;
   clearConsole: () => void;
 }
 
@@ -42,16 +48,21 @@ const ConsoleContext = createContext<ConsoleContextType | undefined>(undefined);
 export function ConsoleProvider({ children }: { children: ReactNode }) {
   const [consoleLogs, setConsoleLogs] = useState<ConsoleLog[]>([]);
 
-  const logToConsole = (type: LogType, method: LogMethod, message: string, data?: unknown) => {
+  const logToConsole = (
+    type: LogType,
+    method: LogMethod,
+    message: string,
+    data?: unknown,
+  ) => {
     const logEntry: ConsoleLog = {
       id: `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       timestamp: new Date().toLocaleTimeString(),
       type,
       message,
       method,
-      data
+      data,
     };
-    setConsoleLogs(prev => [...prev, logEntry]);
+    setConsoleLogs((prev) => [...prev, logEntry]);
   };
 
   const clearConsole = () => {
@@ -59,7 +70,9 @@ export function ConsoleProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ConsoleContext.Provider value={{ consoleLogs, logToConsole, clearConsole }}>
+    <ConsoleContext.Provider
+      value={{ consoleLogs, logToConsole, clearConsole }}
+    >
       {children}
     </ConsoleContext.Provider>
   );
@@ -68,7 +81,7 @@ export function ConsoleProvider({ children }: { children: ReactNode }) {
 export function useConsole() {
   const context = useContext(ConsoleContext);
   if (context === undefined) {
-    throw new Error('useConsole must be used within a ConsoleProvider');
+    throw new Error("useConsole must be used within a ConsoleProvider");
   }
   return context;
 }

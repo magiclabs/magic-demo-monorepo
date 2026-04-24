@@ -32,6 +32,12 @@ importers:
       '@magic-ext/wallet-kit':
         specifier: ^0.2.3
         version: 0.2.3(cd65bdc5fda2352f37da5f6012c32fec)
+      '@magic-ext/webauthn':
+        specifier: 27.6.0
+        version: 27.6.0
+      '@magic-sdk/provider':
+        specifier: 33.6.4
+        version: 33.6.4(localforage@1.10.0)
       '@magic-sdk/server-wallets':
         specifier: ^0.1.0
         version: 0.1.0
@@ -960,8 +966,11 @@ packages:
       react-dom: '>=18.0.0'
       viem: ^2.0.0
 
-  '@magic-sdk/provider@33.3.2':
-    resolution: {integrity: sha512-BFVT8ki0wDBN4eXWKE6OmkYmQJuiOFDJ14ipIJj+rRL901osK1G5JKfdiuKH3NqZ6aB+1VqyXZU4F4WGokG7Uw==}
+  '@magic-ext/webauthn@27.6.0':
+    resolution: {integrity: sha512-gSkALEyOzwcsF/I049jzbVC8AvpaWqebRV3rzCLw5TEiPDKNlDGgc+JAAVZ9OlH2MJoKMWJ2ctezGJ6rP+rWbQ==}
+
+  '@magic-sdk/provider@33.6.4':
+    resolution: {integrity: sha512-SbM2TX64MoDgMYlN1ov2ALrotcFnOVsa7DZepynem7RbPUV8tJ+F+dRX3IBwJ1NqWGjIoOS4LO7K+mcaQBZ2QQ==}
     peerDependencies:
       localforage: ^1.7.4
 
@@ -971,6 +980,9 @@ packages:
 
   '@magic-sdk/types@27.3.1':
     resolution: {integrity: sha512-tEM7eyGSLOaFdYaDV24EO8SfSBvLLFy1WoNKqKFYA4DNh4Q/7pDUftwfZqzCJOO0R4v4drVhntvONsqCohoauA==}
+
+  '@magic-sdk/types@27.6.3':
+    resolution: {integrity: sha512-ZwciaA3g90I/962uxX3KDG9BH68GnmLqoy6WCav4mXm9Ouya/tkTIsLUPBdEK1l7EI2GK8a4AzLYuIpCSeOxCw==}
 
   '@magiclabs/ui-components@1.49.3':
     resolution: {integrity: sha512-csb04tTKJHDqlkV00oCFB7aSylnxieSkLv/ee/261VtQmRCVV5zM8VeQlMk/HxN6ePJ4s1PW/uJBXMXatpxDcg==}
@@ -8068,15 +8080,19 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@magic-sdk/provider@33.3.2(localforage@1.10.0)':
+  '@magic-ext/webauthn@27.6.0': {}
+
+  '@magic-sdk/provider@33.6.4(localforage@1.10.0)':
     dependencies:
-      '@magic-sdk/types': 27.3.1
+      '@magic-sdk/types': 27.6.3
       eventemitter3: 4.0.7
       localforage: 1.10.0
 
   '@magic-sdk/server-wallets@0.1.0': {}
 
   '@magic-sdk/types@27.3.1': {}
+
+  '@magic-sdk/types@27.6.3': {}
 
   '@magiclabs/ui-components@1.49.3(@pandacss/dev@0.35.0(typescript@5.9.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -11452,7 +11468,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.43.0(typescript@5.9.2)
       '@typescript-eslint/types': 8.43.0
-      debug: 4.4.1
+      debug: 4.4.3
       typescript: 5.9.2
     transitivePeerDependencies:
       - supports-color
@@ -11471,7 +11487,7 @@ snapshots:
       '@typescript-eslint/types': 8.43.0
       '@typescript-eslint/typescript-estree': 8.43.0(typescript@5.9.2)
       '@typescript-eslint/utils': 8.43.0(eslint@9.35.0(jiti@2.5.1))(typescript@5.9.2)
-      debug: 4.4.1
+      debug: 4.4.3
       eslint: 9.35.0(jiti@2.5.1)
       ts-api-utils: 2.1.0(typescript@5.9.2)
       typescript: 5.9.2
@@ -11486,7 +11502,7 @@ snapshots:
       '@typescript-eslint/tsconfig-utils': 8.43.0(typescript@5.9.2)
       '@typescript-eslint/types': 8.43.0
       '@typescript-eslint/visitor-keys': 8.43.0
-      debug: 4.4.1
+      debug: 4.4.3
       fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -14826,7 +14842,7 @@ snapshots:
 
   magic-sdk@33.3.2:
     dependencies:
-      '@magic-sdk/provider': 33.3.2(localforage@1.10.0)
+      '@magic-sdk/provider': 33.6.4(localforage@1.10.0)
       '@magic-sdk/types': 27.3.1
       localforage: 1.10.0
 
