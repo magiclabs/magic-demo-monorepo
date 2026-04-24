@@ -19,10 +19,10 @@ export function Passkey({ onSuccess }: PasskeyAuthProps) {
   const [isRegisterLoading, setIsRegisterLoading] = useState(false);
 
   const handleSuccess = () => {
-    // Redirect to wallet page after successful authentication using Next router
-    router.push("/embedded-wallet/wallet");
     // Call the optional onSuccess callback if provided
     onSuccess?.();
+    // Redirect to wallet page after successful authentication using Next router
+    router.push("/embedded-wallet/wallet");
   };
 
   const login = async () => {
