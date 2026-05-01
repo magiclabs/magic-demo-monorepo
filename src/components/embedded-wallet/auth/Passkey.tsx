@@ -37,7 +37,7 @@ export function Passkey({ onSuccess }: PasskeyAuthProps) {
     );
 
     try {
-      await MagicService.magic.webauthn.login();
+      await MagicService.magic.passkey.login();
     } catch (error) {
       console.error(error);
 
@@ -67,7 +67,7 @@ export function Passkey({ onSuccess }: PasskeyAuthProps) {
 
     try {
       const username = generateRandomUsername();
-      await MagicService.magic.webauthn.registerNewUser({ username });
+      await MagicService.magic.passkey.registerNewUser({ username });
     } catch (error) {
       console.error(error);
       setIsRegisterLoading(false);
