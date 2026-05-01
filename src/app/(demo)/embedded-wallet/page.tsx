@@ -11,7 +11,7 @@ import {
   MagicWidget,
   ThirdPartyWallets,
 } from "@magic-ext/wallet-kit";
-import { Passkey } from "@/components/embedded-wallet/auth/WebAuthn";
+import { Passkey } from "@/components/embedded-wallet/auth/Passkey";
 
 export default function Home() {
   const { isAuthenticated, isLoading, fetchAllNetworkAddresses } =

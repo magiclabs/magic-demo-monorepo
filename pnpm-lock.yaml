@@ -26,15 +26,15 @@ importers:
       '@magic-ext/oauth2':
         specifier: ^13.0.0
         version: 13.0.0
+      '@magic-ext/passkey':
+        specifier: 1.0.0
+        version: 1.0.0
       '@magic-ext/solana':
         specifier: ^28.0.0
         version: 28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))
       '@magic-ext/wallet-kit':
         specifier: ^0.2.3
         version: 0.2.3(cd65bdc5fda2352f37da5f6012c32fec)
-      '@magic-ext/webauthn':
-        specifier: 27.6.0
-        version: 27.6.0
       '@magic-sdk/provider':
         specifier: 33.6.4
         version: 33.6.4(localforage@1.10.0)
@@ -953,6 +953,9 @@ packages:
   '@magic-ext/oauth2@13.0.0':
     resolution: {integrity: sha512-RI+bWqz7lq9Nj00CxaCiPIIY71KD35iYzQ6R3VFJrx5yT0IxfDuKpw0jMwjwC+i9+vbTqg2h5DcxZOgItA/cHg==}
 
+  '@magic-ext/passkey@1.0.0':
+    resolution: {integrity: sha512-dLXEWqwq4vQiK+j7UPnIHKv6AssDN+D5A0eYrygxxn6bMUK33zu0lCb4WhM4n6Kc0Fuq+Sh2pLH05sE2bSQu+g==}
+
   '@magic-ext/solana@28.0.0':
     resolution: {integrity: sha512-mB4uAK3XRMCiHdWZHK+3FS92DoWF7L9KrCUGeqsmL0vBwLxc8lEeWBPDAsK1Hwl/cwRUsFkCsISs+uaYx66mNw==}
     peerDependencies:
@@ -965,9 +968,6 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
       viem: ^2.0.0
-
-  '@magic-ext/webauthn@27.6.0':
-    resolution: {integrity: sha512-gSkALEyOzwcsF/I049jzbVC8AvpaWqebRV3rzCLw5TEiPDKNlDGgc+JAAVZ9OlH2MJoKMWJ2ctezGJ6rP+rWbQ==}
 
   '@magic-sdk/provider@33.6.4':
     resolution: {integrity: sha512-SbM2TX64MoDgMYlN1ov2ALrotcFnOVsa7DZepynem7RbPUV8tJ+F+dRX3IBwJ1NqWGjIoOS4LO7K+mcaQBZ2QQ==}
@@ -8019,6 +8019,8 @@ snapshots:
     dependencies:
       crypto-js: 4.2.0
 
+  '@magic-ext/passkey@1.0.0': {}
+
   '@magic-ext/solana@28.0.0(@solana/web3.js@1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/web3.js': 1.98.4(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)
@@ -8079,8 +8081,6 @@ snapshots:
       - use-sync-external-store
       - utf-8-validate
       - zod
-
-  '@magic-ext/webauthn@27.6.0': {}
 
   '@magic-sdk/provider@33.6.4(localforage@1.10.0)':
     dependencies:

@@ -4,6 +4,7 @@ import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
 import { LogMethod, LogType, useConsole } from "@/contexts/ConsoleContext";
 import { MagicService } from "@/lib/embedded-wallet/get-magic";
+import { generateRandomUsername } from "@/lib/embedded-wallet/generate-username";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -36,7 +37,7 @@ export function Passkey({ onSuccess }: PasskeyAuthProps) {
     );
 
     try {
-      await MagicService.magic.webauthn.login();
+      await MagicService.magic.passkey.login();
     } catch (error) {
       console.error(error);
 
@@ -65,7 +66,8 @@ export function Passkey({ onSuccess }: PasskeyAuthProps) {
     );
 
     try {
-      await MagicService.magic.webauthn.registerNewUser();
+      const username = generateRandomUsername();
+      await MagicService.magic.passkey.registerNewUser({ username });
     } catch (error) {
       console.error(error);
       setIsRegisterLoading(false);

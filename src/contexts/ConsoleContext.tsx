@@ -20,7 +20,7 @@ export enum LogMethod {
   MAGIC_USER_RECOVER_ACCOUNT = "magic.user.recoverAccount",
   TEE_GET_WALLET = "tee.getWallet",
   NEXTAUTH_SIGNOUT = "nextauth.signOut",
-  MAGIC_OAUTH_LOGIN_WITH_PASSKEY = "magic.webauthn.login",
+  MAGIC_OAUTH_LOGIN_WITH_PASSKEY = "magic.passkey.login",
 }
 
 interface ConsoleLog {
