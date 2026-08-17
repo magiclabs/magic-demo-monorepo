@@ -7,30 +7,21 @@ import {
 import { ethereumService } from "./ethereum";
 
 /**
- * Avalanche C-Chain (Fuji testnet) example for Server Wallets.
+ * Avalanche C-Chain (Fuji testnet) support for Server Wallets.
  *
- * Why no Fridge/TEE changes are needed: the Server Wallet EVM key is a single
- * secp256k1 keypair, and the TEE sign endpoint (`/v2/wallet/sign/data`) signs a
- * raw 32-byte hash — it is chain-agnostic. Avalanche C-Chain is a standard EVM
- * chain, so "supporting" it is entirely client-side:
- *   1. The wallet address is identical to the Ethereum address (same key), so we
- *      request/sign against chain "ETH" (see ethereumService, which hardcodes it).
- *   2. We set the Avalanche chainId (43113 for Fuji) on the transaction. ethers
- *      bakes that into `unsignedHash`, so the signature is only valid on Avalanche.
- *   3. We connect an RPC provider to Fuji to populate nonce/fees and broadcast.
- *
- * Note: `X-Magic-Chain` stays "ETH" for every call — Fridge only accepts
- * BTC/ETH/SOL/HEDERA/COSMOS, so an "AVALANCHE" chain value would be rejected.
+ * Avalanche C-Chain is EVM-compatible and shares the same address and key as
+ * Ethereum, so message and typed-data signing reuse `ethereumService`. Sending a
+ * transaction sets the Fuji chainId, signs with the Server Wallet, and broadcasts
+ * over an RPC connection to Fuji.
  */
 export const AVALANCHE_FUJI = {
   chainId: 43113,
   rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
   explorer: "https://testnet.snowtrace.io",
-  faucet: "https://faucet.avax.network",
   nativeSymbol: "AVAX",
 } as const;
 
-// staticNetwork avoids repeated eth_chainId round-trips since the network is fixed.
+// Fixed network, so skip the provider's auto-detection round-trips.
 const provider = new JsonRpcProvider(
   AVALANCHE_FUJI.rpcUrl,
   new Network("avalanche-fuji", AVALANCHE_FUJI.chainId),
@@ -47,10 +38,8 @@ export interface SendTransactionResult {
 }
 
 /**
- * Build an EIP-1559 transaction on Avalanche Fuji, sign it with the Server Wallet
- * TEE key (via the EVM sign endpoint), and broadcast it to the Fuji RPC.
- *
- * The wallet must hold test AVAX first — fund `from` at {@link AVALANCHE_FUJI.faucet}.
+ * Build an EIP-1559 transaction on Avalanche Fuji, sign it with the Server
+ * Wallet, and broadcast it. The wallet must hold test AVAX first.
  */
 async function sendTransaction(
   from: string,
@@ -68,16 +57,14 @@ async function sendTransaction(
     value: parseEther(amountAvax),
     nonce,
     chainId: AVALANCHE_FUJI.chainId,
-    type: 2, // EIP-1559 — C-Chain supports it; keeps `v` a clean y-parity.
-    gasLimit: 21000, // exact cost of a plain native-value transfer
+    type: 2, // EIP-1559
+    gasLimit: 21000, // exact cost of a native-value transfer
     maxFeePerGas: feeData.maxFeePerGas,
     maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
   };
 
-  // ethereumService.signTransaction computes the unsigned hash (chainId included),
-  // sends it to the TEE (`chain: "ETH"`), and returns the serialized signed tx.
+  // Sign with the Server Wallet key, then broadcast the signed tx to Fuji.
   const signedTx = await ethereumService.signTransaction(tx);
-
   const response = await provider.broadcastTransaction(signedTx);
 
   return {
@@ -96,13 +83,12 @@ async function getBalance(address: string): Promise<string> {
 }
 
 export const avalancheService = {
-  // Message + typed-data signing is identical to Ethereum (same EVM key).
+  // Message and typed-data signing are identical to Ethereum (same EVM key).
   personalSign: ethereumService.personalSign,
   signTypedDataV1: ethereumService.signTypedDataV1,
   signTypedDataV3: ethereumService.signTypedDataV3,
   signTypedDataV4: ethereumService.signTypedDataV4,
   signTransaction: ethereumService.signTransaction,
-  // Avalanche-specific: broadcast a real transaction on Fuji.
   sendTransaction,
   getBalance,
   config: AVALANCHE_FUJI,

@@ -1,8 +1,7 @@
 import { getOrCreateWallet as getOrCreateWalletAPI } from "./express-proxy";
 
 // UI-network -> API chain. EVM chains (e.g. Avalanche C-Chain) all resolve to the
-// single "ETH" secp256k1 wallet; Fridge rejects any chain outside its known set,
-// so "avalanche" must be mapped rather than sent through as-is.
+// same "ETH" wallet, so "avalanche" is mapped to the "ETH" chain the API expects.
 const NETWORK_TO_CHAIN: Record<string, string> = {
   avalanche: "ETH",
 };

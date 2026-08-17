@@ -38,7 +38,7 @@ export async function express<T = any>(
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
 
-    // Fridge/Express API returns errors as `{ detail: ... }`; fall back to `error`
+    // The Express API returns errors as `{ detail: ... }`; fall back to `error`
     // then a generic message so the real cause isn't swallowed.
     const rawMessage = data.detail ?? data.error;
     const message =

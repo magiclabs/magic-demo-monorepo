@@ -81,14 +81,14 @@ export function SolanaSignMethods() {
     {
       value: "simple-message",
       label: "Simple Message",
-      functionName: `${TEE_BASE}/v2/sign/message`,
+      functionName: `${TEE_BASE}/v2/wallet/sign/message`,
       payload: messagePayload,
       handler: handleSignSimpleMessage,
     },
     {
       value: "transaction",
       label: "Sign Transaction",
-      functionName: `${TEE_BASE}/v2/sign/message`,
+      functionName: `${TEE_BASE}/v2/wallet/sign/message`,
       payload: txPayload,
       handler: handleSignTransaction,
     },

@@ -42,7 +42,7 @@ export function AvalancheSignMethods() {
 
   const handleSendTransaction = async (): Promise<string> => {
     // Self-transfer so the demo needs no second address. Requires the wallet to
-    // hold test AVAX first — fund it at the Fuji faucet.
+    // hold test AVAX first.
     const result = await avalancheService.sendTransaction(
       publicAddress,
       publicAddress,
@@ -79,7 +79,7 @@ export function AvalancheSignMethods() {
   return (
     <SigningMethodsLayout
       title="Avalanche C-Chain (Fuji)"
-      description={`Sign and broadcast on Avalanche Fuji testnet with Server Wallet. Same EVM key as Ethereum — fund the address with test ${config.nativeSymbol} at ${config.faucet} before sending.`}
+      description='Sign and broadcast on Avalanche Fuji testnet with Server Wallet.'
       defaultTab="send-transaction"
       tabs={tabs}
     >
