@@ -38,8 +38,17 @@ export async function express<T = any>(
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
 
-    // For other errors, throw a generic error
-    throw new Error(data.error || `HTTP error! status: ${response.status}`);
+    // Fridge/Express API returns errors as `{ detail: ... }`; fall back to `error`
+    // then a generic message so the real cause isn't swallowed.
+    const rawMessage = data.detail ?? data.error;
+    const message =
+      typeof rawMessage === "string"
+        ? rawMessage
+        : rawMessage
+          ? JSON.stringify(rawMessage)
+          : `HTTP error! status: ${response.status}`;
+
+    throw new Error(message);
   }
 
   return await response.json();
