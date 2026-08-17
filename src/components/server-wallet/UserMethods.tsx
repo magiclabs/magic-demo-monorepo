@@ -52,6 +52,7 @@ async function revealPrivateKey(
 const NETWORK_TO_TYPE: Record<string, WalletType> = {
   ethereum: "ETH",
   eth: "ETH",
+  avalanche: "ETH", // Avalanche C-Chain uses the same EVM key as Ethereum
   bitcoin: "BITCOIN",
   btc: "BITCOIN",
   solana: "SOLANA",

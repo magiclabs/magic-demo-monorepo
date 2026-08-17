@@ -2,6 +2,7 @@
 
 import { SolanaSignMethods } from "@/components/server-wallet/SolanaSignMethods";
 import { EVMSignMethods } from "@/components/server-wallet/EVMSignMethods";
+import { AvalancheSignMethods } from "@/components/server-wallet/AvalancheSignMethods";
 import { AlchemySmartWallet } from "@/components/server-wallet/AlchemySmartWallet";
 import { UserInfo } from "@/components/server-wallet/UserInfo";
 import { useServerWallet } from "@/contexts/ServerWalletContext";
@@ -38,6 +39,8 @@ export default function ServerWalletPage() {
             {/* Show Solana methods if Solana network is selected */}
             {selectedNetwork === "solana" ? (
               <SolanaSignMethods />
+            ) : selectedNetwork === "avalanche" ? (
+              <AvalancheSignMethods />
             ) : (
               /* Default to EVM methods for Ethereum and other EVM networks */
               <>
