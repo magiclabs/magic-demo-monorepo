@@ -46,7 +46,7 @@ async function express<T = any>(
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
 
-    // Fridge/Express API returns errors as `{ detail: ... }`; keep `error` as a
+    // The Express API returns errors as `{ detail: ... }`; keep `error` as a
     // fallback for any other source. Without this, every backend error collapses
     // to a generic "HTTP error! status: 4xx" and hides the real cause.
     const rawMessage = data.detail ?? data.error;
