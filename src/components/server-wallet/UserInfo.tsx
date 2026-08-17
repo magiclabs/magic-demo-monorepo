@@ -20,6 +20,7 @@ export function UserInfo() {
 
   const networks = [
     { value: "ethereum", label: "Ethereum" },
+    { value: "avalanche", label: "Avalanche (Fuji)" },
     { value: "solana", label: "Solana" },
   ];
 

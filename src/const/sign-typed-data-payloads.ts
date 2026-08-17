@@ -48,3 +48,21 @@ export const SIGN_TYPED_DATA_V4_PAYLOAD = {
     Mail: [{ name: "contents", type: "string" }],
   },
 };
+
+// Avalanche Fuji (chainId 43113) variant, so the EIP-712 domain matches the chain
+// the Server Wallet demo is signing for.
+export const SIGN_TYPED_DATA_V4_PAYLOAD_FUJI = {
+  domain: {
+    chainId: 43113,
+    name: "Ether Mail",
+    version: "1",
+  },
+  message: {
+    contents: "Hello from Avalanche Fuji!",
+  },
+  primaryType: "Mail",
+  types: {
+    EIP712Domain: [{ name: "name", type: "string" }],
+    Mail: [{ name: "contents", type: "string" }],
+  },
+};

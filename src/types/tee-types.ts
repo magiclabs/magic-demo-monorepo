@@ -1,8 +1,8 @@
 export enum TeeEndpoint {
-  WALLET = "/v1/wallet",
-  SIGN_DATA = "/v1/wallet/sign/data",
-  SIGN_MESSAGE = "/v1/wallet/sign/message",
-  SIGN_EIP7702 = "/v1/wallet/sign/eip7702",
+  WALLET = "/v2/wallet",
+  SIGN_DATA = "/v2/wallet/sign/data",
+  SIGN_MESSAGE = "/v2/wallet/sign/message",
+  SIGN_EIP7702 = "/v2/wallet/sign/eip7702",
 }
 
 
