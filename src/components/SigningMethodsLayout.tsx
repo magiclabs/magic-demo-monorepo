@@ -9,7 +9,7 @@ import Image from "next/image";
 import IconWand from "public/icons/icon-wand.svg";
 
 const TabsClasses = {
-  root: "rounded-2xl w-full max-w-4xl",
+  root: "rounded-2xl w-full max-w-5xl",
   trigger:
     "font-semibold px-6 py-4 text-[#EDEBFF] bg-slate-1 hover:bg-white/10 [&[data-state=active]]:bg-slate-3 cursor-pointer rounded-2xl transition-all duration-200 w-full text-left",
 };
@@ -84,7 +84,7 @@ export function SigningMethodsLayout({
           Function
         </label>
         <div className="p-4 rounded-lg bg-slate-1 border border-slate-4 font-mono text-sm leading-relaxed">
-          <span className="text-[#9AD9FB] break-all">{functionName}</span>
+          <span className="text-[#9AD9FB] break-words">{functionName}</span>
         </div>
       </div>
     );
@@ -100,7 +100,7 @@ export function SigningMethodsLayout({
       <Card icon={IconEdit} title={title} subtitle={description}>
         <div className="flex flex-col gap-6 max-[740px]:gap-4 min-[741px]:flex-row">
           {/* Tabs - Above content on mobile, left side on desktop */}
-          <div className="w-full min-[741px]:w-1/3">
+          <div className="w-full min-[741px]:w-56 min-[741px]:shrink-0">
             <TabsList className="flex gap-2 bg-transparent flex-col">
               {tabs.map((tab) => (
                 <TabsTrigger
@@ -115,7 +115,7 @@ export function SigningMethodsLayout({
           </div>
 
           {/* Content - Below tabs on mobile, right side on desktop */}
-          <div className="w-full min-[741px]:w-2/3">
+          <div className="w-full min-w-0 min-[741px]:flex-1">
             <div className="flex flex-col gap-6 w-full">
               <div className="flex flex-col gap-4">
                 {currentTab && renderFunctionDisplay(currentTab)}

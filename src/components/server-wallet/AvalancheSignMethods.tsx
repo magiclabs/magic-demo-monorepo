@@ -79,7 +79,7 @@ export function AvalancheSignMethods() {
   return (
     <SigningMethodsLayout
       title="Avalanche C-Chain (Fuji)"
-      description={`Sign and broadcast on Avalanche Fuji testnet with Server Wallet. Same EVM key as Ethereum — fund the address with test ${config.nativeSymbol} before sending.`}
+      description='Sign and broadcast on Avalanche Fuji testnet with Server Wallet.'
       defaultTab="send-transaction"
       tabs={tabs}
     >

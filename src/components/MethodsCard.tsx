@@ -24,7 +24,7 @@ interface TabItem {
 }
 
 const TabsClasses = {
-  root: "rounded-2xl w-full max-w-4xl",
+  root: "rounded-2xl w-full max-w-5xl",
   trigger:
     "font-semibold px-6 py-4 text-[#EDEBFF] bg-slate-1 hover:bg-white/10 [&[data-state=active]]:bg-slate-3 cursor-pointer rounded-2xl transition-all duration-200 w-full text-left",
 };
@@ -47,7 +47,7 @@ export function MethodsCard({ title, description, defaultTab, tabs }: Props) {
       <Card icon={IconGlobeCard} title={title} subtitle={description}>
         <div className="flex flex-col gap-6 max-[740px]:gap-4 min-[741px]:flex-row">
           {/* Tabs - Above content on mobile, left side on desktop */}
-          <div className="w-full min-[741px]:w-1/3">
+          <div className="w-full min-[741px]:w-56 min-[741px]:shrink-0">
             <TabsList className="flex gap-2 bg-transparent flex-col">
               {tabs.map((tab) => (
                 <div key={tab.value} className="relative group/tab w-full">
@@ -97,7 +97,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
           Function
         </label>
         <div className="p-4 rounded-lg bg-slate-1 border border-slate-4 font-mono text-sm leading-relaxed">
-          <span className="text-[#9AD9FB]">{functionName}</span>
+          <span className="text-[#9AD9FB] break-words">{functionName}</span>
         </div>
       </div>
     );
@@ -123,7 +123,7 @@ function MethodCardContent({ tab }: MethodCardContentProps) {
   if (!tab) return null;
 
   return (
-    <div className="w-full min-[741px]:w-2/3">
+    <div className="w-full min-w-0 min-[741px]:flex-1">
       <div className="flex flex-col gap-6 w-full">
         <div className="flex flex-col gap-4">
           {tab && renderFunctionDisplay(tab)}
