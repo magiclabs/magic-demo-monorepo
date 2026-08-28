@@ -28,7 +28,7 @@
     "clsx": "^2.1.1",
     "ethers": "^6.15.0",
     "magic-sdk": "^33.3.2",
-    "next": "16.1.5",
+    "next": "16.3.3",
     "next-auth": "^4.24.11",
     "prismjs": "^1.30.0",
     "react": "19.1.0",
@@ -44,7 +44,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.2",
+    "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
